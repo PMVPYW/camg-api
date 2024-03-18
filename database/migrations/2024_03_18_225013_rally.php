@@ -1,0 +1,62 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('rallies', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->date('data_inicio');
+            $table->date('data_fim');
+            $table->integer('external_entity_id');
+        });
+
+        Schema::create('albuns', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('rally_id')->constrained("rallies");
+            $table->string("nome");
+        });
+
+        Schema::create('fotos', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('album_id')->constrained("albuns");
+            $table->string("image_src");
+            $table->longText("description");
+        });
+
+        Schema::create('noticias', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('rally_id')->constrained("rallies");
+            $table->string("titulo");
+            $table->longText("conteudo");
+            $table->string("title_img");
+            $table->date("data");
+        });
+
+        Schema::create('imagens_noticia', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('noticia_id')->constrained("rallies");
+            $table->foreignId('image_id')->constrained("rallies");
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('rallies');
+        Schema::dropIfExists('albuns');
+        Schema::dropIfExists('fotos');
+        Schema::dropIfExists('noticias');
+        Schema::dropIfExists('imagens_noticia');
+    }
+};
