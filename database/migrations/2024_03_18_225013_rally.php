@@ -34,7 +34,7 @@ return new class extends Migration
 
         Schema::create('noticias', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rally_id')->constrained("rallies");
+            $table->foreignId('rally_id')->nullable()->constrained("rallies");
             $table->string("titulo");
             $table->longText("conteudo");
             $table->string("title_img");
