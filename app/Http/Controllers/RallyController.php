@@ -33,7 +33,7 @@ class RallyController extends Controller
             $rally->fill($validated);
             $rally->save();
         });
-        return new RallyResource($rally);
+        return response(new RallyResource($rally), 201);
     }
 
     /**
@@ -62,8 +62,11 @@ class RallyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Rally $rally)
     {
-        //
+        DB::transaction(function () use ($rally) {
+            $rally->deleteOrFail();
+        });
+        return new RallyResource($rally);
     }
 }
