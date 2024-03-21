@@ -43,8 +43,8 @@ return new class extends Migration
 
         Schema::create('imagens_noticia', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('noticia_id')->constrained("rallies");
-            $table->foreignId('image_id')->constrained("rallies");
+            $table->foreignId('noticia_id')->constrained("noticias");
+            $table->foreignId('image_id')->constrained("fotos");
         });
 
         Schema::create('entidades', function (Blueprint $table) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ImagemNoticia;
 use Illuminate\Http\Request;
 
 class ImagemNoticiaController extends Controller
@@ -11,7 +12,7 @@ class ImagemNoticiaController extends Controller
      */
     public function index()
     {
-        //
+        return ImagemNoticia::all();
     }
 
     /**
