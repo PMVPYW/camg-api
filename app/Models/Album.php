@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Album extends Model
@@ -19,4 +20,8 @@ class Album extends Model
         return $this->hasOne(Rally::class, "id", "rally_id");
     }
 
+    public function photos(): HasMany
+    {
+        return $this->hasMany(Foto::class, "album_id", "id");
+    }
 }
