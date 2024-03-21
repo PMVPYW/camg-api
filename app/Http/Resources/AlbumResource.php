@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RallyResource extends JsonResource
+class AlbumResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,10 @@ class RallyResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->id,
+            "id" =>$this->id,
+            "rally_id" => $this->rally_id,
             "nome" => $this->nome,
-            "data_inicio" => $this->data_inicio,
-            "data_fim" => $this->data_fim,
-            "external_entity_id" => $this->external_entity_id,
-            "photo_url" => $this->photo_url
+            "img" => $this->img
         ];
     }
 }
