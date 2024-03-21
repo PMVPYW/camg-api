@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Album extends Model
 {
@@ -15,12 +15,12 @@ class Album extends Model
 
     public $timestamps = false;
 
-    public function rally(): HasOne
+    public function rally(): belongsTo
     {
-        return $this->hasOne(Rally::class, "id", "rally_id");
+        return $this->belongsTo(Rally::class, "id", "rally_id");
     }
 
-    public function photos(): HasMany
+    public function Photos(): HasMany
     {
         return $this->hasMany(Foto::class, "album_id", "id");
     }
