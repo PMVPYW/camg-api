@@ -19,8 +19,7 @@ class RallyResource extends JsonResource
             "nome" => $this->nome,
             "data_inicio" => $this->data_inicio,
             "data_fim" => $this->data_fim,
-            "external_entity_id" => $this->external_entity_id,
-            "photo_url" => $this->photo_url
+            "external_entity_id" => $this->external_entity_id
         ];
     }
 }
