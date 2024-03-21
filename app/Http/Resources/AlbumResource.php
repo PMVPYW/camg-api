@@ -17,7 +17,8 @@ class AlbumResource extends JsonResource
         return [
             "id" =>$this->id,
             "rally_id" => $this->rally_id,
-            "nome" => $this->nome
+            "nome" => $this->nome,
+            "img" => $this->img
         ];
     }
 }

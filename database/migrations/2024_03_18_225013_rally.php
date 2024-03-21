@@ -16,13 +16,15 @@ return new class extends Migration
             $table->string('nome');
             $table->date('data_inicio');
             $table->date('data_fim');
+            $table->string('photo_url')->nullable();
             $table->integer('external_entity_id');
         });
 
         Schema::create('albuns', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rally_id')->nullable()->constrained("rallies");
+            $table->foreignId('rally_id')->constrained("rallies");
             $table->string("nome");
+            $table->string("img")->nullable();
         });
 
         Schema::create('fotos', function (Blueprint $table) {
