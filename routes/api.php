@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\RallyController;
 use Illuminate\Http\Request;
@@ -11,4 +12,5 @@ Route::get('/user', function (Request $request) {
 
 Route::post('auth/login', [AuthenticationController::class, "login"])->name("login");
 
-Route::apiResource("rally", RallyController::class);
+    Route::apiResource("rally", RallyController::class);
+    Route::apiResource("album", AlbumController::class);

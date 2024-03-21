@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class RallyRequest extends FormRequest
+class AlbumRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,8 @@ class RallyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nome" => "required|string|min:0|unique:rallies,nome",
-            "data_inicio" => "required|date",
-            "data_fim" => "required|date",
-            "external_entity_id" => "required|integer"
+            "rally_id" => "integer|exists:rallies,id|nullable",
+            "nome" => "string|required"
         ];
     }
 }
