@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AlbumRequest;
+use App\Http\Requests\AlbumRequestUpdate;
 use App\Http\Resources\AlbumResource;
 use App\Models\Album;
 use Illuminate\Http\Request;
@@ -49,17 +50,36 @@ class AlbumController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Album $album)
     {
-        //
+        return new AlbumResource($album);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AlbumRequestUpdate $request, Album $album)
     {
-        //
+        $validated = $request->validated();
+        DB::transaction(function () use ($album, $request, $validated)
+        {
+            if ($request->hasFile("img"))
+            {
+                if($album->img && Storage::exists('public/fotos/' . $album->img))
+                {
+                    Storage::disk('public')->delete('fotos/' . $album->img);
+                }
+                $file = $request->file("img");
+                $file_type  = $file->getClientOriginalExtension();
+                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.'  .  $file_type;
+                Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
+                $album->img = $file_name_to_store;
+            }
+            unset($validated["img"]);
+            $album->fill($validated);
+            $album->save();
+        });
+       return new AlbumResource($album);
     }
 
     /**
