@@ -8,6 +8,8 @@ use App\Http\Resources\RallyResource;
 use App\Models\Rally;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class RallyController extends Controller
 {
@@ -27,9 +29,17 @@ class RallyController extends Controller
     {
         $validated = $request->validated();
         $rally = null;
-        DB::transaction(function() use ($validated, &$rally)
+        DB::transaction(function() use ($validated, &$rally, $request)
         {
             $rally = new Rally();
+            if ($request->hasFile("photo_url")) {
+                $file = $request->file("photo_url");
+                $file_type = $file->getClientOriginalExtension();
+                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+                Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
+                $rally->photo_url = $file_name_to_store;
+            }
+            unset($validated["photo_url"]);
             $rally->fill($validated);
             $rally->save();
         });

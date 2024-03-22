@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('data_fim');
             $table->string('photo_url')->nullable();
             $table->integer('external_entity_id');
+            $table->timestamp("deleted_at")->nullable();
         });
 
         Schema::create('albuns', function (Blueprint $table) {
@@ -46,8 +47,8 @@ return new class extends Migration
 
         Schema::create('imagens_noticia', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('noticia_id')->constrained("rallies");
-            $table->foreignId('image_id')->constrained("rallies");
+            $table->foreignId('noticia_id')->constrained("noticias");
+            $table->foreignId('image_id')->constrained("fotos");
         });
 
         Schema::create('entidades', function (Blueprint $table) {
