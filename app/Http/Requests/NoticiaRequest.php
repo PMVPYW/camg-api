@@ -25,7 +25,7 @@ class NoticiaRequest extends FormRequest
 
         return [
             'fotos_id' => 'nullable|array',
-            'fotos_id.*' => 'integer',
+            'fotos_id.*' => 'integer| exists:fotos,id', // Validação para cada item do array
             "rally_id" => "nullable | integer |exists:rallies,id",
             "titulo" => "required|string",
             "conteudo" => "required|string",

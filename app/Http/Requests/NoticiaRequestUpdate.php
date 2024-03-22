@@ -22,7 +22,7 @@ class NoticiaRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            "rally_id" => "nullable | integer |exists:rallies,id",
+            "rally_id" => "nullable|integer|exists:rallies,id",
             "titulo" => "required|string",
             "conteudo" => "required|string",
             "title_img" => "required|string",

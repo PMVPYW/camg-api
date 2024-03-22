@@ -74,7 +74,19 @@ class NoticiaController extends Controller
      */
     public function destroy(Noticia $noticia)
     {
-        $noticia->forceDelete();
+
+        DB::transaction(function () use($noticia){
+            if(isset($noticia->imagens)) {
+                foreach ($noticia->imagens as $imagem) {
+                    $imagem_noticias=ImagemNoticia::find($imagem->id);
+                    $imagem_noticias->delete();
+                    $noticia->delete();
+                }
+            }else{
+                $noticia->delete();
+            }
+        });
+
         return response()->json(["message" => "Deleted succesfuly"], 200);
     }
 }
