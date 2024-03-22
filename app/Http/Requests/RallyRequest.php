@@ -12,7 +12,7 @@ class RallyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::user() != null;
+        return true;
     }
 
     /**

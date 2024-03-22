@@ -29,16 +29,14 @@ class AlbumController extends Controller
     {
         $validated = $request->validated();
         $file_name_to_store = null;
-        if ($request->hasFile("img"))
-        {
+        if ($request->hasFile("img")) {
             $file = $request->file("img");
-            $file_type  = $file->getClientOriginalExtension();
-            $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.'  .  $file_type;
+            $file_type = $file->getClientOriginalExtension();
+            $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
             Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
         }
         $album = null;
-        DB::transaction(function() use ($validated, &$album, $file_name_to_store)
-        {
+        DB::transaction(function () use ($validated, &$album, $file_name_to_store) {
             $album = new Album();
             $album->fill($validated);
             $album->img = $file_name_to_store;
@@ -61,17 +59,14 @@ class AlbumController extends Controller
     public function update(AlbumRequestUpdate $request, Album $album)
     {
         $validated = $request->validated();
-        DB::transaction(function () use ($album, $request, $validated)
-        {
-            if ($request->hasFile("img"))
-            {
-                if($album->img && Storage::exists('public/fotos/' . $album->img))
-                {
+        DB::transaction(function () use ($album, $request, $validated) {
+            if ($request->hasFile("img")) {
+                if ($album->img && Storage::exists('public/fotos/' . $album->img)) {
                     Storage::disk('public')->delete('fotos/' . $album->img);
                 }
                 $file = $request->file("img");
-                $file_type  = $file->getClientOriginalExtension();
-                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.'  .  $file_type;
+                $file_type = $file->getClientOriginalExtension();
+                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
                 Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
                 $album->img = $file_name_to_store;
             }
@@ -79,14 +74,25 @@ class AlbumController extends Controller
             $album->fill($validated);
             $album->save();
         });
-       return new AlbumResource($album);
+        return new AlbumResource($album);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Album $album)
     {
-        //
+
+        DB::transaction(function () use ($album) {
+            if ($album->Photos()->count() == 0) {
+                if ($album->img && Storage::exists('public/fotos/' . $album->img)) {
+                    Storage::disk('public')->delete('fotos/' . $album->img);
+                }
+                $album->forceDelete();
+            } else {
+                $album->delete();
+            }
+        });
+        return new AlbumResource($album);
     }
 }

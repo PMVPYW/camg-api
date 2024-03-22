@@ -22,9 +22,10 @@ return new class extends Migration
 
         Schema::create('albuns', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rally_id')->constrained("rallies");
+            $table->foreignId('rally_id')->nullable()->constrained("rallies");
             $table->string("nome");
             $table->string("img")->nullable();
+            $table->timestamp('deleted_at')->nullable();
         });
 
         Schema::create('fotos', function (Blueprint $table) {
