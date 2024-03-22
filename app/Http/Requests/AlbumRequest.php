@@ -12,7 +12,7 @@ class AlbumRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::user() != null;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class AlbumRequest extends FormRequest
     {
         return [
             "rally_id" => "integer|exists:rallies,id|nullable",
-            "nome" => "string|required"
+            "nome" => "string|required",
+            "img" => "file|nullable"
         ];
     }
 }

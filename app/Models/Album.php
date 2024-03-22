@@ -11,7 +11,7 @@ class Album extends Model
 {
     use HasFactory;
     protected $table = "albuns";
-    protected $fillable = ["rally_id", "nome"];
+    protected $fillable = ["rally_id", "nome", "img"];
 
     public $timestamps = false;
 
