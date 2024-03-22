@@ -18,4 +18,9 @@ class Rally extends Model
     {
         return $this->hasMany(Noticia::class);
     }
+
+    public function Albuns(): HasMany
+    {
+        return $this->hasMany(Album::class, "rally_id", "id");
+    }
 }
