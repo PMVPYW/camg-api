@@ -29,8 +29,7 @@ class RallyController extends Controller
     {
         $validated = $request->validated();
         $rally = null;
-        DB::transaction(function() use ($validated, &$rally, $request)
-        {
+        DB::transaction(function () use ($validated, &$rally, $request) {
             $rally = new Rally();
             if ($request->hasFile("photo_url")) {
                 $file = $request->file("photo_url");
@@ -61,8 +60,18 @@ class RallyController extends Controller
     public function update(RallyRequestUpdate $request, Rally $rally)
     {
         $validated = $request->validated();
-        DB::transaction(function() use ($validated, $rally)
-        {
+        DB::transaction(function () use ($validated, $rally, $request) {
+            if ($request->hasFile("photo_url")) {
+                if ($rally->photo_url && Storage::exists('public/fotos/' . $rally->photo_url)) {
+                    Storage::disk('public')->delete('fotos/' . $rally->photo_url);
+                }
+                $file = $request->file("photo_url");
+                $file_type = $file->getClientOriginalExtension();
+                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+                Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
+                $rally->photo_url = $file_name_to_store;
+            }
+            unset($validated["photo_url"]);
             $rally->fill($validated);
             $rally->save();
         });
@@ -75,7 +84,17 @@ class RallyController extends Controller
     public function destroy(Rally $rally)
     {
         DB::transaction(function () use ($rally) {
-            $rally->deleteOrFail();
+            if ($rally->noticias()->count() + $rally->Albuns()->count() == 0) {
+                #hard delete
+                if ($rally->photo_url && Storage::exists('public/fotos/' . $rally->photo_url)) {
+                    Storage::disk('public')->delete('fotos/' . $rally->photo_url);
+                }
+                $rally->forceDelete();
+            } else {
+                #soft delete
+                $rally->delete();
+            }
+
         });
         return new RallyResource($rally);
     }
