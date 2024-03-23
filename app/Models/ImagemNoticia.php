@@ -16,4 +16,9 @@ class ImagemNoticia extends Model
     {
         return $this->belongsTo(Noticia::class);
     }
+
+    public function foto(): belongsTo
+    {
+        return $this->belongsTo(Foto::class, "id", "image_id");
+    }
 }
