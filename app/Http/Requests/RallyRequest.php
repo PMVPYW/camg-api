@@ -26,7 +26,8 @@ class RallyRequest extends FormRequest
             "nome" => "required|string|min:0|unique:rallies,nome",
             "data_inicio" => "required|date",
             "data_fim" => "required|date",
-            "external_entity_id" => "required|integer"
+            "external_entity_id" => "required|integer",
+            "photo_url" => "file"
         ];
     }
 }
