@@ -25,7 +25,7 @@ class AlbumRequest extends FormRequest
         return [
             "rally_id" => "integer|exists:rallies,id|nullable",
             "nome" => "string|required",
-            "img" => "file|nullable"
+            "img" => "file|nullable|image"
         ];
     }
 }

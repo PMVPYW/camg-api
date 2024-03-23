@@ -1,0 +1,67 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\FotoRequest;
+use App\Http\Resources\FotoResource;
+use App\Models\Foto;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
+class FotoController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return FotoResource::collection(Foto::all());
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(FotoRequest $request)
+    {
+        $validated = $request->validated();
+        $file = $request->file("image_src");
+        $file_type = $file->getClientOriginalExtension();
+        $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+        Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
+        $foto = null;
+        unset($validated["image_src"]);
+        DB::transaction(function () use ($validated, &$foto, $file_name_to_store) {
+            $foto = new Foto();
+            $foto->fill($validated);
+            $foto->image_src = $file_name_to_store;
+            $foto->save();
+        });
+        return new FotoResource($foto);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Foto $foto)
+    {
+        return new FotoResource($foto);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}
