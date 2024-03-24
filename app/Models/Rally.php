@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -17,11 +18,16 @@ class Rally extends Model
 
     public function noticias(): HasMany
     {
-        return $this->hasMany(Noticia::class);
+        return $this->hasMany(Noticia::class, "rally_id", "id");
     }
 
     public function Albuns(): HasMany
     {
         return $this->hasMany(Album::class, "rally_id", "id");
+    }
+
+    public function patrocinios(): BelongsToMany
+    {
+        return $this->belongsToMany(Patrocinio::class);
     }
 }
