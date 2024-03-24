@@ -43,12 +43,14 @@ return new class extends Migration
             $table->longText("conteudo");
             $table->string("title_img");
             $table->date("data");
+            $table->timestamp("deleted_at")->nullable();
         });
 
         Schema::create('imagens_noticia', function (Blueprint $table) {
             $table->id();
             $table->foreignId('noticia_id')->constrained("noticias");
             $table->foreignId('image_id')->constrained("fotos");
+            $table->timestamp("deleted_at")->nullable();
         });
 
         Schema::create('entidades', function (Blueprint $table) {

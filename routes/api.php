@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\ImagemNoticiaController;
+use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\RallyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +14,8 @@ Route::post('auth/login', [AuthenticationController::class, "login"])->name("log
 
 Route::get("rally", [RallyController::class, "index"]);
 Route::get("rally/{rally}", [RallyController::class, "show"]);
+Route::apiResource("noticias", NoticiaController::class);
+Route::apiResource("imagensNoticia", ImagemNoticiaController::class);
 
 Route::get("album", [AlbumController::class, "index"]);
 Route::get("album/{album}", [AlbumController::class, "show"]);
