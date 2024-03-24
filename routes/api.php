@@ -18,6 +18,9 @@ Route::get("rally/{rally}", [RallyController::class, "show"]);
 Route::get("noticias", [NoticiaController::class, "index"]);
 Route::get("noticias/{noticias}", [NoticiaController::class, "show"]);
 
+Route::get("noticias", [NoticiaController::class, "index"]);
+Route::get("noticias/{noticias}", [NoticiaController::class, "show"]);
+
 Route::get("album", [AlbumController::class, "index"]);
 Route::get("album/{album}", [AlbumController::class, "show"]);
 

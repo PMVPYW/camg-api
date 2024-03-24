@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Patrocinio extends Model
 {
     use HasFactory;
-
     protected $table = "patrocinios";
     protected $fillable = ["entidade_id", "rally_id"];
+    public $timestamps = false;
+
     public function entidade(): BelongsTo
     {
         return $this->belongsTo(Entidade::class, "id", "entidade_id");
