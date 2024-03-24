@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FotoRequest;
+use App\Http\Requests\FotoUpdateRequest;
 use App\Http\Resources\FotoResource;
 use App\Models\Foto;
 use Illuminate\Http\Request;
@@ -52,16 +53,42 @@ class FotoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FotoUpdateRequest $request, Foto $foto)
     {
-        //
+        $validated = $request->validated();
+        if ($request->hasFile("image_src"))
+        {
+            if (Storage::exists("public/fotos/" . $foto->image_src))
+            {
+                $file = $request->file("image_src");
+                $file_type = $file->getClientOriginalExtension();
+                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+                Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
+            }
+            unset($validated["image_src"]);
+        }
+        if (!isset($validated["description"]))
+        {
+            $foto->description = null;
+        }
+        $foto->fill($validated);
+        $foto->save();
+        return new FotoResource($foto);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Foto $foto)
     {
-        //
+        DB::transaction(function () use ($foto) {
+           if ($foto->ImagemNoticia()->count() == 0)
+           {
+               $foto->forceDelete();
+           } else {
+               $foto->delete();
+           }
+        });
+        return new FotoResource($foto);
     }
 }
