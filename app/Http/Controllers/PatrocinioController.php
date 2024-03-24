@@ -42,7 +42,7 @@ class PatrocinioController extends Controller
      */
     public function show(Patrocinio $patrocinio)
     {
-        return response()->json(["data", $patrocinio]);
+        return new PatrocinioResource($patrocinio);
     }
 
     /**

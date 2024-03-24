@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PatrocinioRequestUpdate extends FormRequest
+class EntidadeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,9 @@ class PatrocinioRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            "entidade_id" => "required | integer |exists:entidades,id"
+            'nome' => 'required|string',
+            'photo_url' => 'required|string',
+            'url' => 'required|url:http,https',
         ];
     }
 }
