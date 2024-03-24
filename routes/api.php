@@ -15,8 +15,12 @@ Route::post('auth/login', [AuthenticationController::class, "login"])->name("log
 
 Route::get("rally", [RallyController::class, "index"]);
 Route::get("rally/{rally}", [RallyController::class, "show"]);
-Route::apiResource("noticias", NoticiaController::class);
-Route::apiResource("imagensNoticia", ImagemNoticiaController::class);
+
+Route::get("noticias", [NoticiaController::class, "index"]);
+Route::get("noticias/{noticias}", [NoticiaController::class, "show"]);
+
+Route::get("noticias", [NoticiaController::class, "index"]);
+Route::get("noticias/{noticias}", [NoticiaController::class, "show"]);
 
 Route::get("album", [AlbumController::class, "index"]);
 Route::get("album/{album}", [AlbumController::class, "show"]);
@@ -33,6 +37,11 @@ Route::middleware("auth:sanctum")->group(function (){
    Route::post("album", [AlbumController::class, "store"]);
    Route::put("album/{album}", [AlbumController::class, "update"]);
    Route::delete("album/{album}", [AlbumController::class, "destroy"]);
+
+   Route::post("noticias", [NoticiaController::class, "store"]);
+   Route::put("noticias", [NoticiaController::class, "update"]);
+   Route::delete("noticias", [NoticiaController::class, "destroy"]);
+
 
     Route::post("foto", [FotoController::class, "store"]);
     Route::put("foto/{foto}", [FotoController::class, "update"]);

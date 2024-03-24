@@ -20,12 +20,12 @@ class Noticia extends Model
 
     public function rally(): BelongsTo
     {
-        return $this->belongsTo(Rally::class);
+        return $this->belongsTo(Rally::class, "id", "rally_id");
     }
 
     public function imagens(): HasMany
     {
-        return $this->hasMany(ImagemNoticia::class);
+        return $this->hasMany(ImagemNoticia::class, "noticia_id", "id");
     }
 
 }
