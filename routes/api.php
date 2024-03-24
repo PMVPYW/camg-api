@@ -24,6 +24,7 @@ Route::get("noticias/{noticias}", [NoticiaController::class, "show"]);
 
 Route::get("album", [AlbumController::class, "index"]);
 Route::get("album/{album}", [AlbumController::class, "show"]);
+Route::get("album/{album}/fotos", [AlbumController::class, "getFotos"]);
 
 Route::get("foto", [FotoController::class, "index"]);
 Route::get("foto/{foto}", [FotoController::class, "show"]);
