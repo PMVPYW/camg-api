@@ -26,20 +26,24 @@ class FotoController extends Controller
      */
     public function store(FotoRequest $request)
     {
+        $fotos = [];
         $validated = $request->validated();
-        $file = $request->file("image_src");
-        $file_type = $file->getClientOriginalExtension();
-        $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
-        Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
-        $foto = null;
         unset($validated["image_src"]);
-        DB::transaction(function () use ($validated, &$foto, $file_name_to_store) {
-            $foto = new Foto();
-            $foto->fill($validated);
-            $foto->image_src = $file_name_to_store;
-            $foto->save();
-        });
-        return new FotoResource($foto);
+        foreach ($request->file("image_src") as $file) {
+            $file_type = $file->getClientOriginalExtension();
+            $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+            Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
+            $foto = null;
+            DB::transaction(function () use ($validated, &$foto, $file_name_to_store) {
+                $foto = new Foto();
+                $foto->fill($validated);
+                $foto->image_src = $file_name_to_store;
+                $foto->save();
+            });
+            array_push($fotos, $foto);
+        }
+
+        return FotoResource::collection($fotos);
     }
 
     /**
