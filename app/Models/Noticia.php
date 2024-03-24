@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Noticia extends Model
 {
     use HasFactory;
-    use SoftDeletes;
-
 
     protected $table = "noticias";
     protected $fillable = ["rally_id", "titulo", "conteudo", "title_img", "data"];
