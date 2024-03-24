@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AlbumRequest;
 use App\Http\Requests\AlbumRequestUpdate;
 use App\Http\Resources\AlbumResource;
+use App\Http\Resources\FotoResource;
 use App\Models\Album;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -84,7 +85,7 @@ class AlbumController extends Controller
     {
 
         DB::transaction(function () use ($album) {
-            if ($album->Photos()->count() == 0) {
+            if ($album->Photos->count() == 0) {
                 if ($album->img && Storage::exists('public/fotos/' . $album->img)) {
                     Storage::disk('public')->delete('fotos/' . $album->img);
                 }
@@ -94,5 +95,10 @@ class AlbumController extends Controller
             }
         });
         return new AlbumResource($album);
+    }
+
+    public function getFotos(Album $album)
+    {
+        return FotoResource::collection($album->Photos);
     }
 }
