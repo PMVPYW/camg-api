@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class AlbumRequestUpdate extends FormRequest
+class FotoUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +22,9 @@ class AlbumRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            "rally_id" => "integer|exists:rallies,id|nullable",
-            "nome" => "string",
-            "img" => "file|nullable|image"
+            "album_id" => "sometimes|integer|exists:albuns,id",
+            "image_src" => "sometimes|file|image",
+            "description" => "sometimes|string"
         ];
     }
 }

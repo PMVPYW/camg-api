@@ -33,7 +33,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('album_id')->constrained("albuns");
             $table->string("image_src");
-            $table->longText("description");
+            $table->longText("description")->nullable();
+            $table->timestamp("deleted_at")->nullable();
         });
 
         Schema::create('noticias', function (Blueprint $table) {
