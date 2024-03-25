@@ -52,7 +52,7 @@ class NoticiaController extends Controller
      */
     public function show(Noticia $noticia)
     {
-        return response()->json(["data" =>$noticia]);
+        return new NoticiaResource($noticia);
     }
 
     /**
@@ -65,8 +65,7 @@ class NoticiaController extends Controller
             $noticia->fill($validated);
             $noticia->save();
         });
-
-        return NoticiaResource::collection($noticia);
+        return new NoticiaResource($noticia);
     }
 
     /**
@@ -87,7 +86,6 @@ class NoticiaController extends Controller
                 $noticia->forceDelete();
             }
         });
-
-        return response()->json(["message" => "Deleted succesfuly"], 200);
+        return new NoticiaResource($noticia);
     }
 }

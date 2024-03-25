@@ -22,9 +22,9 @@ class EntidadeRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string',
-            'photo_url' => 'required|string',
-            'url' => 'required|url:http,https',
+            'nome' => 'sometimes|string',
+            'photo_url' => 'sometimes|string',
+            'url' => 'sometimes|url:http,https',
         ];
     }
 }

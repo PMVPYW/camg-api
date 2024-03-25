@@ -6,6 +6,7 @@ use App\Http\Requests\EntidadeRequest;
 use App\Http\Requests\EntidadeRequestUpdate;
 use App\Http\Resources\EntidadeResource;
 use App\Models\Entidade;
+use App\Models\Patrocinio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -41,7 +42,7 @@ class EntidadeController extends Controller
      */
     public function show(Entidade $entidade)
     {
-        return EntidadeResource::collection($entidade);
+        return new EntidadeResource($entidade);
     }
 
     /**
@@ -55,7 +56,7 @@ class EntidadeController extends Controller
             $entidade->save();
         });
 
-        return EntidadeResource::collection($entidade);
+        return new EntidadeResource($entidade);
     }
 
     /**
@@ -63,7 +64,13 @@ class EntidadeController extends Controller
      */
     public function destroy(Entidade $entidade)
     {
-        $entidade->delete();
-        return EntidadeResource::collection($entidade);
+        DB::transaction(function () use($entidade){
+            if(isset($entidade->patrocinios[0])) {
+                $entidade->delete();
+            }else{
+                $entidade->forceDelete();
+            }
+        });
+        return new EntidadeResource($entidade);
     }
 }

@@ -23,10 +23,10 @@ class NoticiaRequestUpdate extends FormRequest
     {
         return [
             "rally_id" => "nullable|integer|exists:rallies,id",
-            "titulo" => "required|string",
-            "conteudo" => "required|string",
-            "title_img" => "required|string",
-            "data" => "required|date"
+            "titulo" => "sometimes|string",
+            "conteudo" => "sometimes|string",
+            "title_img" => "sometimes|string",
+            "data" => "sometimes|date"
         ];
     }
 }
