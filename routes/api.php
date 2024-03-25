@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\ConcelhoSegurancaController;
 use App\Http\Controllers\EntidadeController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\FotoController;
@@ -32,6 +33,9 @@ Route::get("entidade/{entidade}", [EntidadeController::class, "show"]);
 
 Route::get("patrocinio", [PatrocinioController::class, "index"]);
 Route::get("patrocinio/{patrocinio}", [PatrocinioController::class, "show"]);
+
+Route::get("conselhoseguranca", [ConcelhoSegurancaController::class, "index"]);
+Route::get("conselhoseguranca/{conselhoseguranca}", [ConcelhoSegurancaController::class, "show"]);
 
 
 
