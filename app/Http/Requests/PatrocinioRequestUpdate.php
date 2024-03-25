@@ -11,7 +11,7 @@ class PatrocinioRequestUpdate extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class PatrocinioRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            "entidade_id" => "required | integer |exists:entidades,id"
+            "entidade_id" => "sometimes | integer |exists:entidades,id"
         ];
     }
 }

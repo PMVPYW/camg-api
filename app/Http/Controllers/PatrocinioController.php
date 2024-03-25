@@ -33,8 +33,7 @@ class PatrocinioController extends Controller
             $patrocinio->fill($validated);
             $patrocinio->save();
         });
-
-        return response()->json(["message"=>"Patrocianio created $patrocinio"], 201);
+        return response(new PatrocinioResource($patrocinio), 201);
     }
 
     /**
@@ -42,7 +41,7 @@ class PatrocinioController extends Controller
      */
     public function show(Patrocinio $patrocinio)
     {
-        return response()->json(["data", $patrocinio]);
+        return new PatrocinioResource($patrocinio);
     }
 
     /**
@@ -56,7 +55,7 @@ class PatrocinioController extends Controller
             $patrocinio->fill($validated);
             $patrocinio->save();
         });
-        return response()->json(["message"=>"Patrocianio updated $patrocinio"], 201);
+        return new PatrocinioResource($patrocinio);
     }
 
     /**
@@ -65,6 +64,6 @@ class PatrocinioController extends Controller
     public function destroy(Patrocinio $patrocinio)
     {
         $patrocinio->forceDelete();
-        return response()->json(["Patrocinio deleted"], 200);
+        return new PatrocinioResource($patrocinio);
     }
 }
