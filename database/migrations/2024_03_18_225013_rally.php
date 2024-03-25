@@ -66,6 +66,16 @@ return new class extends Migration
             $table->foreignId('entidade_id')->constrained("entidades");
             $table->foreignId('rally_id')->constrained("rallies");
         });
+
+        Schema::create('concelhos_seguranca', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId("rally_id")->nullable()->constrained("rallies");
+            $table->string("descricao");
+            $table->string("img_conselho");
+            $table->string("erro");
+            $table->string("img_erro");
+
+        });
     }
 
     /**
@@ -73,6 +83,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('concelhos_segurança');
         Schema::dropIfExists('patrocionios');
         Schema::dropIfExists('entidades');
         Schema::dropIfExists('imagens_noticia');
