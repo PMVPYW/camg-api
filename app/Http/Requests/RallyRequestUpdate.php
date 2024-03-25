@@ -23,10 +23,10 @@ class RallyRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            "nome" => "required|string|min:0",
-            "data_inicio" => "required|date",
-            "data_fim" => "required|date",
-            "external_entity_id" => "required|integer",
+            "nome" => "sometimes|string|min:0",
+            "data_inicio" => "sometimes|date",
+            "data_fim" => "sometimes|date",
+            "external_entity_id" => "sometimes|integer",
             "photo_url" => "file|image"
         ];
     }
