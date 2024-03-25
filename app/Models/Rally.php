@@ -16,9 +16,9 @@ class Rally extends Model
     public $timestamps = false;
     protected $fillable = ["nome", "data_inicio", "data_fim", "external_entity_id", "photo_url"];
 
-    public function concelhos_seguranca(): HasMany
+    public function conselhos_seguranca(): HasMany
     {
-        return $this->hasMany(ConcelhoSeguranca::class, "rally_id", "id");
+        return $this->hasMany(ConselhoSeguranca::class, "rally_id", "id");
     }
 
     public function noticias(): HasMany

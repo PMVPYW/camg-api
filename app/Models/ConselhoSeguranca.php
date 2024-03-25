@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ConcelhoSeguranca extends Model
+class ConselhoSeguranca extends Model
 {
     use HasFactory;
 
-    protected $table = 'concelhos_seguranca';
-    protected $fillable = ["rally_id", "descricao", "img_concelho", "erro", "img_erro"];
+    protected $table = 'conselhos_seguranca';
+    protected $fillable = ["rally_id", "descricao", "img_conselho", "erro", "img_erro"];
 
     public $timestamps = false;
 
