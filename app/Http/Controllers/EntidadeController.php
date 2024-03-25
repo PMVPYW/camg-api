@@ -9,6 +9,8 @@ use App\Models\Entidade;
 use App\Models\Patrocinio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class EntidadeController extends Controller
 {
@@ -28,8 +30,16 @@ class EntidadeController extends Controller
     {
         $validated=$request->validated();
         $entidade=null;
-        DB::transaction(function () use ($validated, &$entidade){
+        DB::transaction(function () use ($validated, &$entidade,$request){
             $entidade=new Entidade();
+            if ($request->hasFile("photo_url")) {
+                $file = $request->file("photo_url");
+                $file_type = $file->getClientOriginalExtension();
+                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+                Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
+                $entidade->photo_url = $file_name_to_store;
+            }
+            unset($validated["photo_url"]);
             $entidade->fill($validated);
             $entidade->save();
         });
@@ -51,7 +61,18 @@ class EntidadeController extends Controller
     public function update(EntidadeRequestUpdate $request, Entidade $entidade)
     {
         $validated = $request->validated();
-        DB::transaction(function() use ($validated, &$entidade){
+        DB::transaction(function() use ($validated, &$entidade, $request){
+            if ($request->hasFile("photo_url")) {
+                if ($entidade->photo_url && Storage::exists('public/fotos/' . $entidade->photo_url)) {
+                    Storage::disk('public')->delete('fotos/' . $entidade->photo_url);
+                }
+                $file = $request->file("photo_url");
+                $file_type = $file->getClientOriginalExtension();
+                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+                Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
+                $entidade->photo_url = $file_name_to_store;
+            }
+            unset($validated["photo_url"]);
             $entidade->fill($validated);
             $entidade->save();
         });
@@ -68,6 +89,10 @@ class EntidadeController extends Controller
             if(isset($entidade->patrocinios[0])) {
                 $entidade->delete();
             }else{
+                #hard delete
+                if ($entidade->photo_url && Storage::exists('public/fotos/' . $entidade->photo_url)) {
+                    Storage::disk('public')->delete('fotos/' . $entidade->photo_url);
+                }
                 $entidade->forceDelete();
             }
         });
