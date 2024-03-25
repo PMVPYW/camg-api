@@ -36,7 +36,7 @@ class EntidadeController extends Controller
                 $file = $request->file("photo_url");
                 $file_type = $file->getClientOriginalExtension();
                 $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
-                Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
+                Storage::disk('public')->put('entidades/' . $file_name_to_store, File::get($file));
                 $entidade->photo_url = $file_name_to_store;
             }
             unset($validated["photo_url"]);
@@ -63,13 +63,13 @@ class EntidadeController extends Controller
         $validated = $request->validated();
         DB::transaction(function() use ($validated, &$entidade, $request){
             if ($request->hasFile("photo_url")) {
-                if ($entidade->photo_url && Storage::exists('public/fotos/' . $entidade->photo_url)) {
-                    Storage::disk('public')->delete('fotos/' . $entidade->photo_url);
+                if ($entidade->photo_url && Storage::exists('public/entidades/' . $entidade->photo_url)) {
+                    Storage::disk('public')->delete('entidades/' . $entidade->photo_url);
                 }
                 $file = $request->file("photo_url");
                 $file_type = $file->getClientOriginalExtension();
                 $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
-                Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
+                Storage::disk('public')->put('entidades/' . $file_name_to_store, File::get($file));
                 $entidade->photo_url = $file_name_to_store;
             }
             unset($validated["photo_url"]);
@@ -90,8 +90,8 @@ class EntidadeController extends Controller
                 $entidade->delete();
             }else{
                 #hard delete
-                if ($entidade->photo_url && Storage::exists('public/fotos/' . $entidade->photo_url)) {
-                    Storage::disk('public')->delete('fotos/' . $entidade->photo_url);
+                if ($entidade->photo_url && Storage::exists('public/entidades/' . $entidade->photo_url)) {
+                    Storage::disk('public')->delete('entidades/' . $entidade->photo_url);
                 }
                 $entidade->forceDelete();
             }

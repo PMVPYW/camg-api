@@ -23,7 +23,7 @@ class EntidadeRequestUpdate extends FormRequest
     {
         return [
             'nome' => 'sometimes|string',
-            "photo_url" => "file|image",
+            'photo_url' => 'file|image',
             'url' => 'sometimes|url:http,https',
         ];
     }
