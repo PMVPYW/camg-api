@@ -16,8 +16,7 @@ class NoticiaController extends Controller
      */
     public function index()
     {
-        $noticias = Noticia::all();
-        return NoticiaResource::collection($noticias);
+        return NoticiaResource::collection(Noticia::all());
     }
 
     /**
@@ -61,7 +60,7 @@ class NoticiaController extends Controller
     public function update(NoticiaRequestUpdate $request, Noticia $noticia)
     {
         $validated = $request->validated();
-        DB::transaction(function() use ($validated, &$noticia){
+        DB::transaction(function() use ($validated, $noticia){
             $noticia->fill($validated);
             $noticia->save();
         });

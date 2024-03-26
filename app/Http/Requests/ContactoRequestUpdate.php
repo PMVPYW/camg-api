@@ -11,7 +11,7 @@ class ContactoRequestUpdate extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class ContactoRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "tipo_valor" => "sometimes|string",
+            "valor" => "sometimes|string",
+            "tipocontacto_id" => "sometimes|integer|exists:tipo_contacto,id"
         ];
     }
 }
