@@ -51,11 +51,10 @@ class ConselhoSegurancaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ConselhoSeguranca $conselhoSeguranca)
+    public function show(string $id)
     {
-        if($conselhoSeguranca->id == null) {
-            return response()->json(["message" => "entity not found"], 404);
-        }
+        $conselhoSeguranca = ConselhoSeguranca::findOrFail($id);
+
         return new ConselhoSegurancaResource($conselhoSeguranca);
     }
 
@@ -72,6 +71,16 @@ class ConselhoSegurancaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $conselhoSeguranca = ConselhoSeguranca::findOrFail($id);
+        DB::transaction(function () use ($conselhoSeguranca) {
+                if ($conselhoSeguranca->img_conselho && Storage::exists('public/fotos/' . $conselhoSeguranca->img_conselho)) {
+                    Storage::disk('public')->delete('fotos/' . $conselhoSeguranca->img_conselho);
+                }
+                if ($conselhoSeguranca->img_erro && Storage::exists('public/fotos/' . $conselhoSeguranca->img_erro)) {
+                    Storage::disk('public')->delete('fotos/' . $conselhoSeguranca->img_erro);
+                }
+                $conselhoSeguranca->delete();
+        });
+        return $conselhoSeguranca;
     }
 }
