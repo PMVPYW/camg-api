@@ -22,7 +22,7 @@ Route::get("rally/{rally}", [RallyController::class, "show"]);
 
 Route::get("noticia", [NoticiaController::class, "index"]);
 Route::get("noticia/{noticia}", [NoticiaController::class, "show"]);
-Route::get("noticia_images/{id}", [NoticiaController::class, "getImagebyNoticia_id"]);
+//Route::get("noticia_images/{id}", [NoticiaController::class, "getImagebyNoticia_id"]);
 
 
 Route::get("album", [AlbumController::class, "index"]);
