@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NoticiaRequest;
 use App\Http\Requests\NoticiaRequestUpdate;
 use App\Http\Resources\NoticiaResource;
+use App\Models\Foto;
 use App\Models\ImagemNoticia;
 use App\Models\Noticia;
 use Illuminate\Support\Facades\DB;
@@ -87,4 +88,20 @@ class NoticiaController extends Controller
         });
         return new NoticiaResource($noticia);
     }
+
+/*    //Metodos Auxiliares
+    public function getImagebyNoticia_id(string $id)
+    {
+        $nome_fotos=[];
+        $fotos_ids = ImagemNoticia::where('noticia_id', $id)->pluck('image_id')->toArray();
+        if(count($fotos_ids)>0){
+            foreach ($fotos_ids as $foto_id){
+                $foto=Foto::find($foto_id);
+                $nome_fotos[]=$foto->image_src;
+            }
+            return response()->json(['data' => $nome_fotos], 200);
+        }else{
+            return response()->json("Não tem fotos", 500);
+        }
+    }*/
 }

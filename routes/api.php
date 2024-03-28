@@ -4,6 +4,7 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\EntidadeController;
+use App\Http\Controllers\ImagemNoticiaController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\FotoController;
 use App\Http\Controllers\PatrocinioController;
@@ -21,6 +22,8 @@ Route::get("rally/{rally}", [RallyController::class, "show"]);
 
 Route::get("noticia", [NoticiaController::class, "index"]);
 Route::get("noticia/{noticia}", [NoticiaController::class, "show"]);
+Route::get("noticia_images/{id}", [NoticiaController::class, "getImagebyNoticia_id"]);
+
 
 Route::get("album", [AlbumController::class, "index"]);
 Route::get("album/{album}", [AlbumController::class, "show"]);
@@ -37,6 +40,11 @@ Route::get("patrocinio/{patrocinio}", [PatrocinioController::class, "show"]);
 
 Route::get("contacto", [ContactoController::class, "index"]);
 Route::get("contacto/{contacto}", [ContactoController::class, "show"]);
+
+Route::get("imagensNoticia", [ImagemNoticiaController::class, "index"]);
+
+
+
 
 
 //protected routes

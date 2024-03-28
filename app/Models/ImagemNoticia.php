@@ -24,6 +24,6 @@ class ImagemNoticia extends Model
 
     public function foto(): belongsTo
     {
-        return $this->belongsTo(Foto::class, "id", "image_id");
+        return $this->belongsTo(Foto::class, "image_id", "id");
     }
 }
