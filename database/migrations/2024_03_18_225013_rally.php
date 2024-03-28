@@ -93,5 +93,7 @@ return new class extends Migration
         Schema::dropIfExists('fotos');
         Schema::dropIfExists('albuns');
         Schema::dropIfExists('rallies');
+        Schema::dropIfExists('contactos');
+        Schema::dropIfExists('tipo_contacto');
     }
 };
