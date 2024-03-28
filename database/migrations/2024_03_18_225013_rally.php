@@ -76,6 +76,19 @@ return new class extends Migration
             $table->string("img_erro");
 
         });
+
+        Schema::create('tipo_contacto', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->timestamp("deleted_at")->nullable();
+        });
+
+        Schema::create('contactos', function (Blueprint $table) {
+            $table->id();
+            $table->string('tipo_valor');
+            $table->string('valor');
+            $table->foreignId('tipocontacto_id')->constrained("tipo_contacto");
+        });
     }
 
     /**
@@ -91,5 +104,7 @@ return new class extends Migration
         Schema::dropIfExists('fotos');
         Schema::dropIfExists('albuns');
         Schema::dropIfExists('rallies');
+        Schema::dropIfExists('contactos');
+        Schema::dropIfExists('tipo_contacto');
     }
 };

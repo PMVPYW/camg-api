@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Foto;
 use App\Models\ImagemNoticia;
+use App\Models\Noticia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ImagemNoticiaController extends Controller
 {
@@ -14,6 +17,4 @@ class ImagemNoticiaController extends Controller
     {
         return ImagemNoticia::all();
     }
-
-
 }

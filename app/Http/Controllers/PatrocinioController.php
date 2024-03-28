@@ -50,8 +50,7 @@ class PatrocinioController extends Controller
     public function update(PatrocinioRequestUpdate $request, Patrocinio $patrocinio)
     {
         $validated=$request->validated();
-        $patrocinio=null;
-        DB::transaction(function() use ($validated, &$patrocinio){
+        DB::transaction(function() use ($validated, $patrocinio){
             $patrocinio->fill($validated);
             $patrocinio->save();
         });
