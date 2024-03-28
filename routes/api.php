@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\ConselhoSegurancaController;
 use App\Http\Controllers\EntidadeController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\FotoController;
@@ -33,6 +34,9 @@ Route::get("entidade/{entidade}", [EntidadeController::class, "show"]);
 Route::get("patrocinio", [PatrocinioController::class, "index"]);
 Route::get("patrocinio/{patrocinio}", [PatrocinioController::class, "show"]);
 
+Route::get("conselhoseguranca", [ConselhoSegurancaController::class, "index"]);
+Route::get("conselhoseguranca/{conselhoseguranca}", [ConselhoSegurancaController::class, "show"]);
+
 
 
 //protected routes
@@ -61,6 +65,10 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::post("patrocinio", [PatrocinioController::class, "store"]);
     Route::put("patrocinio/{patrocinio}", [PatrocinioController::class, "update"]);
     Route::delete("patrocinio/{patrocinio}", [PatrocinioController::class, "destroy"]);
+
+    Route::post("conselhoseguranca", [ConselhoSegurancaController::class, "store"]);
+    Route::put("conselhoseguranca/{conselhoseguranca}", [ConselhoSegurancaController::class, "update"]);
+    Route::delete("conselhoseguranca/{conselhoseguranca}", [ConselhoSegurancaController::class, "destroy"]);
 
     Route::get('/user', function (Request $request) {
         return Auth::user();
