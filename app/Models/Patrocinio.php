@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Patrocinio extends Model
 {
@@ -16,12 +17,12 @@ class Patrocinio extends Model
 
     public function entidade(): BelongsTo
     {
-        return $this->belongsTo(Entidade::class, "id", "entidade_id");
+        return $this->belongsTo(Entidade::class, "entidade_id", "id");
     }
 
-    public function rallys(): BelongsToMany
+    public function rallys(): HasMany
     {
-        return $this->belongsToMany(Rally::class);
+        return $this->hasMany(Rally::class, "id", "rally_id");
     }
 
 }

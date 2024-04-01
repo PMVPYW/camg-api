@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RallyRequest;
 use App\Http\Requests\RallyRequestUpdate;
+use App\Http\Resources\EntidadeResource;
+use App\Http\Resources\PatrocinioResource;
 use App\Http\Resources\RallyResource;
 use App\Models\Rally;
 use Illuminate\Http\Request;
@@ -97,5 +99,10 @@ class RallyController extends Controller
 
         });
         return new RallyResource($rally);
+    }
+
+    public function getPatrocinios(Rally $rally)
+    {
+        return PatrocinioResource::collection($rally->patrocinios);
     }
 }

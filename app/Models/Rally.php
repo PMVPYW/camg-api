@@ -31,8 +31,8 @@ class Rally extends Model
         return $this->hasMany(Album::class, "rally_id", "id");
     }
 
-    public function patrocinios(): BelongsToMany
+    public function patrocinios(): HasMany
     {
-        return $this->belongsToMany(Patrocinio::class);
+        return $this->hasMany(Patrocinio::class, "rally_id", "id");
     }
 }

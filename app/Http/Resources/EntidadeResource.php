@@ -14,11 +14,14 @@ class EntidadeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
+
         return [
             "id" => $this->id,
             "nome" => $this->nome,
             "photo_url" => $this->photo_url,
-            "url" => $this->url
+            "url" => $this->url,
+            "rallys" =>  $this->patrocinios
         ];
     }
 }

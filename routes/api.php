@@ -20,6 +20,8 @@ Route::post('auth/login', [AuthenticationController::class, "login"])->name("log
 
 Route::get("rally", [RallyController::class, "index"]);
 Route::get("rally/{rally}", [RallyController::class, "show"]);
+Route::get("rally/{rally}/patrocinios", [RallyController::class, "getPatrocinios"]);
+
 
 Route::get("noticia", [NoticiaController::class, "index"]);
 Route::get("noticia/{noticia}", [NoticiaController::class, "show"]);
@@ -39,6 +41,7 @@ Route::get("entidade/{entidade}", [EntidadeController::class, "show"]);
 Route::get("patrocinio", [PatrocinioController::class, "index"]);
 Route::get("patrocinio/{patrocinio}", [PatrocinioController::class, "show"]);
 
+
 Route::get("contacto", [ContactoController::class, "index"]);
 Route::get("contacto/{contacto}", [ContactoController::class, "show"]);
 Route::get("conselhoseguranca", [ConselhoSegurancaController::class, "index"]);
@@ -56,6 +59,7 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::post("rally", [RallyController::class, "store"]);
     Route::put("rally/{rally}", [RallyController::class, "update"]);
     Route::delete("rally/{rally}", [RallyController::class, "destroy"]);
+
 
    Route::post("album", [AlbumController::class, "store"]);
    Route::put("album/{album}", [AlbumController::class, "update"]);
