@@ -24,8 +24,8 @@ class RallyRequestUpdate extends FormRequest
     {
         return [
             "nome" => "sometimes|string|min:0",
-            "data_inicio" => "sometimes|date",
-            "data_fim" => "sometimes|date",
+            "data_inicio" => "sometimes|date|before_or_equal:data_fim",
+            "data_fim" => "sometimes|date|after_or_equal:data_inicio",
             "external_entity_id" => "sometimes|integer",
             "photo_url" => "file|image"
         ];
