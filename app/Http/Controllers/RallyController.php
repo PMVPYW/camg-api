@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RallyFiltersRequest;
 use App\Http\Requests\RallyRequest;
 use App\Http\Requests\RallyRequestUpdate;
 use App\Http\Resources\EntidadeResource;
@@ -19,8 +20,10 @@ class RallyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(RallyFiltersRequest $request)
     {
+        //request validation
+        $validated_data = $request->validated();
         $rallies = Rally::query();
         if (!$request->order || $request->order == 'proximity') {
             $rallies = $rallies->orderByRaw("ABS(DATEDIFF(data_inicio, ?)) ASC", [today()]);
