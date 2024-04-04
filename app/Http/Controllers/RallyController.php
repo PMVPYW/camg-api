@@ -7,11 +7,13 @@ use App\Http\Requests\RallyRequestUpdate;
 use App\Http\Resources\EntidadeResource;
 use App\Http\Resources\PatrocinioResource;
 use App\Http\Resources\RallyResource;
+use App\Models\Entidade;
 use App\Models\Rally;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Expr\Array_;
 
 class RallyController extends Controller
 {
@@ -101,8 +103,16 @@ class RallyController extends Controller
         return new RallyResource($rally);
     }
 
+
+    //Metodos auxiliares
     public function getPatrocinios(Rally $rally)
     {
         return PatrocinioResource::collection($rally->patrocinios);
+    }
+
+    public function getPatrociniosSemAssociacao(Rally $rally)
+    {
+        $entidadesSemAssociacao = Entidade::whereNotIn('id',  $rally->patrocinios->pluck('entidade_id'))->get();
+        return EntidadeResource::collection($entidadesSemAssociacao);
     }
 }
