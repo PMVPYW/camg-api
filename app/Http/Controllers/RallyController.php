@@ -8,6 +8,7 @@ use App\Http\Resources\EntidadeResource;
 use App\Http\Resources\PatrocinioResource;
 use App\Http\Resources\RallyResource;
 use App\Models\Rally;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -18,10 +19,18 @@ class RallyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rallies = Rally::all();
-        return RallyResource::collection($rallies);
+        $rallies = Rally::query();
+        if (!$request->order || $request->order == 'proximity') {
+            $rallies = $rallies->orderByRaw("ABS(DATEDIFF(data_inicio, ?)) ASC", [today()]);
+        } elseif ($request->order == 'date_desc') {
+            $rallies = $rallies->orderBy('data_inicio', 'desc');
+        } elseif ($request->order == 'date_asc') {
+            $rallies = $rallies->orderBy('data_inicio', 'asc');
+        }
+
+        return RallyResource::collection($rallies->get());
     }
 
     /**
