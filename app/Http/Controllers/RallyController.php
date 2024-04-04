@@ -24,20 +24,28 @@ class RallyController extends Controller
         $rallies = Rally::query();
         if (!$request->order || $request->order == 'proximity') {
             $rallies = $rallies->orderByRaw("ABS(DATEDIFF(data_inicio, ?)) ASC", [today()]);
-        } elseif ($request->order == 'date_desc') {
+        } else if ($request->order == 'date_desc') {
             $rallies = $rallies->orderBy('data_inicio', 'desc');
-        } elseif ($request->order == 'date_asc') {
+        } else if ($request->order == 'date_asc') {
             $rallies = $rallies->orderBy('data_inicio', 'asc');
         }
 
-        if ($request->data_inicio)
-        {
+        if ($request->data_inicio) {
             $rallies = $rallies->where("data_inicio", ">=", $request->data_inicio);
         }
-        //dd($request->all());
-        if ($request->data_fim)
-        {
+        if ($request->data_fim) {
             $rallies = $rallies->where("data_inicio", "<=", $request->data_fim);
+        }
+
+        //if (!$request->status || $request->status == "all") --> n é preciso pq já vem
+        if ($request->status == "not_started") {
+            $rallies = $rallies->where("data_inicio", ">", today());
+        } else if ($request->status == "on_going") {
+            $rallies = $rallies->where([["data_inicio", "<=", today()],
+                ["data_fim", ">=", today()]
+            ]);
+        } else if ($request->status == "terminated") {
+            $rallies->where("data_fim", "<", today());
         }
 
         return RallyResource::collection($rallies->get());
