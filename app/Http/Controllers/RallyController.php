@@ -48,6 +48,11 @@ class RallyController extends Controller
             $rallies->where("data_fim", "<", today());
         }
 
+        if ($request->search && strlen($request->search) > 0)
+        {
+            $rallies = $rallies->where('nome', 'LIKE', "%{$request->search}%");
+        }
+
         return RallyResource::collection($rallies->get());
     }
 
