@@ -23,11 +23,11 @@ class RallyFiltersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "search" => "sometimes|string|min:0",
-            "data_inicio" => "sometimes|date",
-            "data_fim" => "sometimes|date",
-            "status" => "sometimes|string|in:not_started,on_going,terminated",
-            "order" => "sometimes|string|in:proximity,date_desc,date_asc"
+            "search" => "nullable|string|min:0",
+            "data_inicio" => "nullable|date",
+            "data_fim" => "nullable|date",
+            "status" => "nullable|string|in:all,not_started,on_going,terminated",
+            "order" => "nullable|string|in:proximity,date_desc,date_asc"
         ];
     }
 }
