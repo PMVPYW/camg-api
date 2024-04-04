@@ -30,6 +30,16 @@ class RallyController extends Controller
             $rallies = $rallies->orderBy('data_inicio', 'asc');
         }
 
+        if ($request->data_inicio)
+        {
+            $rallies = $rallies->where("data_inicio", ">=", $request->data_inicio);
+        }
+        //dd($request->all());
+        if ($request->data_fim)
+        {
+            $rallies = $rallies->where("data_inicio", "<=", $request->data_fim);
+        }
+
         return RallyResource::collection($rallies->get());
     }
 
