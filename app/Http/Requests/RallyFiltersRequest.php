@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class RallyRequestUpdate extends FormRequest
+class RallyFiltersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,11 @@ class RallyRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            "nome" => "sometimes|string|min:0",
-            "data_inicio" => "sometimes|date|before_or_equal:data_fim",
-            "data_fim" => "sometimes|date|after_or_equal:data_inicio",
-            "external_entity_id" => "sometimes|integer",
-            "photo_url" => "file|image"
+            "search" => "sometimes|string|min:0",
+            "data_inicio" => "sometimes|date",
+            "data_fim" => "sometimes|date",
+            "status" => "sometimes|string|in:not_started,on_going,terminated",
+            "order" => "sometimes|string|in:proximity,date_desc,date_asc"
         ];
     }
 }

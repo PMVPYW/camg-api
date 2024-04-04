@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RallyFiltersRequest;
 use App\Http\Requests\RallyRequest;
 use App\Http\Requests\RallyRequestUpdate;
 use App\Http\Resources\EntidadeResource;
 use App\Http\Resources\PatrocinioResource;
 use App\Http\Resources\RallyResource;
 use App\Models\Rally;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -18,10 +20,43 @@ class RallyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(RallyFiltersRequest $request)
     {
-        $rallies = Rally::all();
-        return RallyResource::collection($rallies);
+        //request validation
+        $validated_data = $request->validated();
+        $rallies = Rally::query();
+        if (!$request->order || $request->order == 'proximity') {
+            $rallies = $rallies->orderByRaw("ABS(DATEDIFF(data_inicio, ?)) ASC", [today()]);
+        } else if ($request->order == 'date_desc') {
+            $rallies = $rallies->orderBy('data_inicio', 'desc');
+        } else if ($request->order == 'date_asc') {
+            $rallies = $rallies->orderBy('data_inicio', 'asc');
+        }
+
+        if ($request->data_inicio) {
+            $rallies = $rallies->where("data_inicio", ">=", $request->data_inicio);
+        }
+        if ($request->data_fim) {
+            $rallies = $rallies->where("data_inicio", "<=", $request->data_fim);
+        }
+
+        //if (!$request->status || $request->status == "all") --> n é preciso pq já vem
+        if ($request->status == "not_started") {
+            $rallies = $rallies->where("data_inicio", ">", today());
+        } else if ($request->status == "on_going") {
+            $rallies = $rallies->where([["data_inicio", "<=", today()],
+                ["data_fim", ">=", today()]
+            ]);
+        } else if ($request->status == "terminated") {
+            $rallies->where("data_fim", "<", today());
+        }
+
+        if ($request->search && strlen($request->search) > 0)
+        {
+            $rallies = $rallies->where('nome', 'LIKE', "%{$request->search}%");
+        }
+
+        return RallyResource::collection($rallies->get());
     }
 
     /**

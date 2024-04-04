@@ -24,8 +24,8 @@ class RallyRequest extends FormRequest
     {
         return [
             "nome" => "required|string|min:0|unique:rallies,nome",
-            "data_inicio" => "required|date",
-            "data_fim" => "required|date",
+            "data_inicio" => "required|date|before_or_equal:data_fim",
+            "data_fim" => "required|date|after_or_equal:data_inicio",
             "external_entity_id" => "required|integer",
             "photo_url" => "file|image"
         ];
