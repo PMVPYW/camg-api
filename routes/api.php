@@ -73,6 +73,8 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::post("entidade", [EntidadeController::class, "store"]);
     Route::put("entidade/{entidade}", [EntidadeController::class, "update"]);
     Route::delete("entidade/{entidade}", [EntidadeController::class, "destroy"]);
+    Route::delete("destroyAllEntities", [EntidadeController::class, "destroyAllEntities"]);
+
 
 
     Route::post("foto", [FotoController::class, "store"]);
@@ -82,6 +84,8 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::post("patrocinio", [PatrocinioController::class, "store"]);
     Route::put("patrocinio/{patrocinio}", [PatrocinioController::class, "update"]);
     Route::delete("patrocinio/{patrocinio}", [PatrocinioController::class, "destroy"]);
+    Route::delete("destroyAllSponsors", [PatrocinioController::class, "destroyAllSponsors"]);
+
 
     Route::post("contacto", [ContactoController::class, "store"]);
     Route::put("contacto/{contacto}", [ContactoController::class, "update"]);

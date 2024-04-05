@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EntidadeRequest;
+use App\Http\Requests\EntidadeRequestDelete;
 use App\Http\Requests\EntidadeRequestUpdate;
 use App\Http\Resources\EntidadeResource;
 use App\Models\Entidade;
@@ -97,5 +98,26 @@ class EntidadeController extends Controller
             }
         });
         return new EntidadeResource($entidade);
+    }
+
+    public function destroyAllEntities(EntidadeRequestDelete $entidades)
+    {
+        $deleted_entities=[];
+        DB::transaction(function () use($entidades, &$deleted_entities){
+            $entidadesIds = $entidades->input('entidades_id', []);
+            if (!empty($entidadesIds)) {
+                foreach ($entidadesIds as $entidadesId){
+                    $entidade = Entidade::find($entidadesId);
+                        if(!(isset($entidade->patrocinios[0]))) {
+                            if ($entidade->photo_url && Storage::exists('public/entidades/' . $entidade->photo_url)) {
+                                Storage::disk('public')->delete('entidades/' . $entidade->photo_url);
+                            }
+                            $deleted_entities[]=$entidade;
+                            $entidade->forceDelete();
+                        }
+                    }
+            }
+        });
+        return EntidadeResource::collection($deleted_entities);
     }
 }

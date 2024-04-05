@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetPatrociniosFiltersRequest;
 use App\Http\Requests\RallyRequest;
 use App\Http\Requests\RallyRequestUpdate;
 use App\Http\Resources\EntidadeResource;
@@ -105,10 +106,25 @@ class RallyController extends Controller
 
 
     //Metodos auxiliares
-    public function getPatrocinios(Rally $rally)
+    public function getPatrocinios(GetPatrociniosFiltersRequest $request, Rally $rally)
     {
-        return PatrocinioResource::collection($rally->patrocinios);
+        $filters = $request->filters;
+        $patrocinios = $rally->patrocinios;
+        switch ($filters) {
+            case 'nome_asc':
+                $patrocinios = $patrocinios->sortBy(function ($patrocinio) {
+                    return $patrocinio->entidade->nome;
+                });
+                break;
+            case 'nome_desc':
+                $patrocinios = $patrocinios->sortByDesc(function ($patrocinio) {
+                    return $patrocinio->entidade->nome;
+                });
+                break;
+        }
+        return PatrocinioResource::collection($patrocinios);
     }
+
 
     public function getPatrociniosSemAssociacao(Rally $rally)
     {
