@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PatrocinioRequest;
+use App\Http\Requests\PatrocinioRequestDelete;
 use App\Http\Requests\PatrocinioRequestUpdate;
 use App\Http\Resources\PatrocinioResource;
 use App\Models\Patrocinio;
@@ -64,5 +65,24 @@ class PatrocinioController extends Controller
     {
         $patrocinio->forceDelete();
         return new PatrocinioResource($patrocinio);
+    }
+
+
+
+    //Métodos Auxiliares
+    public function destroyAllSponsors(PatrocinioRequestDelete $patrocinios)
+    {
+        $deleted_sponsors=[];
+        DB::transaction(function () use($patrocinios, &$deleted_sponsors){
+            $patrociniosIds = $patrocinios->input('patrocinios_id', []);
+            if (!empty($patrociniosIds)) {
+                foreach ($patrociniosIds as $patrociniosId) {
+                    $patrocinio = Patrocinio::find($patrociniosId);
+                    $deleted_sponsors[]=$patrocinio;
+                    $patrocinio->forceDelete();
+                }
+            }
+        });
+        return PatrocinioResource::collection($deleted_sponsors);
     }
 }

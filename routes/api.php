@@ -21,6 +21,8 @@ Route::post('auth/login', [AuthenticationController::class, "login"])->name("log
 Route::get("rally", [RallyController::class, "index"]);
 Route::get("rally/{rally}", [RallyController::class, "show"]);
 Route::get("rally/{rally}/patrocinios", [RallyController::class, "getPatrocinios"]);
+Route::get("rally/{rally}/patrocinios_s_associacao", [RallyController::class, "getPatrociniosSemAssociacao"]);
+
 
 
 Route::get("noticia", [NoticiaController::class, "index"]);
@@ -60,18 +62,19 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::put("rally/{rally}", [RallyController::class, "update"]);
     Route::delete("rally/{rally}", [RallyController::class, "destroy"]);
 
+    Route::post("album", [AlbumController::class, "store"]);
+    Route::put("album/{album}", [AlbumController::class, "update"]);
+    Route::delete("album/{album}", [AlbumController::class, "destroy"]);
 
-   Route::post("album", [AlbumController::class, "store"]);
-   Route::put("album/{album}", [AlbumController::class, "update"]);
-   Route::delete("album/{album}", [AlbumController::class, "destroy"]);
-
-   Route::post("noticia", [NoticiaController::class, "store"]);
-   Route::put("noticia/{noticia}", [NoticiaController::class, "update"]);
-   Route::delete("noticia/{noticia}", [NoticiaController::class, "destroy"]);
+    Route::post("noticia", [NoticiaController::class, "store"]);
+    Route::put("noticia/{noticia}", [NoticiaController::class, "update"]);
+    Route::delete("noticia/{noticia}", [NoticiaController::class, "destroy"]);
 
     Route::post("entidade", [EntidadeController::class, "store"]);
     Route::put("entidade/{entidade}", [EntidadeController::class, "update"]);
     Route::delete("entidade/{entidade}", [EntidadeController::class, "destroy"]);
+    Route::delete("destroyAllEntities", [EntidadeController::class, "destroyAllEntities"]);
+
 
 
     Route::post("foto", [FotoController::class, "store"]);
@@ -81,6 +84,8 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::post("patrocinio", [PatrocinioController::class, "store"]);
     Route::put("patrocinio/{patrocinio}", [PatrocinioController::class, "update"]);
     Route::delete("patrocinio/{patrocinio}", [PatrocinioController::class, "destroy"]);
+    Route::delete("destroyAllSponsors", [PatrocinioController::class, "destroyAllSponsors"]);
+
 
     Route::post("contacto", [ContactoController::class, "store"]);
     Route::put("contacto/{contacto}", [ContactoController::class, "update"]);

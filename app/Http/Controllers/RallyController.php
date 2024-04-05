@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetPatrociniosFiltersRequest;
 use App\Http\Requests\RallyFiltersRequest;
 use App\Http\Requests\RallyRequest;
 use App\Http\Requests\RallyRequestUpdate;
 use App\Http\Resources\EntidadeResource;
 use App\Http\Resources\PatrocinioResource;
 use App\Http\Resources\RallyResource;
+use App\Models\Entidade;
 use App\Models\Rally;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Expr\Array_;
 
 class RallyController extends Controller
 {
@@ -136,8 +139,31 @@ class RallyController extends Controller
         return new RallyResource($rally);
     }
 
-    public function getPatrocinios(Rally $rally)
+
+    //Metodos auxiliares
+    public function getPatrocinios(GetPatrociniosFiltersRequest $request, Rally $rally)
     {
-        return PatrocinioResource::collection($rally->patrocinios);
+        $filters = $request->filters;
+        $patrocinios = $rally->patrocinios;
+        switch ($filters) {
+            case 'nome_asc':
+                $patrocinios = $patrocinios->sortBy(function ($patrocinio) {
+                    return $patrocinio->entidade->nome;
+                });
+                break;
+            case 'nome_desc':
+                $patrocinios = $patrocinios->sortByDesc(function ($patrocinio) {
+                    return $patrocinio->entidade->nome;
+                });
+                break;
+        }
+        return PatrocinioResource::collection($patrocinios);
+    }
+
+
+    public function getPatrociniosSemAssociacao(Rally $rally)
+    {
+        $entidadesSemAssociacao = Entidade::whereNotIn('id',  $rally->patrocinios->pluck('entidade_id'))->get();
+        return EntidadeResource::collection($entidadesSemAssociacao);
     }
 }
