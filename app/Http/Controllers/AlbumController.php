@@ -73,6 +73,10 @@ class AlbumController extends Controller
             }
             unset($validated["img"]);
             $album->fill($validated);
+            if (!$request->rally_id)
+            {
+                $album->rally_id = null;
+            }
             $album->save();
         });
         return new AlbumResource($album);
