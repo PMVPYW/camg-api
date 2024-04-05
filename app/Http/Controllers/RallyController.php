@@ -37,10 +37,10 @@ class RallyController extends Controller
         }
 
         if ($request->data_inicio) {
-            $rallies = $rallies->where("data_inicio", ">=", $request->data_inicio);
+            $rallies = $rallies->where([["data_fim", ">=", $request->data_inicio]]);//acabam dps do inicio da pesquisa
         }
         if ($request->data_fim) {
-            $rallies = $rallies->where("data_inicio", "<=", $request->data_fim);
+            $rallies = $rallies->where([["data_inicio", "<=", $request->data_fim]]);// começam antes do fim da pesquisa
         }
 
         //if (!$request->status || $request->status == "all") --> n é preciso pq já vem
