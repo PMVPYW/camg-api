@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AlbumFiltersRequest;
 use App\Http\Requests\AlbumRequest;
 use App\Http\Requests\AlbumRequestUpdate;
 use App\Http\Resources\AlbumResource;
@@ -17,10 +18,15 @@ class AlbumController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(AlbumFiltersRequest $request)
     {
-        $albuns = Album::all();
-        return AlbumResource::collection($albuns);
+        $validated = $request->validated(); //data is validated now - i will use request from here because i prefer the sintax
+        $albuns = Album::query();
+        if ($request->search)
+        {
+            $albuns = $albuns->where("nome", "LIKE", "%{$request->search}%");
+        }
+        return AlbumResource::collection($albuns->get());
     }
 
     /**
