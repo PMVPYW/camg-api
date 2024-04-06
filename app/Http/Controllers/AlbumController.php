@@ -22,6 +22,24 @@ class AlbumController extends Controller
     {
         $validated = $request->validated(); //data is validated now - i will use request from here because i prefer the sintax
         $albuns = Album::query();
+        if ($request->rally_id)
+        {
+            $rally_id = $request->rally_id;
+            //if ($rally_id == "todos") -> n faz nada pq já vêm todos
+            switch ($rally_id)
+            {
+                case "todos":
+                    //continua igual
+                    break;
+                case "nenhum":
+                    $albuns = $albuns->where('rally_id', null);
+                    break;
+                default:
+                    $albuns = $albuns->where('rally_id', $rally_id);
+            }
+
+        }
+
         if ($request->search)
         {
             $albuns = $albuns->where("nome", "LIKE", "%{$request->search}%");
