@@ -25,7 +25,7 @@ class NoticiaRequestUpdate extends FormRequest
             "rally_id" => "nullable|integer|exists:rallies,id",
             "titulo" => "sometimes|string",
             "conteudo" => "sometimes|string",
-            "title_img" => "sometimes|string",
+            "title_img" => "sometimes|file|image",
             "data" => "sometimes|date"
         ];
     }

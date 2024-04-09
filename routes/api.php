@@ -84,7 +84,7 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::post("patrocinio", [PatrocinioController::class, "store"]);
     Route::put("patrocinio/{patrocinio}", [PatrocinioController::class, "update"]);
     Route::delete("patrocinio/{patrocinio}", [PatrocinioController::class, "destroy"]);
-    Route::delete("destroyAllSponsors", [PatrocinioController::class, "destroyAllSponsors"]);
+    //Route::delete("destroyAllSponsors", [PatrocinioController::class, "destroyAllSponsors"]);
 
 
     Route::post("contacto", [ContactoController::class, "store"]);

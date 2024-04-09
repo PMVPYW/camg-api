@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GetPatrociniosFiltersRequest extends FormRequest
+class NoticiaFiltersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,10 @@ class GetPatrociniosFiltersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "filters" => "nullable|string|in:nome_asc,nome_desc"
+            "data_inicio" => "nullable|date",
+            "data_fim" => "nullable|date",
+            "rally_id" => "nullable|integer|exists:rallies,id",
+            "order" => "nullable|string|in:date_desc,date_asc,titulo_asc,titulo_desc"
         ];
     }
 }
