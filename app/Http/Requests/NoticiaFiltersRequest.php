@@ -22,6 +22,7 @@ class NoticiaFiltersRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "search" => "nullable|string|min:0",
             "data_inicio" => "nullable|date",
             "data_fim" => "nullable|date",
             "rally_id" => "nullable|integer|exists:rallies,id",

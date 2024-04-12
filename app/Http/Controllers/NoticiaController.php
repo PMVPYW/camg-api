@@ -44,6 +44,12 @@ class NoticiaController extends Controller
             $noticias->where([["rally_id", $request->rally_id]]);
         }
 
+        if ($request->search && strlen($request->search) > 0)
+        {
+            $noticias = $noticias->where('titulo', 'LIKE', "%{$request->search}%")
+                ->orWhere('conteudo', 'LIKE', "%{$request->search}%");
+        }
+
         return NoticiaResource::collection($noticias->get());
     }
 
@@ -126,13 +132,9 @@ class NoticiaController extends Controller
                 foreach ($noticia->imagens as $imagem) {
                     $imagem_noticias=ImagemNoticia::find($imagem->id);
                     $imagem_noticias->forceDelete();
-                    //$imagem_noticias->delete();
-                    $noticia->forceDelete();
-                    //$noticia->delete();
                 }
-            }else{
-                $noticia->forceDelete();
             }
+            $noticia->forceDelete();
         });
         return new NoticiaResource($noticia);
     }
