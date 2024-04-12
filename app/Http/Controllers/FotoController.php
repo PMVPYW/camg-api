@@ -60,19 +60,18 @@ class FotoController extends Controller
     public function update(FotoUpdateRequest $request, Foto $foto)
     {
         $validated = $request->validated();
-        if ($request->hasFile("image_src"))
-        {
-            if (Storage::exists("public/fotos/" . $foto->image_src))
-            {
-                $file = $request->file("image_src");
-                $file_type = $file->getClientOriginalExtension();
-                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
-                Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
+        if ($request->hasFile("image_src")) {
+            if (Storage::exists("public/fotos/" . $foto->image_src)) {
+                Storage::disk('public')->delete('fotos/' . $foto->image_src);
             }
+            $file = $request->file("image_src");
+            $file_type = $file->getClientOriginalExtension();
+            $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+            Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
+            $foto->image_src = $file_name_to_store;
             unset($validated["image_src"]);
         }
-        if (!isset($validated["description"]))
-        {
+        if (!isset($validated["description"])) {
             $foto->description = null;
         }
         $foto->fill($validated);
@@ -86,12 +85,11 @@ class FotoController extends Controller
     public function destroy(Foto $foto)
     {
         DB::transaction(function () use ($foto) {
-           if ($foto->ImagemNoticia()->count() == 0)
-           {
-               $foto->forceDelete();
-           } else {
-               $foto->delete();
-           }
+            if ($foto->ImagemNoticia()->count() == 0) {
+                $foto->forceDelete();
+            } else {
+                $foto->delete();
+            }
         });
         return new FotoResource($foto);
     }
