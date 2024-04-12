@@ -22,7 +22,7 @@ class EntidadeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string',
+            'nome' => 'required|string|unique:entidades,nome',
             "photo_url" => "file|image",
             'url' => 'required|url:http,https',
         ];

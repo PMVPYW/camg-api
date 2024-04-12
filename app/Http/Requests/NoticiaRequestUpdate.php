@@ -25,8 +25,10 @@ class NoticiaRequestUpdate extends FormRequest
             "rally_id" => "nullable|integer|exists:rallies,id",
             "titulo" => "sometimes|string",
             "conteudo" => "sometimes|string",
-            "title_img" => "sometimes|string",
-            "data" => "sometimes|date"
+            "title_img" => "sometimes|file|image",
+            "data" => "sometimes|date",
+            'fotos_id' => 'nullable|array',
+            'fotos_id.*' => 'integer|exists:fotos,id', // Validação para cada item do array
         ];
     }
 }

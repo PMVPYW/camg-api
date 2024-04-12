@@ -22,7 +22,7 @@ class GetPatrociniosFiltersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "filters" => "sometimes|string"
+            "filters" => "nullable|string|in:nome_asc,nome_desc"
         ];
     }
 }

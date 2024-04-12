@@ -40,7 +40,7 @@ return new class extends Migration
         Schema::create('noticias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rally_id')->nullable()->constrained("rallies");
-            $table->string("titulo");
+            $table->string("titulo")->unique();
             $table->longText("conteudo");
             $table->string("title_img");
             $table->date("data");
