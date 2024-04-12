@@ -26,7 +26,9 @@ class NoticiaRequestUpdate extends FormRequest
             "titulo" => "sometimes|string",
             "conteudo" => "sometimes|string",
             "title_img" => "sometimes|file|image",
-            "data" => "sometimes|date"
+            "data" => "sometimes|date",
+            'fotos_id' => 'nullable|array',
+            'fotos_id.*' => 'integer|exists:fotos,id', // Validação para cada item do array
         ];
     }
 }

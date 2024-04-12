@@ -104,7 +104,7 @@ class NoticiaController extends Controller
     public function update(NoticiaRequestUpdate $request, Noticia $noticia)
     {
         $validated = $request->validated();
-        DB::transaction(function() use ($validated, $noticia, $request){
+        DB::transaction(function() use ($validated, &$noticia, $request){
             if ($request->hasFile("title_img")) {
                 if ($noticia->title_img && Storage::exists('public/fotos/' . $noticia->title_img)) {
                     Storage::disk('public')->delete('fotos/' . $noticia->title_img);
@@ -116,10 +116,25 @@ class NoticiaController extends Controller
                 $noticia->title_img = $file_name_to_store;
             }
             unset($validated["title_img"]);
+            if(isset($request->fotos_id)){
+                if(isset($noticia->imagens[0])) {
+                    foreach ($noticia->imagens as $imagem) {
+                        $imagem_noticias=ImagemNoticia::find($imagem->id);
+                        $imagem_noticias->forceDelete();
+                    }
+                }
+                foreach ($request->fotos_id as $foto_id){
+                    $image_noticia = new ImagemNoticia();
+                    $image_noticia->noticia_id = $noticia->id;
+                    $image_noticia->image_id = $foto_id;
+                    $image_noticia->save();
+                }
+            }
             $noticia->fill($validated);
             $noticia->save();
+            $noticia=Noticia::find($noticia->id);
         });
-        return new NoticiaResource($noticia);
+        return response(new NoticiaResource($noticia), 201);
     }
 
     /**
