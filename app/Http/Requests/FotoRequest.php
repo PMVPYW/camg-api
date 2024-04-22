@@ -23,6 +23,7 @@ class FotoRequest extends FormRequest
     {
         return [
             "album_id" => "integer|required|exists:albuns,id",
+            "image_src" => "required|array|min:1",
             "image_src.*" => "required|file|image",
             "description" => "sometimes|string"
         ];
