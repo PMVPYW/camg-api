@@ -17,7 +17,7 @@ class NoticiaResource extends JsonResource
     {
         $imagensArray = [];
         foreach ($this->imagens as $image) {
-            $imagensArray[] = $image->foto;
+            array_push($imagensArray, $image->foto()->withTrashed()->first());
         }
         return [
             "id" => $this->id,
