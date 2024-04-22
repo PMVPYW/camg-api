@@ -113,7 +113,7 @@ class AlbumController extends Controller
     {
 
         DB::transaction(function () use ($album) {
-            if ($album->Photos->count() == 0) {
+            if ($album->Photos()->withTrashed()->count() == 0) {
                 if ($album->img && Storage::exists('public/fotos/' . $album->img)) {
                     Storage::disk('public')->delete('fotos/' . $album->img);
                 }
