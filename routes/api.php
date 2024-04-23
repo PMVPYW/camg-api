@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ContactoController;
@@ -52,10 +53,6 @@ Route::get("conselhoseguranca/{conselhoseguranca}", [ConselhoSegurancaController
 Route::get("imagensNoticia", [ImagemNoticiaController::class, "index"]);
 
 
-
-
-
-
 //protected routes
 Route::middleware("auth:sanctum")->group(function (){
     Route::post("rally", [RallyController::class, "store"]);
@@ -104,4 +101,6 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::get('/user', function (Request $request) {
         return Auth::user();
     });
+
+    Route::apiResource("admin", AdminController::class);
 });

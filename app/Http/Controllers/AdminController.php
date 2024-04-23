@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AdminResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -11,7 +13,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-
+        $admins = User::all();
+        return AdminResource::collection($admins);
     }
 
     /**
@@ -25,9 +28,9 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $admin)
     {
-        //
+        return new AdminResource($admin);
     }
 
     /**
