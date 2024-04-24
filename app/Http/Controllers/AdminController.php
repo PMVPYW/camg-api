@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -58,7 +59,23 @@ class AdminController extends Controller
      */
     public function update(AdminUpdateRequest $request, User $admin)
     {
-        //
+        $validated = $request->validated();
+        DB::transaction(function () use ($validated, $admin, $request) {
+            if ($request->hasFile("photo_url")) {
+                if ($admin->photo_url && Storage::exists('public/fotos/' . $admin->photo_url)) {
+                    Storage::disk('public')->delete('fotos/' . $admin->photo_url);
+                }
+                $file = $request->file("photo_url");
+                $file_type = $file->getClientOriginalExtension();
+                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+                Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
+                $admin->photo_url = $file_name_to_store;
+            }
+            unset($validated["photo_url"]);
+            $admin->fill($validated);
+            $admin->save();
+        });
+        return new AdminResource($admin);
     }
 
     /**

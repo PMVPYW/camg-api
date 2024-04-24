@@ -28,6 +28,7 @@ class AdminUpdateRequest extends FormRequest
             "nome" => "sometimes|string",
             "email" => ["sometimes", "email:rfc,dns", new UniqueUpdateRule("users", 'email', $resourceId)],
             "password" => ["sometimes", "string", "confirmed", Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
+            "old_password" => "required_with:password|current_password:sanctum",
             "photo_url" => "nullable|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
         ];
     }
