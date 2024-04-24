@@ -103,4 +103,5 @@ Route::middleware("auth:sanctum")->group(function (){
     });
 
     Route::apiResource("admin", AdminController::class);
+    Route::patch("admin/{admin}/toggle_blocked", [AdminController::class, "toggle_blocked"]);
 });

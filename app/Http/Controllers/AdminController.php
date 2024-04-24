@@ -81,8 +81,27 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $admin)
     {
-        //
+        DB::transaction(function () use ($admin) {
+            #hard delete
+            if ($admin->photo_url && Storage::exists('public/fotos/' . $admin->photo_url)) {
+                Storage::disk('public')->delete('fotos/' . $admin->photo_url);
+            }
+            $admin->tokens()->delete();
+            $admin->delete();
+        });
+        return new AdminResource($admin);
+    }
+
+    public function toggle_blocked(User $admin)
+    {
+        $admin->blocked = !$admin->blocked;
+        $admin->save();
+        if ($admin->blocked)
+        {
+            $admin->tokens()->delete();
+        }
+        return new AdminResource($admin);
     }
 }
