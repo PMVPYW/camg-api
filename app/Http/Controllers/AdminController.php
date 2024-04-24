@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminRequest;
+use App\Http\Requests\AdminUpdateRequest;
 use App\Http\Resources\AdminResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AdminUpdateRequest $request, User $admin)
     {
         //
     }

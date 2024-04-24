@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueUpdateRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class AdminRequest extends FormRequest
+class AdminUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +23,11 @@ class AdminRequest extends FormRequest
      */
     public function rules(): array
     {
+        $resourceId = $this->route('admin')->id;
         return [
-            "nome" => "required|string",
-            "email" => "required|email:rfc,dns|unique:users,email",
-            "password" => ["required", "string", "confirmed", Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
+            "nome" => "sometimes|string",
+            "email" => ["sometimes", "email:rfc,dns", new UniqueUpdateRule("users", 'email', $resourceId)],
+            "password" => ["sometimes", "string", "confirmed", Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
             "photo_url" => "nullable|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
         ];
     }
@@ -33,12 +35,8 @@ class AdminRequest extends FormRequest
     public function messages()
     {
         return [
-            "nome.required" => "O campo nome é obrigatório.",
             "nome.string" => "O campo nome deve ser uma string.",
-            "email.required" => "O campo email é obrigatório.",
             "email.email" => "O campo email deve ser um endereço de e-mail válido.",
-            "email.unique" => "Este endereço de e-mail já está em uso.",
-            "password.required" => "O campo senha é obrigatório.",
             "password.string" => "O campo senha deve ser uma string.",
             "password.confirmed" => "A confirmação da senha não corresponde.",
             "password.min" => "A senha deve ter no mínimo :min caracteres.",
