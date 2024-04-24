@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\UniqueUpdateRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 
 class AdminUpdateRequest extends FormRequest
@@ -13,7 +14,7 @@ class AdminUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Auth::user()->id == $this->route('admin')->id;
     }
 
     /**
