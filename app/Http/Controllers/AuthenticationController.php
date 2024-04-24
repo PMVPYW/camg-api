@@ -14,8 +14,15 @@ class AuthenticationController extends Controller
         if (Auth::attempt($validated))
         {
             $user = Auth::user();
+            if ($user->blocked)
+            {
+                return response()->json(['message' => 'O seu utilizador encontra-se bloqueado. Por Favor contacte um administrador!'], 401);
+            }
+            if (!$user->authorized){
+                return response()->json(['message' => 'O seu utilizador ainda não foi autorizado, por Favor contacte um administrador!'], 401);
+            }
             return response()->json(['message' => 'Logged in successfully', 'token' => $user->createToken('authToken')->plainTextToken], 200);
         }
-        return response()->json(['message' => 'Invalid credentials'], 401);
+        return response()->json(['message' => 'Credenciais Inválidas!'], 401);
     }
 }
