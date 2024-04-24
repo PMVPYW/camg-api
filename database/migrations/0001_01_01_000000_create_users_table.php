@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('nome');
             $table->string('email')->unique();
             $table->string('photo_url')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean("authorized")->default(false);
+            $table->boolean("blocked")->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
