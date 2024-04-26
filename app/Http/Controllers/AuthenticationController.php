@@ -37,4 +37,9 @@ class AuthenticationController extends Controller
         $controller = new AdminController();
         return $controller->store($request);
     }
+
+    public function logout()
+    {
+        Auth::user()->currentAccessToken()->delete();
+    }
 }
