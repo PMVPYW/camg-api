@@ -121,5 +121,7 @@ class AdminController extends Controller
     public function authorize_admin(User $admin)
     {
         $admin->authorized = true;
+        $admin->save();
+        return new AdminResource($admin);
     }
 }
