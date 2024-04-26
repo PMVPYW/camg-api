@@ -19,7 +19,7 @@ class ContactoResource extends JsonResource
             "id" => $this->id,
             "tipo_valor" => $this->tipo_valor,
             "valor" => $this->valor,
-            "tipocontacto_id" => $this->tipocontacto_id
+            "tipocontacto_id" => $this->tipo_contacto,
         ];
     }
 }
