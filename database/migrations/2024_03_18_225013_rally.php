@@ -85,7 +85,8 @@ return new class extends Migration
 
         Schema::create('contactos', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo_valor');
+            $table->string('nome');
+            $table->enum('tipo_valor', ['Email', 'Telemovel', 'Telefone', 'Fax', 'Facebook', 'Instagram', 'Twitter', 'PaginaWeb', 'WhatsApp', 'Morada', 'Coordenadas']);
             $table->string('valor');
             $table->foreignId('tipocontacto_id')->constrained("tipo_contacto");
         });
