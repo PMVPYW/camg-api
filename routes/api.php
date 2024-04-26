@@ -46,6 +46,7 @@ Route::get("entidade/{entidade}", [EntidadeController::class, "show"]);
 Route::get("patrocinio", [PatrocinioController::class, "index"]);
 Route::get("patrocinio/{patrocinio}", [PatrocinioController::class, "show"]);
 
+Route::get("tipocontacto", [TipoContactoController::class, "index"]);
 
 Route::get("contacto", [ContactoController::class, "index"]);
 Route::get("contacto/{contacto}", [ContactoController::class, "show"]);
@@ -90,7 +91,6 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::put("contacto/{contacto}", [ContactoController::class, "update"]);
     Route::delete("contacto/{contacto}", [ContactoController::class, "destroy"]);
 
-    Route::get("tipocontacto", [TipoContactoController::class, "index"]);
     Route::get("tipocontacto/{tipocontacto}", [TipoContactoController::class, "show"]);
     Route::post("tipocontacto", [TipoContactoController::class, "store"]);
     Route::put("tipocontacto/{tipocontacto}", [TipoContactoController::class, "update"]);

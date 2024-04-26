@@ -10,7 +10,7 @@ class Contacto extends Model
 {
     use HasFactory;
     protected $table = "contactos";
-    protected $fillable = ["tipo_valor", "valor", "tipocontacto_id"];
+    protected $fillable = ["nome","tipo_valor", "valor", "tipocontacto_id"];
 
     public $timestamps = false;
 

@@ -22,7 +22,8 @@ class ContactoRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            "tipo_valor" => "sometimes|string",
+            "nome" => "sometimes|string",
+            "tipo_valor" => "sometimes|in:Email,Telemovel,Telefone,Fax,Facebook,Instagram,Twitter,PaginaWeb,WhatsApp,Morada,Coordenadas",
             "valor" => "sometimes|string",
             "tipocontacto_id" => "sometimes|integer|exists:tipo_contacto,id"
         ];

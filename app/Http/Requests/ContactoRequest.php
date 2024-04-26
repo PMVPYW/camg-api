@@ -22,7 +22,8 @@ class ContactoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "tipo_valor" => "required|string",
+            "nome" => "required|string",
+            "tipo_valor" => "required|in:Email,Telemovel,Telefone,Fax,Facebook,Instagram,Twitter,PaginaWeb,WhatsApp,Morada,Coordenadas",
             "valor" => "required|string",
             "tipocontacto_id" => "required|integer|exists:tipo_contacto,id"
         ];
