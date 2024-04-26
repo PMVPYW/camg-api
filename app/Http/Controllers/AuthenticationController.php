@@ -34,21 +34,7 @@ class AuthenticationController extends Controller
 
     public function register(AdminRequest $request)
     {
-        $validated = $request->validated();
-        $admin = null;
-        DB::transaction(function () use ($validated, &$admin, $request) {
-            $admin = new User();
-            if ($request->hasFile("photo_url")) {
-                $file = $request->file("photo_url");
-                $file_type = $file->getClientOriginalExtension();
-                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
-                Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
-                $admin->photo_url = $file_name_to_store;
-            }
-            unset($validated["photo_url"]);
-            $admin->fill($validated);
-            $admin->save();
-        });
-        return new AdminResource($admin);
+        $controller = new AdminController();
+        return $controller->store($request);
     }
 }

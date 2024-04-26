@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 //unprotected routes
 Route::post('auth/login', [AuthenticationController::class, "login"])->name("login");
+Route::post('auth/register', [AuthenticationController::class, "register"])->name("register");
 
 Route::get("rally", [RallyController::class, "index"]);
 Route::get("rally/{rally}", [RallyController::class, "show"]);

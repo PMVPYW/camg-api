@@ -42,7 +42,6 @@ class AdminController extends Controller
             }
             unset($validated["photo_url"]);
             $admin->fill($validated);
-            $admin->authorized = true;
             $admin->save();
         });
         return new AdminResource($admin);
