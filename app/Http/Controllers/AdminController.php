@@ -20,7 +20,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = User::all();
+        $admins = User::paginate(15);
         return AdminResource::collection($admins);
     }
 
@@ -84,9 +84,10 @@ class AdminController extends Controller
      */
     public function destroy(User $admin)
     {
-        if (User::all()->count() == 1)
+        $can_log = User::where('blocked', 0)->where('authorized', 1);
+        if ($can_log->count() == 1 && $can_log->where('id', $admin->id)->count() == 1)
         {
-            return response()->json(['message' => 'Você não pode eliminar todos os utilizadores!'], 401);
+            return response()->json(['message' => 'Você não pode eliminar todos os utilizadores que conseguem iniciar sessão!'], 401);
         }
         DB::transaction(function () use ($admin) {
             #hard delete
