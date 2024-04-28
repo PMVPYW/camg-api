@@ -41,7 +41,12 @@ class AdminController extends Controller
         } else if ($request->status == "unauthorized") {
             $admins = $admins->where("authorized", "=", 0);
         }
-        return AdminResource::collection($admins->get());
+
+        if ($request->search)
+        {
+            $admins = $admins->where("nome", 'like', "%$request->search%")->orWhere("email", 'like', "%$request->search%");
+        }
+        return AdminResource::collection($admins->paginate(15));
     }
 
     /**
