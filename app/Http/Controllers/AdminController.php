@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminRequest;
+use App\Http\Requests\AdminsFiltersRequest;
 use App\Http\Requests\AdminUpdateRequest;
 use App\Http\Resources\AdminResource;
 use App\Models\User;
@@ -18,10 +19,34 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(AdminsFiltersRequest $request)
     {
-        $admins = User::all();
-        return AdminResource::collection($admins);
+        $validated_data = $request->validated();
+        $admins = User::query();
+        if (!$request->order || $request->order == "most_recent") {
+            $admins = $admins->orderBy('created_at', 'desc');
+        } else if ($request->order == 'least_recent') {
+            $admins = $admins->orderBy('created_at', 'asc');
+        } else if ($request->order == 'nome_asc') {
+            $admins = $admins->orderBy('nome', 'asc');
+        } else if ($request->order == 'nome_desc') {
+            $admins = $admins->orderBy('nome', 'desc');
+        }
+
+        //if (!$request->status || $request->status == "all") //nothing to do here
+        if ($request->status == "unblocked") {
+            $admins = $admins->where('blocked', '=', 0)->where("authorized", "=", 1);
+        } else if ($request->status == "blocked") {
+            $admins = $admins->where('blocked', '=', 1)->where("authorized", "=", 1);
+        } else if ($request->status == "unauthorized") {
+            $admins = $admins->where("authorized", "=", 0);
+        }
+
+        if ($request->search)
+        {
+            $admins = $admins->where("nome", 'like', "%$request->search%")->orWhere("email", 'like', "%$request->search%");
+        }
+        return AdminResource::collection($admins->paginate(15));
     }
 
     /**
@@ -84,9 +109,9 @@ class AdminController extends Controller
      */
     public function destroy(User $admin)
     {
-        if (User::all()->count() == 1)
-        {
-            return response()->json(['message' => 'Você não pode eliminar todos os utilizadores!'], 401);
+        $can_log = User::where('blocked', 0)->where('authorized', 1);
+        if ($can_log->count() == 1 && $can_log->where('id', $admin->id)->count() == 1) {
+            return response()->json(['message' => 'Você não pode eliminar todos os utilizadores que conseguem iniciar sessão!'], 401);
         }
         DB::transaction(function () use ($admin) {
             #hard delete
@@ -101,18 +126,15 @@ class AdminController extends Controller
 
     public function toggle_blocked(User $admin)
     {
-        if ($admin->id == Auth::user()->id)
-        {
+        if ($admin->id == Auth::user()->id) {
             return response()->json(['message' => 'Você não se pode bloquear a você próprio!'], 401);
         }
-        if (!$admin->blocked && User::query()->where("blocked", false)->count() == 1)
-        {
+        if (!$admin->blocked && User::query()->where("blocked", false)->count() == 1) {
             return response()->json(['message' => 'Você não bloquear todos os utilizadores!'], 401);
         }
         $admin->blocked = !$admin->blocked;
         $admin->save();
-        if ($admin->blocked)
-        {
+        if ($admin->blocked) {
             $admin->tokens()->delete();
         }
         return new AdminResource($admin);
