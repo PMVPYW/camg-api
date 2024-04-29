@@ -90,6 +90,15 @@ return new class extends Migration
             $table->string('valor');
             $table->foreignId('tipocontacto_id')->constrained("tipo_contacto");
         });
+
+        Schema::create('declaracoes', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('rally_id')->constrained("rallies");
+            $table->string('conteudo');
+            $table->string('nome');
+            $table->string('cargo');
+            $table->string('photo_url');
+        });
     }
 
     /**
