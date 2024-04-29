@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TipoContactoFiltersRequest;
 use App\Http\Requests\TipoContactoRequest;
 use App\Http\Requests\TipoContactoRequestUpdate;
 use App\Http\Resources\TipoContactoResource;
@@ -15,9 +16,19 @@ class TipoContactoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(TipoContactoFiltersRequest $request)
     {
-        return TipoContactoResource::collection(TipoContacto::all());
+        $tipoContacto = TipoContacto::query();
+        if ($request->order == 'nome_desc') {
+            $tipoContacto = $tipoContacto->orderBy('nome', 'desc');
+        } else if ($request->order == 'nome_asc') {
+            $tipoContacto = $tipoContacto->orderBy('nome', 'asc');
+        }
+
+        if($request->tipo_contacto_id){
+            $tipoContacto->where([["id", $request->tipo_contacto_id]]);
+        }
+        return TipoContactoResource::collection($tipoContacto->get());
     }
 
     /**
