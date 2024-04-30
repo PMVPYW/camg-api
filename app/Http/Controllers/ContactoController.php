@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactoFiltersRequest;
 use App\Http\Requests\ContactoRequest;
 use App\Http\Requests\ContactoRequestUpdate;
 use App\Http\Resources\ContactoResource;
@@ -14,9 +15,13 @@ class ContactoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ContactoFiltersRequest $request)
     {
-        return ContactoResource::collection(Contacto::all());
+        $contacts=Contacto::query();
+        if($request->tipo_contacto_id){
+            $contacts->where([["tipocontacto_id", $request->tipo_contacto_id]]);
+        }
+        return ContactoResource::collection($contacts->get());
     }
 
     /**
