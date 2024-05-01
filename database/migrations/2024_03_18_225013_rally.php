@@ -90,6 +90,21 @@ return new class extends Migration
             $table->string('valor');
             $table->foreignId('tipocontacto_id')->constrained("tipo_contacto");
         });
+
+        Schema::create('horario', function (Blueprint $table) {
+            $table->id();
+            $table->date('data_inicio');
+        });
+
+        Schema::create('prova', function (Blueprint $table) {
+            $table->id();
+            $table->string('local');
+            $table->float('distancia_percurso');
+            $table->foreignId('horario_id')->constrained("horario");
+            $table->foreignId('rally_id')->constrained("rallies");
+            $table->integer('external_id');
+            $table->timestamp("deleted_at")->nullable();
+        });
     }
 
     /**
@@ -97,6 +112,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('horario');
+        Schema::dropIfExists('prova');
         Schema::dropIfExists('conselhos_segurança');
         Schema::dropIfExists('patrocionios');
         Schema::dropIfExists('entidades');
