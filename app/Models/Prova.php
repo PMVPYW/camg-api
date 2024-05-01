@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Prova extends Model
 {
     use HasFactory;
-    protected $table = "horario";
+    protected $table = "prova";
     protected $fillable = ["horario_id","rally_id","external_id","local","distancia_percurso","data_inicio","nome"];
 
     public $timestamps = false;
