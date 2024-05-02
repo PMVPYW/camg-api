@@ -81,7 +81,7 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::post("prova", [ProvaController::class, "store"]);
     Route::put("prova/{prova}", [ProvaController::class, "update"]);
     Route::delete("prova/{prova}", [ProvaController::class, "destroy"]);
-    Route::get("copyProvas", [ProvaController::class, "copyProvas"]);
+    Route::post("copyProvas", [ProvaController::class, "copyProvas"]);
 
 
     Route::post("foto", [FotoController::class, "store"]);
