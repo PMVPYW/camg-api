@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CopyProvaRequest;
+use App\Http\Requests\ProvaFiltersRequest;
 use App\Http\Requests\ProvaRequest;
 use App\Http\Requests\ProvaUpdateRequest;
 use App\Http\Resources\ProvaResource;
@@ -15,9 +16,39 @@ class ProvaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ProvaFiltersRequest $request)
     {
-        return ProvaResource::collection(Prova::all());
+        $prova=Prova::query();
+        if (!$request->order || $request->order == 'proximity') {
+            $prova = $prova->orderByRaw("ABS(DATEDIFF(data_inicio, ?)) ASC", [today()]);
+        }else if ($request->order == 'nome_desc') {
+            $prova = $prova->orderBy('nome', 'desc');
+        } else if ($request->order == 'nome_asc') {
+            $prova = $prova->orderBy('nome', 'asc');
+        } else if ($request->order == 'local_desc') {
+            $prova = $prova->orderBy('local', 'desc');
+        } else if ($request->order == 'local_asc') {
+            $prova = $prova->orderBy('local', 'asc');
+        }else if ($request->order == 'distancia_percurso_asc') {
+            $prova = $prova->orderBy('distancia_percurso', 'asc');
+        } else if ($request->order == 'distancia_percurso_desc') {
+            $prova = $prova->orderBy('distancia_percurso', 'desc');
+        }
+
+        if ($request->data_inicio) {
+            $prova = $prova->where([["data", ">=", $request->data_inicio]]);//acabam dps do inicio da pesquisa
+        }
+
+        if($request->rally_id){
+            $prova->where([["rally_id", $request->rally_id]]);
+        }
+
+        if ($request->search && strlen($request->search) > 0)
+        {
+            $prova = $prova->where('nome', 'LIKE', "%{$request->search}%")
+                ->orWhere('local', 'LIKE', "%{$request->search}%");
+        }
+        return ProvaResource::collection($prova->get());
     }
 
     /**
