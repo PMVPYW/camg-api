@@ -10,6 +10,7 @@ use App\Http\Controllers\ImagemNoticiaController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\FotoController;
 use App\Http\Controllers\PatrocinioController;
+use App\Http\Controllers\ProvaController;
 use App\Http\Controllers\RallyController;
 use App\Http\Controllers\TipoContactoController;
 use Illuminate\Http\Request;
@@ -55,6 +56,8 @@ Route::get("conselhoseguranca/{conselhoseguranca}", [ConselhoSegurancaController
 
 Route::get("imagensNoticia", [ImagemNoticiaController::class, "index"]);
 
+Route::get("prova", [ProvaController::class, "index"]);
+Route::get("prova/{prova}", [ProvaController::class, "show"]);
 
 //protected routes
 Route::middleware("auth:sanctum")->group(function (){
@@ -75,6 +78,10 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::delete("entidade/{entidade}", [EntidadeController::class, "destroy"]);
     Route::delete("destroyAllEntities", [EntidadeController::class, "destroyAllEntities"]);
 
+    Route::post("prova", [ProvaController::class, "store"]);
+    Route::put("prova/{prova}", [ProvaController::class, "update"]);
+    Route::delete("prova/{prova}", [ProvaController::class, "destroy"]);
+    Route::post("copyProvas", [ProvaController::class, "copyProvas"]);
 
 
     Route::post("foto", [FotoController::class, "store"]);

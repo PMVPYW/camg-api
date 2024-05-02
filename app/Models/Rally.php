@@ -35,4 +35,9 @@ class Rally extends Model
     {
         return $this->hasMany(Patrocinio::class, "rally_id", "id");
     }
+
+    public function provas(): HasMany
+    {
+        return $this->hasMany(Prova::class, "rally_id", "id");
+    }
 }
