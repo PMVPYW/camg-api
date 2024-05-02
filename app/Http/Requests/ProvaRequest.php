@@ -21,8 +21,14 @@ class ProvaRequest extends FormRequest
      */
     public function rules(): array
     {
+        //    protected $fillable = ["rally_id","external_id","local","distancia_percurso","data_inicio","nome"];
         return [
-            //
+            "data_inicio" => "sometimes|date",
+            "rally_id" => "required | integer |exists:rallies,id",
+            "external_id" => "required | integer",
+            "local" => "required | string",
+            "distancia_percurso" => "required | integer",
+            "nome" => "required | string",
         ];
     }
 }

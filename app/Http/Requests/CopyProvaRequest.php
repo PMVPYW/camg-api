@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProvaUpdateRequest extends FormRequest
+class CopyProvaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,12 +22,8 @@ class ProvaUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "data_inicio" => "sometimes|date",
-            "rally_id" => "sometimes | integer |exists:rallies,id",
-            "external_id" => "sometimes | integer",
-            "local" => "sometimes | string",
-            "distancia_percurso" => "sometimes | integer",
-            "nome" => "sometimes | string",
+            "external_entity_id" => "required|integer|exists:rallies,external_entity_id",
+            "rally_id" => "required|integer|exists:rallies,id",
         ];
     }
 }

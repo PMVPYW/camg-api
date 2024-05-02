@@ -11,7 +11,7 @@ class Prova extends Model
 {
     use HasFactory;
     protected $table = "prova";
-    protected $fillable = ["horario_id","rally_id","external_id","local","distancia_percurso","data_inicio","nome"];
+    protected $fillable = ["rally_id","external_id","local","distancia_percurso","data_inicio","nome"];
 
     public $timestamps = false;
 
