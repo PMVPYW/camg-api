@@ -23,8 +23,6 @@ class ProvaUpdateRequest extends FormRequest
     {
         return [
             "data_inicio" => "sometimes|date",
-            "rally_id" => "sometimes | integer |exists:rallies,id",
-            "external_id" => "sometimes | integer",
             "local" => "sometimes | string",
             "distancia_percurso" => "sometimes | integer",
             "nome" => "sometimes | string",
