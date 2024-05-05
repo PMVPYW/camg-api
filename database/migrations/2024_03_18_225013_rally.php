@@ -57,8 +57,8 @@ return new class extends Migration
             $table->string('nome')->unique();
             $table->string('photo_url');
             $table->string("url");
+            $table->boolean('special')->default(false);
             $table->timestamp("deleted_at")->nullable();
-
         });
 
         Schema::create('patrocinios', function (Blueprint $table) {

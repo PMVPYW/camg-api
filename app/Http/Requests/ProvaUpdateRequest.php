@@ -22,7 +22,7 @@ class ProvaUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "data_inicio" => "sometimes|date",
+            "data_inicio" => "sometimes|date|nullable",
             "local" => "sometimes | string",
             "distancia_percurso" => "sometimes | integer",
             "nome" => "sometimes | string",
