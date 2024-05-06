@@ -57,12 +57,14 @@ return new class extends Migration
             $table->string('nome')->unique();
             $table->string('photo_url');
             $table->string("url");
-            $table->boolean('special')->default(false);
+            $table->boolean('entidade_oficial')->default(false);
             $table->timestamp("deleted_at")->nullable();
         });
 
         Schema::create('patrocinios', function (Blueprint $table) {
             $table->id();
+            $table->integer("relevancia");
+            $table->boolean('entidade_oficial')->default(false);
             $table->foreignId('entidade_id')->constrained("entidades");
             $table->foreignId('rally_id')->constrained("rallies");
         });
