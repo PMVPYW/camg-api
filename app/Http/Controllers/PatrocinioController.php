@@ -17,8 +17,9 @@ class PatrocinioController extends Controller
      */
     public function index()
     {
-        $patrocinios = Patrocinio::all();
-        return PatrocinioResource::collection($patrocinios);
+        $patrocinios = Patrocinio::query();
+        $patrocinios = $patrocinios->where("entidade_oficial",false);
+        return PatrocinioResource::collection($patrocinios->get());
     }
 
     /**
@@ -42,7 +43,9 @@ class PatrocinioController extends Controller
      */
     public function show(Patrocinio $patrocinio)
     {
-        return new PatrocinioResource($patrocinio);
+        $patrocinio = Patrocinio::findOrFail($patrocinio->id);
+        $patrocinio = $patrocinio->where("entidade_oficial", false);
+        return PatrocinioResource::collection($patrocinio->get());
     }
 
     /**
@@ -66,6 +69,24 @@ class PatrocinioController extends Controller
         $patrocinio->forceDelete();
         return new PatrocinioResource($patrocinio);
     }
+
+
+    //Patrocinios Oficiais(Index e Show)
+
+    public function patrocinioOficial(){
+        $patrocinios = Patrocinio::query();
+        $patrocinios = $patrocinios->where('entidade_oficial', true);
+        return PatrocinioResource::collection($patrocinios->get());
+    }
+
+    public function showPatrocinioOficial(Patrocinio $patrocinioOficial)
+    {
+        $patrocinio = Patrocinio::findOrFail($patrocinioOficial->id);
+        $patrocinio = $patrocinio->where("entidade_oficial", true);
+        return PatrocinioResource::collection($patrocinio->get());
+    }
+
+
 
 
 

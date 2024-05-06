@@ -17,7 +17,8 @@ class PatrocinioResource extends JsonResource
         return [
             "id" => $this->id,
             "rally_id" => $this->rallys,
-            "entidade_id" => $this->entidade
+            "entidade_id" => $this->entidade,
+            "relevancia" => $this->relevancia
         ];
     }
 }

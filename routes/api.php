@@ -44,8 +44,14 @@ Route::get("foto/{foto}", [FotoController::class, "show"]);
 Route::get("entidade", [EntidadeController::class, "index"]);
 Route::get("entidade/{entidade}", [EntidadeController::class, "show"]);
 
+Route::get("entidadeOficial", [EntidadeController::class, "entidadeOficial"]);
+Route::get("entidadeOficial/{entidadeOficial}", [EntidadeController::class, "showEntidadeOficial"]);
+
 Route::get("patrocinio", [PatrocinioController::class, "index"]);
 Route::get("patrocinio/{patrocinio}", [PatrocinioController::class, "show"]);
+
+Route::get("patrocinioOficial", [PatrocinioController::class, "patrocinioOficial"]);
+Route::get("patrocinioOficial/{patrocinioOficial}", [PatrocinioController::class, "showPatrocinioOficial"]);
 
 Route::get("tipocontacto", [TipoContactoController::class, "index"]);
 

@@ -25,6 +25,7 @@ class EntidadeRequest extends FormRequest
             'nome' => 'required|string|unique:entidades,nome',
             "photo_url" => "file|image",
             'url' => 'required|url:http,https',
+            "entidade_oficial" => "required | boolean"
         ];
     }
 }
