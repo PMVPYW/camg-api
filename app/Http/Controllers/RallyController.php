@@ -146,6 +146,8 @@ class RallyController extends Controller
     {
         $filters = $request->filters;
         $patrocinios = $rally->patrocinios;
+        $patrocinios = $patrocinios->where("entidade_oficial",false);
+
         switch ($filters) {
             case 'nome_asc':
                 $patrocinios = $patrocinios->sortBy(function ($patrocinio) {
@@ -164,7 +166,7 @@ class RallyController extends Controller
 
     public function getPatrociniosSemAssociacao(Rally $rally)
     {
-        $entidadesSemAssociacao = Entidade::whereNotIn('id',  $rally->patrocinios->pluck('entidade_id'))->get();
+        $entidadesSemAssociacao = Entidade::whereNotIn('id',  $rally->patrocinios->pluck('entidade_id'))->where("entidade_oficial",false)->get();
         return EntidadeResource::collection($entidadesSemAssociacao);
     }
     //PatrociniosOficiais
