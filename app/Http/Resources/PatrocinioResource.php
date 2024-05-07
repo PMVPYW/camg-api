@@ -18,7 +18,8 @@ class PatrocinioResource extends JsonResource
             "id" => $this->id,
             "rally_id" => $this->rallys,
             "entidade_id" => $this->entidade,
-            "relevancia" => $this->relevancia
+            "relevancia" => $this->relevancia,
+            "entidade_oficial" => $this->entidade_oficial
         ];
     }
 }

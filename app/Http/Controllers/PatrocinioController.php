@@ -6,6 +6,7 @@ use App\Http\Requests\PatrocinioRequest;
 use App\Http\Requests\PatrocinioRequestDelete;
 use App\Http\Requests\PatrocinioRequestUpdate;
 use App\Http\Resources\PatrocinioResource;
+use App\Models\Entidade;
 use App\Models\Patrocinio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,13 +30,16 @@ class PatrocinioController extends Controller
     {
         $validated= $request->validated();
         $patrocinio = null;
-        DB::transaction(function() use ($validated, &$patrocinio)
+        $entidade = Entidade::findOrFail($request->entidade_id);
+        DB::transaction(function() use ($validated, &$patrocinio, $request, $entidade)
         {
-            $patrocinio = new Patrocinio();
-            $patrocinio->fill($validated);
-            $patrocinio->save();
+            if($entidade->entidade_oficial==$request->entidade_oficial){
+                $patrocinio = new Patrocinio();
+                $patrocinio->fill($validated);
+                $patrocinio->save();
+            }
         });
-        return response(new PatrocinioResource($patrocinio), 201);
+        return !($entidade->entidade_oficial==$request->entidade_oficial) ? response()->json(["Error"=> "A associação entre o patrocinio e a entidade não é válida"], 522) : response(new PatrocinioResource($patrocinio), 201);
     }
 
     /**
@@ -53,12 +57,17 @@ class PatrocinioController extends Controller
      */
     public function update(PatrocinioRequestUpdate $request, Patrocinio $patrocinio)
     {
-        $validated=$request->validated();
-        DB::transaction(function() use ($validated, $patrocinio){
-            $patrocinio->fill($validated);
-            $patrocinio->save();
+        $validated= $request->validated();
+        dd($validated);
+        $entidade = Entidade::findOrFail($request->entidade_id);
+        DB::transaction(function() use ($validated, &$patrocinio, $request, $entidade)
+        {
+            if($entidade->entidade_oficial==$request->entidade_oficial){
+                $patrocinio->fill($validated);
+                $patrocinio->save();
+            }
         });
-        return new PatrocinioResource($patrocinio);
+        return !($entidade->entidade_oficial==$request->entidade_oficial) ? response()->json(["Error"=> "A associação entre o patrocinio e a entidade não é válida"], 522) : response(new PatrocinioResource($patrocinio));
     }
 
     /**

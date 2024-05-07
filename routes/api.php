@@ -24,8 +24,14 @@ Route::post('auth/register', [AuthenticationController::class, "register"])->nam
 
 Route::get("rally", [RallyController::class, "index"]);
 Route::get("rally/{rally}", [RallyController::class, "show"]);
+
+//Patrocinios de um rally
 Route::get("rally/{rally}/patrocinios", [RallyController::class, "getPatrocinios"]);
 Route::get("rally/{rally}/patrocinios_s_associacao", [RallyController::class, "getPatrociniosSemAssociacao"]);
+
+//Patrocinios Oficiais de um rally
+Route::get("rally/{rally}/patrociniosOficiais", [RallyController::class, "getPatrociniosOficiais"]);
+Route::get("rally/{rally}/patrociniosOficiais_s_associacao", [RallyController::class, "getPatrociniosOficiaisSemAssociacao"]);
 
 
 

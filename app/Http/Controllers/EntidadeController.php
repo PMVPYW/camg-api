@@ -20,7 +20,7 @@ class EntidadeController extends Controller
      */
     public function index()
     {
-        $entidades = Patrocinio::query();
+        $entidades = Entidade::query();
         $entidades = $entidades->where("entidade_oficial",false);
         return EntidadeResource::collection($entidades->get());
     }
