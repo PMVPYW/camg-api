@@ -14,17 +14,19 @@ class HorarioResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $inicio = strtotime($this->inicio);
+        $fim = strtotime($this->fim);
         return [
             "id" => $this->id,
             "rally_id" => $this->rally_id,
             "titulo" => $this->titulo,
             "descricao" => $this->descricao,
             "inicio" => $this->inicio,
-            "inicio_dia" => $this->inicio->format('d-m-Y'),
-            "inicio_hora" => $this->inicio->format('H:i'),
+            "inicio_dia" => date('d-m-Y', $inicio),
+            "inicio_hora" => date('H:i', $inicio),
             "fim" => $this->fim,
-            "fim_dia" => $this->fim->format('d-m-Y'),
-            "fim_hora" => $this->fim->format('H:i')
+            "fim_dia" => date('d-m-Y', $fim),
+            "fim_hora" => date('H:i', $fim)
         ];
     }
 }
