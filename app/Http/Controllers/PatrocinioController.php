@@ -47,9 +47,11 @@ class PatrocinioController extends Controller
      */
     public function show(Patrocinio $patrocinio)
     {
-        $patrocinio = Patrocinio::findOrFail($patrocinio->id);
-        $patrocinio = $patrocinio->where("entidade_oficial", false);
-        return PatrocinioResource::collection($patrocinio->get());
+        if($patrocinio->entidade_oficial === 0){
+            return new PatrocinioResource($patrocinio);
+        }else{
+            return response()->json(["Error"=> "A Entidade é oficial"], 522);
+        }
     }
 
     /**
@@ -90,9 +92,11 @@ class PatrocinioController extends Controller
 
     public function showPatrocinioOficial(Patrocinio $patrocinioOficial)
     {
-        $patrocinio = Patrocinio::findOrFail($patrocinioOficial->id);
-        $patrocinio = $patrocinio->where("entidade_oficial", true);
-        return PatrocinioResource::collection($patrocinio->get());
+        if($patrocinioOficial->entidade_oficial === 1){
+            return new PatrocinioResource($patrocinioOficial);
+        }else{
+            return response()->json(["Error"=> "A Entidade não é oficial"], 522);
+        }
     }
 
 
