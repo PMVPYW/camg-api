@@ -93,12 +93,22 @@ return new class extends Migration
             $table->foreignId('tipocontacto_id')->constrained("tipo_contacto");
         });
 
+        Schema::create('horarios', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('rally_id')->constrained("rallies");
+            $table->string('titulo');
+            $table->string('descricao');
+            $table->datetime('inicio');
+            $table->datetime('fim');
+            $table->timestamp("deleted_at")->nullable();
+        });
+
         Schema::create('prova', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->string('local');
             $table->integer('distancia_percurso');
-            $table->date('data_inicio')->nullable();
+            $table->foreignId('horario_id')->constrained("horarios");
             $table->foreignId('rally_id')->constrained("rallies");
             $table->integer('external_id');
             $table->timestamp("deleted_at")->nullable();
