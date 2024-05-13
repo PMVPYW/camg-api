@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\ConselhoSegurancaController;
 use App\Http\Controllers\EntidadeController;
+use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\ImagemNoticiaController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\FotoController;
@@ -58,6 +59,9 @@ Route::get("imagensNoticia", [ImagemNoticiaController::class, "index"]);
 
 Route::get("prova", [ProvaController::class, "index"]);
 Route::get("prova/{prova}", [ProvaController::class, "show"]);
+
+Route::get("horario", [HorarioController::class, "index"]);
+Route::get("horario/{horario}", [HorarioController::class, "show"]);
 
 //protected routes
 Route::middleware("auth:sanctum")->group(function (){
@@ -114,4 +118,8 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::apiResource("admin", AdminController::class);
     Route::patch("admin/{admin}/toggle_blocked", [AdminController::class, "toggle_blocked"]);
     Route::patch("admin/{admin}/authorize", [AdminController::class, "authorize_admin"]);
+
+    Route::post("horario", [HorarioController::class, "store"]);
+    Route::put("horario/{horario}", [HorarioController::class, "update"]);
+    Route::delete("horario/{horario}", [HorarioController::class, "destroy"]);
 });
