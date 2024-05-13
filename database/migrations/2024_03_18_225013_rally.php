@@ -93,6 +93,15 @@ return new class extends Migration
             $table->foreignId('tipocontacto_id')->constrained("tipo_contacto");
         });
 
+        Schema::create('horario', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('rally_id')->constrained("rallies");
+            $table->string('titulo');
+            $table->string('descricao');
+            $table->datetimes('inicio');
+            $table->datetimes('fim');
+        });
+
         Schema::create('prova', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
