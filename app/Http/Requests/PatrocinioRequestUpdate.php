@@ -22,7 +22,6 @@ class PatrocinioRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            "entidade_id" => "sometimes | integer |exists:entidades,id",
             "relevancia" => "sometimes | integer |max:10",
         ];
     }

@@ -60,16 +60,12 @@ class PatrocinioController extends Controller
     public function update(PatrocinioRequestUpdate $request, Patrocinio $patrocinio)
     {
         $validated= $request->validated();
-        dd($validated);
-        $entidade = Entidade::findOrFail($request->entidade_id);
-        DB::transaction(function() use ($validated, &$patrocinio, $request, $entidade)
+        DB::transaction(function() use ($validated, &$patrocinio)
         {
-            if($entidade->entidade_oficial==$request->entidade_oficial){
-                $patrocinio->fill($validated);
-                $patrocinio->save();
-            }
+            $patrocinio->fill($validated);
+            $patrocinio->save();
         });
-        return !($entidade->entidade_oficial==$request->entidade_oficial) ? response()->json(["Error"=> "A associação entre o patrocinio e a entidade não é válida"], 522) : response(new PatrocinioResource($patrocinio));
+        return new PatrocinioResource($patrocinio);
     }
 
     /**
