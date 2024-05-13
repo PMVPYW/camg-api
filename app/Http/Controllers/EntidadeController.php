@@ -20,8 +20,9 @@ class EntidadeController extends Controller
      */
     public function index()
     {
-        $entidades = Entidade::all();
-        return EntidadeResource::collection($entidades);
+        $entidades = Entidade::query();
+        $entidades = $entidades->where("entidade_oficial",false);
+        return EntidadeResource::collection($entidades->get());
     }
 
     /**
@@ -53,7 +54,9 @@ class EntidadeController extends Controller
      */
     public function show(Entidade $entidade)
     {
-        return new EntidadeResource($entidade);
+        $entidade = Entidade::findOrFail($entidade->id);
+        $entidade = $entidade->where("entidade_oficial", false);
+        return EntidadeResource::collection($entidade->get());
     }
 
     /**
@@ -120,4 +123,20 @@ class EntidadeController extends Controller
         });
         return EntidadeResource::collection($deleted_entities);
     }
+
+    //Entidades Oficiais (Index e Show)
+
+    public function entidadeOficial(){
+        $entidades = Entidade::query();
+        $entidades = $entidades->where("entidade_oficial", true);
+        return EntidadeResource::collection($entidades->get());
+    }
+
+    public function showEntidadeOficial(Entidade $entidadeOficial)
+    {
+        $entidade = Entidade::findOrFail($entidadeOficial->id);
+        $entidade = $entidade->where("entidade_oficial", true);
+        return EntidadeResource::collection($entidade->get());
+    }
+
 }

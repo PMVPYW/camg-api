@@ -22,7 +22,7 @@ class EntidadeRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'sometimes|string',
+            'nome' => 'sometimes|unique:entidades,nome,NULL,id,entidade_oficial,' . $this->input('entidade_oficial'),
             'photo_url' => 'file|image',
             'url' => 'sometimes|url:http,https',
         ];

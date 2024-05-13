@@ -6,6 +6,7 @@ use App\Http\Requests\PatrocinioRequest;
 use App\Http\Requests\PatrocinioRequestDelete;
 use App\Http\Requests\PatrocinioRequestUpdate;
 use App\Http\Resources\PatrocinioResource;
+use App\Models\Entidade;
 use App\Models\Patrocinio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,8 +18,9 @@ class PatrocinioController extends Controller
      */
     public function index()
     {
-        $patrocinios = Patrocinio::all();
-        return PatrocinioResource::collection($patrocinios);
+        $patrocinios = Patrocinio::query();
+        $patrocinios = $patrocinios->where("entidade_oficial",false);
+        return PatrocinioResource::collection($patrocinios->get());
     }
 
     /**
@@ -28,13 +30,16 @@ class PatrocinioController extends Controller
     {
         $validated= $request->validated();
         $patrocinio = null;
-        DB::transaction(function() use ($validated, &$patrocinio)
+        $entidade = Entidade::findOrFail($request->entidade_id);
+        DB::transaction(function() use ($validated, &$patrocinio, $request, $entidade)
         {
-            $patrocinio = new Patrocinio();
-            $patrocinio->fill($validated);
-            $patrocinio->save();
+            if($entidade->entidade_oficial==$request->entidade_oficial){
+                $patrocinio = new Patrocinio();
+                $patrocinio->fill($validated);
+                $patrocinio->save();
+            }
         });
-        return response(new PatrocinioResource($patrocinio), 201);
+        return !($entidade->entidade_oficial==$request->entidade_oficial) ? response()->json(["Error"=> "A associação entre o patrocinio e a entidade não é válida"], 522) : response(new PatrocinioResource($patrocinio), 201);
     }
 
     /**
@@ -42,7 +47,11 @@ class PatrocinioController extends Controller
      */
     public function show(Patrocinio $patrocinio)
     {
-        return new PatrocinioResource($patrocinio);
+        if($patrocinio->entidade_oficial === 0){
+            return new PatrocinioResource($patrocinio);
+        }else{
+            return response()->json(["Error"=> "A Entidade é oficial"], 522);
+        }
     }
 
     /**
@@ -50,8 +59,9 @@ class PatrocinioController extends Controller
      */
     public function update(PatrocinioRequestUpdate $request, Patrocinio $patrocinio)
     {
-        $validated=$request->validated();
-        DB::transaction(function() use ($validated, $patrocinio){
+        $validated= $request->validated();
+        DB::transaction(function() use ($validated, &$patrocinio)
+        {
             $patrocinio->fill($validated);
             $patrocinio->save();
         });
@@ -66,6 +76,26 @@ class PatrocinioController extends Controller
         $patrocinio->forceDelete();
         return new PatrocinioResource($patrocinio);
     }
+
+
+    //Patrocinios Oficiais(Index e Show)
+
+    public function patrocinioOficial(){
+        $patrocinios = Patrocinio::query();
+        $patrocinios = $patrocinios->where('entidade_oficial', true);
+        return PatrocinioResource::collection($patrocinios->get());
+    }
+
+    public function showPatrocinioOficial(Patrocinio $patrocinioOficial)
+    {
+        if($patrocinioOficial->entidade_oficial === 1){
+            return new PatrocinioResource($patrocinioOficial);
+        }else{
+            return response()->json(["Error"=> "A Entidade não é oficial"], 522);
+        }
+    }
+
+
 
 
 

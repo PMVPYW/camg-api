@@ -141,10 +141,13 @@ class RallyController extends Controller
 
 
     //Metodos auxiliares
+    //Patrocinios
     public function getPatrocinios(GetPatrociniosFiltersRequest $request, Rally $rally)
     {
         $filters = $request->filters;
         $patrocinios = $rally->patrocinios;
+        $patrocinios = $patrocinios->where("entidade_oficial",false);
+
         switch ($filters) {
             case 'nome_asc':
                 $patrocinios = $patrocinios->sortBy(function ($patrocinio) {
@@ -163,7 +166,35 @@ class RallyController extends Controller
 
     public function getPatrociniosSemAssociacao(Rally $rally)
     {
-        $entidadesSemAssociacao = Entidade::whereNotIn('id',  $rally->patrocinios->pluck('entidade_id'))->get();
+        $entidadesSemAssociacao = Entidade::whereNotIn('id',  $rally->patrocinios->pluck('entidade_id'))->where("entidade_oficial",false)->get();
+        return EntidadeResource::collection($entidadesSemAssociacao);
+    }
+    //PatrociniosOficiais
+    public function getPatrociniosOficiais(GetPatrociniosFiltersRequest $request, Rally $rally)
+    {
+        $filters = $request->filters;
+        $patrocinios = $rally->patrocinios;
+        $patrocinios = $patrocinios->where("entidade_oficial",true);
+
+        switch ($filters) {
+            case 'nome_asc':
+                $patrocinios = $patrocinios->sortBy(function ($patrocinio) {
+                    return $patrocinio->entidade->nome;
+                });
+                break;
+            case 'nome_desc':
+                $patrocinios = $patrocinios->sortByDesc(function ($patrocinio) {
+                    return $patrocinio->entidade->nome;
+                });
+                break;
+        }
+        return PatrocinioResource::collection($patrocinios);
+    }
+
+
+    public function getPatrociniosOficiaisSemAssociacao(Rally $rally)
+    {
+        $entidadesSemAssociacao = Entidade::whereNotIn('id',  $rally->patrocinios->pluck('entidade_id'))->where("entidade_oficial",true)->get();
         return EntidadeResource::collection($entidadesSemAssociacao);
     }
 }
