@@ -58,8 +58,13 @@ class HorarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(horario $horario)
     {
-        //
+        if ($horario->prova()->count() == 0) {
+            $horario->forceDelete();
+        } else {
+            $horario->delete();
+        }
+        return new HorarioResource($horario);
     }
 }

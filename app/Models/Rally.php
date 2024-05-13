@@ -40,4 +40,9 @@ class Rally extends Model
     {
         return $this->hasMany(Prova::class, "rally_id", "id");
     }
+
+    public function horarios(): HasMany
+    {
+        return $this->hasMany(Horario::class, "rally_id", "id");
+    }
 }

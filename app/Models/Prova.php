@@ -20,4 +20,9 @@ class Prova extends Model
         return $this->belongsTo(Rally::class, "id", "rally_id");
     }
 
+    public function horario() : BelongsTo
+    {
+        return $this->BelongsTo(Horario::class, "id", "horario_id");
+    }
+
 }
