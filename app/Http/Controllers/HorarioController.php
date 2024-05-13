@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\HorarioRequest;
+use App\Http\Requests\HorarioUpdateRequest;
 use App\Http\Resources\HorarioResource;
 use App\Models\Horario;
 use Illuminate\Http\Request;
@@ -36,17 +37,22 @@ class HorarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Horario $horario)
     {
-        //
+        return new HorarioResource($horario);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(HorarioUpdateRequest $request, Horario $horario)
     {
-        //
+        $validated = $request->validated();
+        DB::transaction(function () use ($validated, $horario) {
+            $horario->fill($validated);
+            $horario->save();
+        });
+        return new HorarioResource($horario);
     }
 
     /**
