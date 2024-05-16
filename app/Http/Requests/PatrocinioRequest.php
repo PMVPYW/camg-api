@@ -24,6 +24,8 @@ class PatrocinioRequest extends FormRequest
         return [
             "rally_id" => "required | integer |exists:rallies,id",
             "entidade_id" => "required | integer |exists:entidades,id",
+            "relevancia" => "required | integer |max:10",
+            "entidade_oficial" => "required | boolean"
         ];
     }
 }

@@ -22,9 +22,10 @@ class EntidadeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|unique:entidades,nome',
+            'nome' => 'required|unique:entidades,nome,NULL,id,entidade_oficial,' . $this->input('entidade_oficial'),
             "photo_url" => "file|image",
             'url' => 'required|url:http,https',
+            "entidade_oficial" => "required | boolean"
         ];
     }
 }

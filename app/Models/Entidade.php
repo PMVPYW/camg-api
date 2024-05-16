@@ -12,7 +12,7 @@ class Entidade extends Model
     use HasFactory;
     use SoftDeletes;
     protected $table = "entidades";
-    protected $fillable = ["nome", "photo_url", "url"];
+    protected $fillable = ["nome", "photo_url", "url", "entidade_oficial"];
     public $timestamps = false;
 
     public function patrocinios(): HasMany

@@ -12,7 +12,7 @@ class Patrocinio extends Model
 {
     use HasFactory;
     protected $table = "patrocinios";
-    protected $fillable = ["entidade_id", "rally_id"];
+    protected $fillable = ["entidade_id", "rally_id", "entidade_oficial", "relevancia"];
     public $timestamps = false;
 
     public function entidade(): BelongsTo
