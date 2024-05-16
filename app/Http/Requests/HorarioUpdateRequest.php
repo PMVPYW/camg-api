@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\HorarioFimMaiorQueInicioRule;
+use App\Rules\HorarioInicioMenorQueFimRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class HorarioUpdateRequest extends FormRequest
@@ -34,7 +35,7 @@ class HorarioUpdateRequest extends FormRequest
             $rules["fim"][] = new HorarioFimMaiorQueInicioRule("horarios", "fim", $resourceId);
         }
         if ($this->has('inicio')) {
-            $rules["inicio"][] = new HorarioFimMaiorQueInicioRule("horarios", "inicio", $resourceId);
+            $rules["inicio"][] = new HorarioInicioMenorQueFimRule("horarios", "inicio", $resourceId);
         }
         return $rules;
     }
