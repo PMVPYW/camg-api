@@ -31,10 +31,10 @@ class HorarioUpdateRequest extends FormRequest
             "inicio" => ["date", "before:fim"],
             "fim" => ["date", "after:inicio"],
         ];
-        if ($this->has('fim')) {
+        if ($this->has('fim') && !$this->has('inicio')) {
             $rules["fim"][] = new HorarioFimMaiorQueInicioRule("horarios", "fim", $resourceId);
         }
-        if ($this->has('inicio')) {
+        if ($this->has('inicio') && !$this->has('fim')) {
             $rules["inicio"][] = new HorarioInicioMenorQueFimRule("horarios", "inicio", $resourceId);
         }
         return $rules;
