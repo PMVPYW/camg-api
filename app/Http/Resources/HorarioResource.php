@@ -21,10 +21,10 @@ class HorarioResource extends JsonResource
             "rally_id" => $this->rally_id,
             "titulo" => $this->titulo,
             "descricao" => $this->descricao,
-            "inicio" => $this->inicio,
+            "inicio" => date('Y-m-d H:i:s', $inicio),
             "inicio_dia" => date('d-m-Y', $inicio),
             "inicio_hora" => date('H:i', $inicio),
-            "fim" => $this->fim,
+            "fim" => date('Y-m-d H:i:s', $fim),
             "fim_dia" => date('d-m-Y', $fim),
             "fim_hora" => date('H:i', $fim)
         ];
