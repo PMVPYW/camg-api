@@ -22,9 +22,8 @@ class ProvaUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "data_inicio" => "sometimes|date|nullable",
+            "horario_id" => "sometimes| integer |exists:horarios,id",
             "local" => "sometimes | string",
-            "distancia_percurso" => "sometimes | integer",
             "nome" => "sometimes | string",
         ];
     }

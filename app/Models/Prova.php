@@ -11,7 +11,7 @@ class Prova extends Model
 {
     use HasFactory;
     protected $table = "prova";
-    protected $fillable = ["rally_id","external_id","local","distancia_percurso","data_inicio","nome"];
+    protected $fillable = ["rally_id","external_id","local","distancia_percurso","horario_id","nome"];
 
     public $timestamps = false;
 
@@ -20,9 +20,9 @@ class Prova extends Model
         return $this->belongsTo(Rally::class, "id", "rally_id");
     }
 
-    public function horario() : BelongsTo
+    public function horario() : HasOne
     {
-        return $this->BelongsTo(Horario::class, "id", "horario_id");
+        return $this->HasOne(Horario::class, "id", "horario_id");
     }
 
 }
