@@ -109,7 +109,7 @@ return new class extends Migration
             $table->string('nome');
             $table->string('local');
             $table->integer('distancia_percurso');
-            $table->foreignId('horario_id')->constrained("horarios");
+            $table->foreignId('horario_id')->nullable()->constrained("horarios");
             $table->foreignId('rally_id')->constrained("rallies");
             $table->integer('external_id');
             $table->timestamp("deleted_at")->nullable();
@@ -121,6 +121,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('horarios');
         Schema::dropIfExists('prova');
         Schema::dropIfExists('conselhos_segurança');
         Schema::dropIfExists('patrocionios');

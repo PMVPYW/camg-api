@@ -23,7 +23,6 @@ class ProvaFiltersRequest extends FormRequest
     {
         return [
             "search" => "nullable|string|min:0",
-            "data_inicio" => "nullable|date",
             "rally_id" => "nullable|integer|exists:rallies,id",
             "order" => "nullable|string|in:nome_desc,nome_asc,local_asc,local_desc,distancia_percurso_asc,distancia_percurso_desc,proximity"
         ];

@@ -17,7 +17,7 @@ class ProvaResource extends JsonResource
         return [
             "id" => $this->id,
             "nome" => $this->nome,
-            "data_inicio" => $this->data_inicio,
+            "horario" => $this->horario,
             "rally_id" => $this->rally_id,
             "external_id" => $this->external_id,
             "local" => $this->local,

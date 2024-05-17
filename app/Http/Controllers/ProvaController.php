@@ -19,9 +19,10 @@ class ProvaController extends Controller
     public function index(ProvaFiltersRequest $request)
     {
         $prova=Prova::query();
-        if (!$request->order || $request->order == 'proximity') {
+        /*if (!$request->order || $request->order == 'proximity') {
             $prova = $prova->orderByRaw("ABS(DATEDIFF(data_inicio, ?)) ASC", [today()]);
-        }else if ($request->order == 'nome_desc') {
+        }else */
+        if ($request->order == 'nome_desc') {
             $prova = $prova->orderBy('nome', 'desc');
         } else if ($request->order == 'nome_asc') {
             $prova = $prova->orderBy('nome', 'asc');
@@ -35,9 +36,6 @@ class ProvaController extends Controller
             $prova = $prova->orderBy('distancia_percurso', 'desc');
         }
 
-        if ($request->data_inicio) {
-            $prova = $prova->where([["data", ">=", $request->data_inicio]]);//acabam dps do inicio da pesquisa
-        }
 
         if($request->rally_id){
             $prova->where([["rally_id", $request->rally_id]]);
