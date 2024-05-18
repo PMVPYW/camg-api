@@ -33,4 +33,23 @@ class NoticiaRequest extends FormRequest
             "data" => "required|date"
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'fotos_id.array' => 'O campo fotos_id deve ser um array.',
+            'fotos_id.*.integer' => 'Cada item em fotos_id deve ser um número inteiro.',
+            'fotos_id.*.exists' => 'Cada item em fotos_id deve existir na tabela fotos.',
+            'rally_id.integer' => 'O campo rally_id deve ser um número inteiro.',
+            'rally_id.exists' => 'O rally_id fornecido não existe na tabela rallies.',
+            'titulo.required' => 'O campo título é obrigatório.',
+            'titulo.string' => 'O campo título deve ser uma string.',
+            'titulo.unique' => 'Este título já está em uso.',
+            'conteudo.required' => 'O campo conteúdo é obrigatório.',
+            'conteudo.string' => 'O campo conteúdo deve ser uma string.',
+            'title_img.file' => 'O campo capa noticia deve ser um arquivo.',
+            'title_img.image' => 'O campo capa noticia deve ser uma imagem.',
+            'data.required' => 'O campo data é obrigatório.',
+            'data.date' => 'O campo data deve ser uma data válida.'
+        ];
+    }
 }

@@ -22,7 +22,15 @@ class TipoContactoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nome" => "required|string"
+            "nome" => "required|string|unique"
+        ];
+    }
+    public function messages()
+    {
+        return [
+            "nome.required" => "O campo nome é obrigatório.",
+            "nome.string" => "O campo nome deve ser uma string.",
+            "nome.unique" => "Este nome já está em uso."
         ];
     }
 }

@@ -28,4 +28,17 @@ class EntidadeRequest extends FormRequest
             "entidade_oficial" => "required | boolean"
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'nome.required' => 'O campo nome é obrigatório.',
+            'nome.unique' => 'Este nome já está em uso.',
+            'photo_url.file' => 'O campo imagem deve ser um arquivo.',
+            'photo_url.image' => 'O campo deve ser uma imagem.',
+            'url.required' => 'O campo url é obrigatório.',
+            'url.url' => 'O campo url deve ser uma URL válida começando com http ou https.',
+            'entidade_oficial.required' => 'O campo entidade oficial é obrigatório.',
+            'entidade_oficial.boolean' => 'O campo entidade oficial deve ser verdadeiro ou falso.'
+        ];
+    }
 }
