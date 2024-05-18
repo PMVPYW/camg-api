@@ -22,7 +22,7 @@ class TipoContactoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nome" => "required|string|unique"
+            "nome" => "required|string|unique:tipo_contacto,nome"
         ];
     }
     public function messages()
