@@ -30,6 +30,10 @@ Route::get("rally/{rally}", [RallyController::class, "show"]);
 Route::get("rally/{rally}/patrocinios", [RallyController::class, "getPatrocinios"]);
 Route::get("rally/{rally}/patrocinios_s_associacao", [RallyController::class, "getPatrociniosSemAssociacao"]);
 
+//Patrocinios com Relevância(neste caso estão só patrocinios não oficiais)????
+Route::get("rally/{rally}/patrocinios_relevancia", [RallyController::class, "getPatrociniosRelevancia"]);
+
+
 //Patrocinios Oficiais de um rally
 Route::get("rally/{rally}/patrociniosOficiais", [RallyController::class, "getPatrociniosOficiais"]);
 Route::get("rally/{rally}/patrociniosOficiais_s_associacao", [RallyController::class, "getPatrociniosOficiaisSemAssociacao"]);

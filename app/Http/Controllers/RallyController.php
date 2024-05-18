@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GetPatrociniosFiltersRequest;
+use App\Http\Requests\PatrocinioRequestDelete;
 use App\Http\Requests\RallyFiltersRequest;
 use App\Http\Requests\RallyRequest;
 use App\Http\Requests\RallyRequestUpdate;
@@ -169,6 +170,22 @@ class RallyController extends Controller
         $entidadesSemAssociacao = Entidade::whereNotIn('id',  $rally->patrocinios->pluck('entidade_id'))->where("entidade_oficial",false)->get();
         return EntidadeResource::collection($entidadesSemAssociacao);
     }
+
+    //Relevância dos Patrocinios
+    public function getPatrociniosRelevancia(Rally $rally)
+    {
+        $patrocinios = $rally->patrocinios;
+        $patrocinios = $patrocinios->where("entidade_oficial",false);
+        $relevancia=[];
+        foreach ($patrocinios as $patrocinio){
+            dump($patrocinio->relevancia);
+            $relevancia[]=$patrocinio->relevancia;
+        }
+        dd($relevancia);
+        return PatrocinioResource::collection($patrocinios);
+    }
+
+
     //PatrociniosOficiais
     public function getPatrociniosOficiais(GetPatrociniosFiltersRequest $request, Rally $rally)
     {

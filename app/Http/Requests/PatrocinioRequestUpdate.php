@@ -22,7 +22,7 @@ class PatrocinioRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            "relevancia" => "sometimes | integer |max:10",
+            "relevancia" => "sometimes | integer | min:1 | max:10",
         ];
     }
 }

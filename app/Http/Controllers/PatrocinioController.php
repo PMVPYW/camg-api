@@ -115,4 +115,5 @@ class PatrocinioController extends Controller
         });
         return PatrocinioResource::collection($deleted_sponsors);
     }
+
 }
