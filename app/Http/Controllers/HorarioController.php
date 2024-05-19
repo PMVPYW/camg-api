@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\HorarioRequest;
 use App\Http\Requests\HorarioUpdateRequest;
 use App\Http\Resources\HorarioResource;
+use App\Http\Resources\ProvaResource;
+use App\Http\Resources\RallyResource;
 use App\Models\Horario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -66,5 +68,17 @@ class HorarioController extends Controller
             $horario->delete();
         }
         return new HorarioResource($horario);
+    }
+
+    public function getRally(Horario $horario) {
+        return new RallyResource($horario->rally);
+    }
+
+    public function getProva(Horario $horario)
+    {
+        if ($horario->prova()->count() == 0) {
+            return response()->json(['data' => null], 200);
+        }
+        return new ProvaResource($horario->prova);
     }
 }

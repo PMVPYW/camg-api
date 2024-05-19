@@ -38,6 +38,9 @@ Route::get("rally/{rally}/patrocinios_relevancia", [RallyController::class, "get
 Route::get("rally/{rally}/patrociniosOficiais", [RallyController::class, "getPatrociniosOficiais"]);
 Route::get("rally/{rally}/patrociniosOficiais_s_associacao", [RallyController::class, "getPatrociniosOficiaisSemAssociacao"]);
 
+//horarios rally
+Route::get("rally/{rally}/horario", [RallyController::class, "getHorarios"]);
+
 
 
 Route::get("noticia", [NoticiaController::class, "index"]);
@@ -76,8 +79,16 @@ Route::get("imagensNoticia", [ImagemNoticiaController::class, "index"]);
 Route::get("prova", [ProvaController::class, "index"]);
 Route::get("prova/{prova}", [ProvaController::class, "show"]);
 
+//get horario from prova
+Route::get("prova/{prova}/horario", [ProvaController::class, "getHorario"]);
+
 Route::get("horario", [HorarioController::class, "index"]);
 Route::get("horario/{horario}", [HorarioController::class, "show"]);
+
+//get rally from horario
+Route::get("horario/{horario}/rally", [HorarioController::class, "getRally"]);
+//get prova from horario
+Route::get("horario/{horario}/prova", [HorarioController::class, "getProva"]);
 
 //protected routes
 Route::middleware("auth:sanctum")->group(function (){

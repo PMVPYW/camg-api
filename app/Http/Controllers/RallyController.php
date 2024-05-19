@@ -8,6 +8,7 @@ use App\Http\Requests\RallyFiltersRequest;
 use App\Http\Requests\RallyRequest;
 use App\Http\Requests\RallyRequestUpdate;
 use App\Http\Resources\EntidadeResource;
+use App\Http\Resources\HorarioResource;
 use App\Http\Resources\PatrocinioResource;
 use App\Http\Resources\RallyResource;
 use App\Models\Entidade;
@@ -206,6 +207,11 @@ class RallyController extends Controller
                 break;
         }
         return PatrocinioResource::collection($patrocinios);
+    }
+
+    function getHorarios(Rally $rally)
+    {
+        return HorarioResource::collection($rally->horarios);
     }
 
 

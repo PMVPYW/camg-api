@@ -6,6 +6,7 @@ use App\Http\Requests\CopyProvaRequest;
 use App\Http\Requests\ProvaFiltersRequest;
 use App\Http\Requests\ProvaRequest;
 use App\Http\Requests\ProvaUpdateRequest;
+use App\Http\Resources\HorarioResource;
 use App\Http\Resources\ProvaResource;
 use App\Models\Prova;
 use Illuminate\Support\Facades\DB;
@@ -119,5 +120,14 @@ class ProvaController extends Controller
             }
         });
         return ProvaResource::collection($provas);
+    }
+
+    public function getHorario(Prova $prova)
+    {
+        if ($prova->horario()->count() == 0)
+        {
+            return response()->json(['data' => null], 200);
+        }
+        return new HorarioResource($prova->horario);
     }
 }
