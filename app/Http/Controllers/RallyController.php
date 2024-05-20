@@ -176,14 +176,25 @@ class RallyController extends Controller
     public function getPatrociniosRelevancia(Rally $rally)
     {
         $patrocinios = $rally->patrocinios;
-        $patrocinios = $patrocinios->where("entidade_oficial",false);
-        $relevancia=[];
-        foreach ($patrocinios as $patrocinio){
-            dump($patrocinio->relevancia);
-            $relevancia[]=$patrocinio->relevancia;
+        $patrocinios = $patrocinios->where("entidade_oficial", false);
+        $relevancia = [];
+        $patrocinios_relevancia = [];
+
+        foreach ($patrocinios as $patrocinio) {
+            $relevancia[] = $patrocinio->relevancia-1;
+            $patrocinios_relevancia[] = $patrocinio->entidade;
         }
-        dd($relevancia);
-        return PatrocinioResource::collection($patrocinios);
+        $count_relevancia=array_sum($relevancia)+count($patrocinios);
+        for ($j=0; $j<$count_relevancia; $j++){
+            $i=0;
+            for ($i; $i < count($patrocinios); $i++) {
+                if ($relevancia[$i] > 0) {
+                    $relevancia[$i]--;
+                    array_push($patrocinios_relevancia, $patrocinios_relevancia[$i]);
+                }
+            }
+        }
+        return response(["data"=>$patrocinios_relevancia]);
     }
 
 
@@ -211,7 +222,7 @@ class RallyController extends Controller
 
     function getHorarios(Rally $rally)
     {
-        return HorarioResource::collection($rally->horarios);
+        return HorarioResource::collection($rally->horarios()->orderBy("inicio", 'asc')->get());
     }
 
 
