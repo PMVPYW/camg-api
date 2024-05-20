@@ -182,7 +182,7 @@ class RallyController extends Controller
 
         foreach ($patrocinios as $patrocinio) {
             $relevancia[] = $patrocinio->relevancia-1;
-            $patrocinios_relevancia[] = $patrocinio->entidade;
+            $patrocinios_relevancia[] = $patrocinio;
         }
         $count_relevancia=array_sum($relevancia)+count($patrocinios);
         for ($j=0; $j<$count_relevancia; $j++){
@@ -194,7 +194,7 @@ class RallyController extends Controller
                 }
             }
         }
-        return response(["data"=>$patrocinios_relevancia]);
+        return PatrocinioResource::collection($patrocinios_relevancia);
     }
 
 
