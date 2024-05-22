@@ -105,7 +105,7 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::delete("noticia/{noticia}", [NoticiaController::class, "destroy"]);
 
     Route::post("entidade", [EntidadeController::class, "store"]);
-    Route::put("entidade/{entidade}", [EntidadeController::class, "update"])->name("entidadeUpdate");
+    Route::put("entidade/{entidade}", [EntidadeController::class, "update"])->name("entidade");
     Route::delete("entidade/{entidade}", [EntidadeController::class, "destroy"]);
     Route::delete("destroyAllEntities", [EntidadeController::class, "destroyAllEntities"]);
 
