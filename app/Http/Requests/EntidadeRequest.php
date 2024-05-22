@@ -23,7 +23,7 @@ class EntidadeRequest extends FormRequest
     {
         return [
             'nome' => 'required|unique:entidades,nome,NULL,id,entidade_oficial,' . $this->input('entidade_oficial'),
-            "photo_url" => "file|image",
+            "photo_url" => "required|file|image",
             'url' => 'required|url:http,https',
             "entidade_oficial" => "required | boolean"
         ];
@@ -33,6 +33,7 @@ class EntidadeRequest extends FormRequest
         return [
             'nome.required' => 'O campo nome é obrigatório.',
             'nome.unique' => 'Este nome já está em uso.',
+            'photo_url.required' => 'O campo imagem é obrigatório.',
             'photo_url.file' => 'O campo imagem deve ser um arquivo.',
             'photo_url.image' => 'O campo deve ser uma imagem.',
             'url.required' => 'O campo url é obrigatório.',

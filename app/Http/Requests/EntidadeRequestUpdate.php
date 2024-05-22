@@ -22,9 +22,19 @@ class EntidadeRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'sometimes|unique:entidades,nome,' . $this->route('entidade')->id . ',id,entidade_oficial,' . $this->input('entidade_oficial'),
+            'nome' => 'sometimes|unique:entidades,nome,' . $this->route('entidadeUpdate')->id . ',id,entidade_oficial,' . $this->input('entidade_oficial'),
             'photo_url' => 'file|image',
             'url' => 'sometimes|url:http,https',
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'nome.unique' => 'Este nome já está em uso.',
+            'photo_url.file' => 'O campo imagem deve ser um arquivo.',
+            'photo_url.image' => 'O campo deve ser uma imagem.',
+            'url.url' => 'O campo url deve ser uma URL válida começando com http ou https.',
+            'entidade_oficial.boolean' => 'O campo entidade oficial deve ser verdadeiro ou falso.'
         ];
     }
 }

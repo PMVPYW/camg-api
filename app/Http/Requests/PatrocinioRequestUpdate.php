@@ -25,4 +25,12 @@ class PatrocinioRequestUpdate extends FormRequest
             "relevancia" => "sometimes | integer | min:1 | max:10",
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'relevancia.integer' => 'O campo relevancia deve ser um número inteiro.',
+            'relevancia.max' => 'O campo relevancia não pode ser maior que 10.',
+            'relevancia.min' => 'O campo relevancia não pode ser menor que 1.',
+        ];
+    }
 }
