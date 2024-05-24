@@ -54,7 +54,7 @@ return new class extends Migration
 
         Schema::create('entidades', function (Blueprint $table) {
             $table->id();
-            $table->string('nome')->unique();
+            $table->string('nome');
             $table->string('photo_url');
             $table->string("url");
             $table->boolean('entidade_oficial')->default(false);
