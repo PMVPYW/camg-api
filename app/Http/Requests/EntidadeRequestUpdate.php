@@ -27,4 +27,14 @@ class EntidadeRequestUpdate extends FormRequest
             'url' => 'sometimes|url:http,https',
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'nome.unique' => 'Este nome já está em uso.',
+            'photo_url.file' => 'O campo logo deve ser um arquivo.',
+            'photo_url.image' => 'O campo logo deve ser uma imagem.',
+            'url.url' => 'O campo link deve ser uma URL válida começando com http ou https.',
+            'entidade_oficial.boolean' => 'O campo entidade oficial deve ser verdadeiro ou falso.'
+        ];
+    }
 }

@@ -29,7 +29,7 @@ class NoticiaRequest extends FormRequest
             "rally_id" => "nullable|integer|exists:rallies,id",
             "titulo" => "required|string|unique:noticias,titulo",
             "conteudo" => "required|string",
-            "title_img" => "file|image",
+            "title_img" => "required|file|image",
             "data" => "required|date"
         ];
     }
@@ -46,6 +46,7 @@ class NoticiaRequest extends FormRequest
             'titulo.unique' => 'Este título já está em uso.',
             'conteudo.required' => 'O campo conteúdo é obrigatório.',
             'conteudo.string' => 'O campo conteúdo deve ser uma string.',
+            'title_img.required' => 'O campo capa noticia é obrigatório.',
             'title_img.file' => 'O campo capa noticia deve ser um arquivo.',
             'title_img.image' => 'O campo capa noticia deve ser uma imagem.',
             'data.required' => 'O campo data é obrigatório.',

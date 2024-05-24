@@ -126,7 +126,7 @@ Route::middleware("auth:sanctum")->group(function (){
 
 
     Route::post("contacto", [ContactoController::class, "store"]);
-    Route::put("contacto/{contacto}", [ContactoController::class, "update"]);
+    Route::put("contacto/{contacto}", [ContactoController::class, "update"])->name("contactUpdate");
     Route::delete("contacto/{contacto}", [ContactoController::class, "destroy"]);
 
     Route::get("tipocontacto/{tipocontacto}", [TipoContactoController::class, "show"]);

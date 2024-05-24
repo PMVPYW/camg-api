@@ -9,6 +9,7 @@ use App\Http\Resources\ContactoResource;
 use App\Models\Contacto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ContactoController extends Controller
 {
