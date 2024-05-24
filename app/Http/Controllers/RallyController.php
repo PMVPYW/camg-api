@@ -126,7 +126,7 @@ class RallyController extends Controller
     public function destroy(Rally $rally)
     {
         DB::transaction(function () use ($rally) {
-            if ($rally->noticias()->count() + $rally->Albuns()->count() == 0) {
+            if ($rally->noticias()->count() + $rally->Albuns()->count() + $rally->conselhos_seguranca()->count() + $rally->patrocinios()->count() + $rally->provas()->count() + $rally->horarios()->count() == 0) {
                 #hard delete
                 if ($rally->photo_url && Storage::exists('public/fotos/' . $rally->photo_url)) {
                     Storage::disk('public')->delete('fotos/' . $rally->photo_url);
