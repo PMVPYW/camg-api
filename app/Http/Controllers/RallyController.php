@@ -126,17 +126,27 @@ class RallyController extends Controller
     public function destroy(Rally $rally)
     {
         DB::transaction(function () use ($rally) {
-            if ($rally->noticias()->count() + $rally->Albuns()->count() + $rally->conselhos_seguranca()->count() + $rally->patrocinios()->count() + $rally->provas()->count() + $rally->horarios()->count() == 0) {
-                #hard delete
-                if ($rally->photo_url && Storage::exists('public/fotos/' . $rally->photo_url)) {
-                    Storage::disk('public')->delete('fotos/' . $rally->photo_url);
-                }
-                $rally->forceDelete();
-            } else {
-                #soft delete
-                $rally->delete();
+            foreach ($rally->conselhos_seguranca as $conselho_seguranca){
+                $conselho_seguranca->forceDelete();
             }
-
+            foreach ($rally->patrocinios as $patrocinio){
+                $patrocinio->forceDelete();
+            }
+            foreach ($rally->provas as $prova){
+                $prova->forceDelete();
+            }
+            foreach ($rally->horarios as $horario){
+                $horario->forceDelete();
+            }
+            foreach ($rally->noticias as $noticia){
+                $noticia->rally_id=null;
+                $noticia->save();
+            }
+            foreach ($rally->Albuns as $album){
+                $album->rally_id=null;
+                $album->save();
+            }
+            $rally->forceDelete();
         });
         return new RallyResource($rally);
     }
