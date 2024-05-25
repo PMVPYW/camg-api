@@ -27,7 +27,8 @@ class HorarioResource extends JsonResource
             "fim" => date('Y-m-d H:i:s', $fim),
             "fim_dia" => date('d-m-Y', $fim),
             "fim_hora" => date('H:i', $fim),
-            "tem_prova" => $this->prova()->count()
+            "tem_prova" => $this->prova()->count(),
+            "prova" => $this->prova
         ];
     }
 }
