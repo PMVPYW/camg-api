@@ -22,7 +22,7 @@ class ProvaUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "horario_id" => "sometimes| integer |exists:horarios,id",
+            "horario_id" => "nullable | sometimes| integer |exists:horarios,id",
             "local" => "sometimes | string",
             "nome" => "sometimes | string",
         ];
