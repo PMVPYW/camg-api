@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\HorarioJaTemProva;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProvaUpdateRequest extends FormRequest
@@ -21,8 +22,9 @@ class ProvaUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $resourceId = $this->route('prova')->id;
         return [
-            "horario_id" => "nullable | sometimes| integer |exists:horarios,id",
+            "horario_id" => ["sometimes", "integer", "exists:horarios,id", new HorarioJaTemProva($resourceId)],
             "local" => "sometimes | string",
             "nome" => "sometimes | string",
         ];
