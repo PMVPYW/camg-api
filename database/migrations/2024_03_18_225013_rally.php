@@ -114,6 +114,10 @@ return new class extends Migration
             $table->integer('external_id');
             $table->timestamp("deleted_at")->nullable();
         });
+
+        Schema::create('zona_espetaculo', function (Blueprint $table) {
+            $table->id();
+        });
     }
 
     /**
