@@ -117,6 +117,12 @@ return new class extends Migration
 
         Schema::create('zona_espetaculo', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('prova_id')->constrained("prova");
+            $table->string('nome')->unique();
+            $table->enum('nivel_afluencia',['facil', 'medio', 'dificil']);
+            $table->enum('facilidade_acesso',['facil', 'medio', 'dificil']);
+            $table->integer('distancia_estacionamento');
+            $table->string('coordenadas')->unique();
         });
     }
 
@@ -125,6 +131,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('zona_espetaculo');
         Schema::dropIfExists('horarios');
         Schema::dropIfExists('prova');
         Schema::dropIfExists('conselhos_segurança');
