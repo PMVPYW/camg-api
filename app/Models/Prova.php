@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Prova extends Model
@@ -23,6 +24,11 @@ class Prova extends Model
     public function horario() : HasOne
     {
         return $this->HasOne(Horario::class, "id", "horario_id");
+    }
+
+    public function zonas_espetaculo(): HasMany
+    {
+        return $this->hasMany(ZonaEspetaculo::class, "prova_id", "id");
     }
 
 }

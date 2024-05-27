@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ZonaEspetaculoUpdateRequest extends FormRequest
+class GetZonaEspetaculoFiltersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,7 @@ class ZonaEspetaculoUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nome" => "sometimes|string|unique:zona_espetaculo,nome",
-            "nivel_afluencia" => "sometimes|in:facil,medio,dificil",
-            "facilidade_acesso" => "sometimes|in:facil,medio,dificil",
-            "distancia_estacionamento" => "sometimes|integer",
-            "coordenadas" => "sometimes|string|unique:zona_espetaculo,nome",
-            "prova_id" => "sometimes|exists:prova,id"
+            "filters" => "nullable|string|in:nome_asc,nome_desc"
         ];
     }
 }

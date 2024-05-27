@@ -14,6 +14,7 @@ use App\Http\Controllers\PatrocinioController;
 use App\Http\Controllers\ProvaController;
 use App\Http\Controllers\RallyController;
 use App\Http\Controllers\TipoContactoController;
+use App\Http\Controllers\ZonaEspetaculoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -33,7 +34,6 @@ Route::get("rally/{rally}/patrocinios_s_associacao", [RallyController::class, "g
 //Patrocinios com Relevância(neste caso estão só patrocinios não oficiais)????
 Route::get("rally/{rally}/patrocinios_relevancia", [RallyController::class, "getPatrociniosRelevancia"]);
 
-
 //Patrocinios Oficiais de um rally
 Route::get("rally/{rally}/patrociniosOficiais", [RallyController::class, "getPatrociniosOficiais"]);
 Route::get("rally/{rally}/patrociniosOficiais_s_associacao", [RallyController::class, "getPatrociniosOficiaisSemAssociacao"]);
@@ -41,12 +41,12 @@ Route::get("rally/{rally}/patrociniosOficiais_s_associacao", [RallyController::c
 //horarios rally
 Route::get("rally/{rally}/horario", [RallyController::class, "getHorarios"]);
 
-
+//zonasEspetaculo rally
+Route::get("rally/{rally}/zonasEspetaculo", [RallyController::class, "getZonasEspetaculo"]);
 
 Route::get("noticia", [NoticiaController::class, "index"]);
 Route::get("noticia/{noticia}", [NoticiaController::class, "show"]);
 //Route::get("noticia_images/{id}", [NoticiaController::class, "getImagebyNoticia_id"]);
-
 
 Route::get("album", [AlbumController::class, "index"]);
 Route::get("album/{album}", [AlbumController::class, "show"]);
@@ -90,8 +90,16 @@ Route::get("horario/{horario}/rally", [HorarioController::class, "getRally"]);
 //get prova from horario
 Route::get("horario/{horario}/prova", [HorarioController::class, "getProva"]);
 
+//Zonas Espetáculo
+Route::get("zonaEspetaculo",[ZonaEspetaculoController::class, "index"]);
+Route::get("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "show"]);
+
 //protected routes
 Route::middleware("auth:sanctum")->group(function (){
+    Route::post("zonaEspetaculo",[ZonaEspetaculoController::class, "store"]);
+    Route::put("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "update"]);
+    Route::delete("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "destroy"]);
+
     Route::post("rally", [RallyController::class, "store"]);
     Route::put("rally/{rally}", [RallyController::class, "update"]);
     Route::delete("rally/{rally}", [RallyController::class, "destroy"]);
@@ -123,7 +131,6 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::put("patrocinio/{patrocinio}", [PatrocinioController::class, "update"]);
     Route::delete("patrocinio/{patrocinio}", [PatrocinioController::class, "destroy"]);
     //Route::delete("destroyAllSponsors", [PatrocinioController::class, "destroyAllSponsors"]);
-
 
     Route::post("contacto", [ContactoController::class, "store"]);
     Route::put("contacto/{contacto}", [ContactoController::class, "update"])->name("contactUpdate");
