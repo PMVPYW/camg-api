@@ -97,7 +97,7 @@ Route::get("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "
 //protected routes
 Route::middleware("auth:sanctum")->group(function (){
     Route::post("zonaEspetaculo",[ZonaEspetaculoController::class, "store"]);
-    Route::put("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "update"]);
+    Route::put("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "update"])->name("zonaEspetaculo");
     Route::delete("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "destroy"]);
 
     Route::post("rally", [RallyController::class, "store"]);
