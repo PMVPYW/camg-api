@@ -126,6 +126,30 @@ return new class extends Migration
             $table->unique(['nome', 'prova_id']); // Garante que o nome seja único para cada prova_id
             $table->unique(['coordenadas', 'prova_id']); // Garante que o coordenadas seja único para cada prova_id
         });
+
+        Schema::create('historia', function (Blueprint $table) {
+            $table->id();
+            $table->string("titulo");
+            $table->string("subtitulo");
+            $table->string("conteudo");
+            $table->string('photo_url');
+        });
+
+        Schema::create('departamento', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome')->unique();
+            $table->timestamp("deleted_at")->nullable();
+        });
+
+        Schema::create('orgaos_sociais', function (Blueprint $table) {
+            $table->id();
+            $table->string("nome")->unique();
+            $table->enum('cargo',['presidente', 'secretario', 'vice-presidente', 'vogal']);
+            $table->integer("relevancia");
+            $table->string('photo_url');
+            $table->foreignId('departamento_id')->constrained("departamento");
+        });
+
     }
 
     /**
@@ -133,6 +157,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('historia');
+        Schema::dropIfExists('departamento');
+        Schema::dropIfExists('orgaos_sociais');
         Schema::dropIfExists('zona_espetaculo');
         Schema::dropIfExists('horarios');
         Schema::dropIfExists('prova');
