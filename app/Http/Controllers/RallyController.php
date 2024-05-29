@@ -252,21 +252,9 @@ class RallyController extends Controller
         $zonasEspetaculo=[];
         foreach ($provas as $prova){
             if($prova->zonas_espetaculo->count()>0) {
-                $zonasEspetaculo[]=$prova->zonas_espetaculo;
+                $zonasEspetaculo = array_merge($zonasEspetaculo, $prova->zonas_espetaculo->toArray());
             }
         }
-       /* switch ($filters) {
-            case 'nome_asc':
-                $patrocinios = $patrocinios->sortBy(function ($patrocinio) {
-                    return $patrocinio->entidade->nome;
-                });
-                break;
-            case 'nome_desc':
-                $patrocinios = $patrocinios->sortByDesc(function ($patrocinio) {
-                    return $patrocinio->entidade->nome;
-                });
-                break;
-        }*/
         return response()->json($zonasEspetaculo);
     }
 }
