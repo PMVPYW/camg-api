@@ -29,7 +29,6 @@ class HorarioController extends Controller
         $validated = $request->validated();
         $horario = new Horario();
         DB::transaction(function () use ($validated, &$horario) {
-            $horario = new Horario();
             $horario->fill($validated);
             $horario->save();
         });

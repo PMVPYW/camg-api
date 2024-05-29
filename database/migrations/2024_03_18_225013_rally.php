@@ -114,6 +114,18 @@ return new class extends Migration
             $table->integer('external_id');
             $table->timestamp("deleted_at")->nullable();
         });
+
+        Schema::create('zona_espetaculo', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('prova_id')->constrained("prova");
+            $table->string('nome');
+            $table->enum('nivel_afluencia',['facil', 'medio', 'dificil']);
+            $table->enum('facilidade_acesso',['facil', 'medio', 'dificil']);
+            $table->integer('distancia_estacionamento');
+            $table->string('coordenadas');
+            $table->unique(['nome', 'prova_id']); // Garante que o nome seja único para cada prova_id
+            $table->unique(['coordenadas', 'prova_id']); // Garante que o coordenadas seja único para cada prova_id
+        });
     }
 
     /**
@@ -121,6 +133,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('zona_espetaculo');
         Schema::dropIfExists('horarios');
         Schema::dropIfExists('prova');
         Schema::dropIfExists('conselhos_segurança');

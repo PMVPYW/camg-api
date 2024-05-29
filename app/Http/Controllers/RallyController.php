@@ -11,8 +11,11 @@ use App\Http\Resources\EntidadeResource;
 use App\Http\Resources\HorarioResource;
 use App\Http\Resources\PatrocinioResource;
 use App\Http\Resources\RallyResource;
+use App\Http\Resources\ZonaEspetaculoResource;
 use App\Models\Entidade;
+use App\Models\Prova;
 use App\Models\Rally;
+use App\Models\ZonaEspetaculo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -240,5 +243,30 @@ class RallyController extends Controller
     {
         $entidadesSemAssociacao = Entidade::whereNotIn('id',  $rally->patrocinios->pluck('entidade_id'))->where("entidade_oficial",true)->get();
         return EntidadeResource::collection($entidadesSemAssociacao);
+    }
+
+    //ZonaEspetaculo
+    public function getZonasEspetaculo(Rally $rally)
+    {
+        $provas = $rally->provas;
+        $zonasEspetaculo=[];
+        foreach ($provas as $prova){
+            if($prova->zonas_espetaculo->count()>0) {
+                $zonasEspetaculo[]=$prova->zonas_espetaculo;
+            }
+        }
+       /* switch ($filters) {
+            case 'nome_asc':
+                $patrocinios = $patrocinios->sortBy(function ($patrocinio) {
+                    return $patrocinio->entidade->nome;
+                });
+                break;
+            case 'nome_desc':
+                $patrocinios = $patrocinios->sortByDesc(function ($patrocinio) {
+                    return $patrocinio->entidade->nome;
+                });
+                break;
+        }*/
+        return response()->json($zonasEspetaculo);
     }
 }
