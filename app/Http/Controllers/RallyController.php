@@ -266,21 +266,20 @@ class RallyController extends Controller
     {
         $declaracoes=$rally->declaracoes();
         if ($request->order == 'nome_desc') {
-            $declaracoes = $rally->declaracoes()->orderBy('nome', 'desc');
+            $declaracoes = $declaracoes->orderBy('nome', 'desc');
         } else if ($request->order == 'nome_asc') {
-            $declaracoes = $rally->declaracoes()->orderBy('nome', 'asc');
+            $declaracoes = $declaracoes->orderBy('nome', 'asc');
         } else if ($request->order == 'cargo_desc') {
-            $declaracoes = $rally->declaracoes()->orderBy('cargo', 'desc');
+            $declaracoes = $declaracoes->orderBy('cargo', 'desc');
         } else if ($request->order == 'cargo_asc') {
-            $declaracoes = $rally->declaracoes()->orderBy('cargo', 'asc');
+            $declaracoes = $declaracoes->orderBy('cargo', 'asc');
         }
-
-        if ($request->search && strlen($request->search) > 0)
-        {
-            $declaracoes = $rally->declaracoes()->where('nome', 'LIKE', "%{$request->search}%")
-                ->orWhere('conteudo', 'LIKE', "%{$request->search}%");
+        if ($request->search && strlen($request->search) > 0) {
+            $declaracoes = $declaracoes->where(function($query) use ($request) {
+                $query->where('nome', 'LIKE', "%{$request->search}%")
+                    ->orWhere('conteudo', 'LIKE', "%{$request->search}%");
+            });
         }
-
         return DeclaracaoResource::collection($declaracoes->get());
     }
 }
