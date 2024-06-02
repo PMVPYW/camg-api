@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeclaracaoFiltersRequest;
 use App\Http\Requests\DeclaracaoRequest;
 use App\Http\Requests\DeclaracaoUpdateRequest;
 use App\Http\Resources\DeclaracaoResource;
@@ -16,9 +17,26 @@ class DeclaracoesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(DeclaracaoFiltersRequest $request)
     {
-        return DeclaracaoResource::collection(Declaracao::all());
+        $declaracoes=Declaracao::query();
+        if ($request->order == 'nome_desc') {
+            $declaracoes = $declaracoes->orderBy('nome', 'desc');
+        } else if ($request->order == 'nome_asc') {
+            $declaracoes = $declaracoes->orderBy('nome', 'asc');
+        } else if ($request->order == 'cargo_desc') {
+        $declaracoes = $declaracoes->orderBy('cargo', 'desc');
+        } else if ($request->order == 'cargo_asc') {
+            $declaracoes = $declaracoes->orderBy('cargo', 'asc');
+        }
+
+        if ($request->search && strlen($request->search) > 0)
+        {
+            $declaracoes = $declaracoes->where('nome', 'LIKE', "%{$request->search}%")
+                ->orWhere('conteudo', 'LIKE', "%{$request->search}%");
+        }
+
+        return DeclaracaoResource::collection($declaracoes->get());
     }
 
     /**
