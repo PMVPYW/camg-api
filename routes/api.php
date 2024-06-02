@@ -5,6 +5,7 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\ConselhoSegurancaController;
+use App\Http\Controllers\DeclaracoesController;
 use App\Http\Controllers\EntidadeController;
 use App\Http\Controllers\ImagemNoticiaController;
 use App\Http\Controllers\NoticiaController;
@@ -40,6 +41,9 @@ Route::get("album/{album}/fotos", [AlbumController::class, "getFotos"]);
 Route::get("foto", [FotoController::class, "index"]);
 Route::get("foto/{foto}", [FotoController::class, "show"]);
 
+Route::get("declaracao", [DeclaracoesController::class, "index"]);
+Route::get("declaracao/{declaracao}", [DeclaracoesController::class, "show"]);
+
 Route::get("entidade", [EntidadeController::class, "index"]);
 Route::get("entidade/{entidade}", [EntidadeController::class, "show"]);
 
@@ -61,6 +65,10 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::post("rally", [RallyController::class, "store"]);
     Route::put("rally/{rally}", [RallyController::class, "update"]);
     Route::delete("rally/{rally}", [RallyController::class, "destroy"]);
+
+    Route::post("declaracao", [DeclaracoesController::class, "store"]);
+    Route::put("declaracao/{declaracao}", [DeclaracoesController::class, "update"]);
+    Route::delete("declaracao/{declaracao}", [DeclaracoesController::class, "destroy"]);
 
     Route::post("album", [AlbumController::class, "store"]);
     Route::put("album/{album}", [AlbumController::class, "update"]);

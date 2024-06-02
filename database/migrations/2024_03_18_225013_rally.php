@@ -116,5 +116,6 @@ return new class extends Migration
         Schema::dropIfExists('rallies');
         Schema::dropIfExists('contactos');
         Schema::dropIfExists('tipo_contacto');
+        Schema::dropIfExists('declaracoes');
     }
 };
