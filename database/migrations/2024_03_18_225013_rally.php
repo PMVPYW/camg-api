@@ -150,6 +150,15 @@ return new class extends Migration
             $table->foreignId('departamento_id')->constrained("departamento");
         });
 
+
+        Schema::create('declaracoes', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('rally_id')->constrained("rallies");
+            $table->string('conteudo');
+            $table->string('nome');
+            $table->string('cargo');
+            $table->string('photo_url');
+        });
     }
 
     /**
@@ -173,5 +182,6 @@ return new class extends Migration
         Schema::dropIfExists('rallies');
         Schema::dropIfExists('contactos');
         Schema::dropIfExists('tipo_contacto');
+        Schema::dropIfExists('declaracoes');
     }
 };
