@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeclaracaoFiltersRequest;
 use App\Http\Requests\GetPatrociniosFiltersRequest;
 use App\Http\Requests\PatrocinioRequestDelete;
 use App\Http\Requests\RallyFiltersRequest;
 use App\Http\Requests\RallyRequest;
 use App\Http\Requests\RallyRequestUpdate;
+use App\Http\Resources\DeclaracaoResource;
 use App\Http\Resources\EntidadeResource;
 use App\Http\Resources\HorarioResource;
 use App\Http\Resources\PatrocinioResource;
 use App\Http\Resources\RallyResource;
 use App\Http\Resources\ZonaEspetaculoResource;
+use App\Models\Declaracao;
 use App\Models\Entidade;
 use App\Models\Prova;
 use App\Models\Rally;
@@ -256,5 +259,28 @@ class RallyController extends Controller
             }
         }
         return response()->json($zonasEspetaculo);
+    }
+
+    //Declarações
+    public function getDeclaracoes(DeclaracaoFiltersRequest $request,Rally $rally)
+    {
+        $declaracoes=$rally->declaracoes();
+        if ($request->order == 'nome_desc') {
+            $declaracoes = $rally->declaracoes()->orderBy('nome', 'desc');
+        } else if ($request->order == 'nome_asc') {
+            $declaracoes = $rally->declaracoes()->orderBy('nome', 'asc');
+        } else if ($request->order == 'cargo_desc') {
+            $declaracoes = $rally->declaracoes()->orderBy('cargo', 'desc');
+        } else if ($request->order == 'cargo_asc') {
+            $declaracoes = $rally->declaracoes()->orderBy('cargo', 'asc');
+        }
+
+        if ($request->search && strlen($request->search) > 0)
+        {
+            $declaracoes = $rally->declaracoes()->where('nome', 'LIKE', "%{$request->search}%")
+                ->orWhere('conteudo', 'LIKE', "%{$request->search}%");
+        }
+
+        return DeclaracaoResource::collection($declaracoes->get());
     }
 }
