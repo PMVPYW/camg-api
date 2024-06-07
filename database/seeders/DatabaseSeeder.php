@@ -6,21 +6,35 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
      */
+    public static $seedType = "deploy";
     public function run(): void
     {
-        // User::factory(10)->create();
+
+        Storage::deleteDirectory("public/fotos");
+        Storage::makeDirectory("public/fotos");
 
         User::factory()->create([
             'nome' => 'Test User',
             'email' => 'test@example.com',
-            "password" => Hash::make("123"),
-            "authorized" => true
+            "password" => "123",
+            "authorized" => true,
+            "blocked" => 0
         ]);
+
+        DatabaseSeeder::$seedType = $this->command->choice('What is the size of seed data (choose "deploy" for publishing)?', ['deploy', 'test'], 0);
+        if (DatabaseSeeder::$seedType == "deploy") {
+            return;
+        }
+
+        User::factory(10)->create();
+        $this->call(RallySeeder::class);
+
     }
 }
