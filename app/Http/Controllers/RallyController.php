@@ -90,6 +90,9 @@ class RallyController extends Controller
             $rally->fill($validated);
             $rally->save();
         });
+
+        $controller = new ProvaController();
+
         return response(new RallyResource($rally), 201);
     }
 

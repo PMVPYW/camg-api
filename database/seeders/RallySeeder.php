@@ -31,7 +31,7 @@ class RallySeeder extends Seeder
             "data_inicio" => "2024-4-19",
             "data_fim" => "2024-4-20",
             "photo_url" => $fileName,
-            "external_entity_id" => "111"
+            "external_entity_id" => "141"
         ]);
     }
 
