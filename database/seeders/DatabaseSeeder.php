@@ -40,5 +40,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AlbumSeeder::class);
         $this->call(FotoSeeder::class);
         $this->call(NoticiaSeeder::class);
+        $this->call(ImagemNoticiaSeeder::class);
     }
 }
