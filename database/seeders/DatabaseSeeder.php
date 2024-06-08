@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         $this->call(RallySeeder::class);
         $this->call(ProvaSeeder::class);
-
+        $this->call(AlbumSeeder::class);
+        $this->call(FotoSeeder::class);
     }
 }
