@@ -15,15 +15,6 @@ class RallySeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        $fileName = CommonSeederFunctions::storePhoto("vidreiro.jpeg");
-        Rally::factory()->create([
-            "nome" => "Rally Vidreiro 2024",
-            "data_inicio" => "2024-10-11",
-            "data_fim" => "2024-10-12",
-            "photo_url" => $fileName,
-            "external_entity_id" => "111"
-        ]);
 
         $fileName = CommonSeederFunctions::storePhoto("ourem.jpg");
         Rally::factory()->create([
@@ -32,6 +23,16 @@ class RallySeeder extends Seeder
             "data_fim" => "2024-4-20",
             "photo_url" => $fileName,
             "external_entity_id" => "141"
+        ]);
+
+
+        $fileName = CommonSeederFunctions::storePhoto("vidreiro.jpeg");
+        Rally::factory()->create([
+            "nome" => "Rally Vidreiro 2024",
+            "data_inicio" => "2024-10-11",
+            "data_fim" => "2024-10-12",
+            "photo_url" => $fileName,
+            "external_entity_id" => "111"
         ]);
     }
 }

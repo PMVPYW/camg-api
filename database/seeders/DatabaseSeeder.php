@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Noticia;
+use App\Models\Patrocinio;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -44,5 +45,6 @@ class DatabaseSeeder extends Seeder
         $this->call(NoticiaSeeder::class);
         $this->call(ImagemNoticiaSeeder::class);
         $this->call(EntidadeSeeder::class);
+        $this->call(PatrocinioSeeder::class);
     }
 }
