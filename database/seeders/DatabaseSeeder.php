@@ -46,5 +46,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ImagemNoticiaSeeder::class);
         $this->call(EntidadeSeeder::class);
         $this->call(PatrocinioSeeder::class);
+        $this->call(TipoContactoSeeder::class);
+        $this->call(ContactoSeeder::class);
     }
 }
