@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
 
         Storage::deleteDirectory("public/fotos");
         Storage::makeDirectory("public/fotos");
+        Storage::deleteDirectory("public/entidades");
+        Storage::makeDirectory("public/entidades");
 
         User::factory()->create([
             'nome' => 'Test User',
@@ -41,5 +43,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FotoSeeder::class);
         $this->call(NoticiaSeeder::class);
         $this->call(ImagemNoticiaSeeder::class);
+        $this->call(EntidadeSeeder::class);
     }
 }
