@@ -70,6 +70,7 @@ return new class extends Migration
             $table->foreignId('rally_id')->constrained("rallies");
         });
 
+        //TODO --> seeders
         Schema::create('conselhos_seguranca', function (Blueprint $table) {
             $table->id();
             $table->foreignId("rally_id")->nullable()->constrained("rallies");
