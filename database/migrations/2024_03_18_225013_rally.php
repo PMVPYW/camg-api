@@ -120,10 +120,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('prova_id')->constrained("prova");
             $table->string('nome');
-            $table->enum('nivel_afluencia',['facil', 'medio', 'dificil']);
-            $table->enum('facilidade_acesso',['facil', 'medio', 'dificil']);
+            $table->enum('nivel_afluencia',['Fácil', 'Médio', 'Difícil']);
+            $table->enum('facilidade_acesso',['Fácil', 'Médio', 'Difícil']);
             $table->integer('distancia_estacionamento');
             $table->string('coordenadas');
+            $table->enum('nivel_ocupacao',['Livre', 'Intermédio', 'Completo']);
             $table->unique(['nome', 'prova_id']); // Garante que o nome seja único para cada prova_id
             $table->unique(['coordenadas', 'prova_id']); // Garante que o coordenadas seja único para cada prova_id
         });
