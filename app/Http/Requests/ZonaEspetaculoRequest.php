@@ -22,12 +22,12 @@ class ZonaEspetaculoRequest extends FormRequest
     public function rules(): array
     {
         return [
-
             "nome" => 'required|string|unique:zona_espetaculo,nome,NULL,id,prova_id,' . $this->input('prova_id'),
-            "nivel_afluencia" => "required|in:facil,medio,dificil",
-            "facilidade_acesso" => "required|in:facil,medio,dificil",
+            "nivel_afluencia" => "required|in:Fácil,Médio,Difícil",
+            "facilidade_acesso" => "required|in:Fácil,Médio,Difícil",
             "distancia_estacionamento" => "required|integer",
             "coordenadas" => 'required|string|unique:zona_espetaculo,coordenadas,NULL,id,prova_id,' . $this->input('prova_id'),
+            "nivel_ocupacao" => "required|in:Livre,Intermédio,Completo",
             "prova_id" => "required|exists:prova,id"
         ];
     }
