@@ -26,7 +26,7 @@ class EntidadeSeeder extends Seeder
         $filename = CommonSeederFunctions::storePhotoEntidade('intermarche.png');
         Entidade::factory()->create(['nome' => 'Intermarche', 'photo_url' => $filename, 'url' => 'https://www.intermarche.pt/', 'entidade_oficial' => 0]);
 
-        $filename = CommonSeederFunctions::storePhotoEntidade('era.svg');
+        $filename = CommonSeederFunctions::storePhotoEntidade('era.png');
         Entidade::factory()->create(['nome' => 'era', 'photo_url' => $filename, 'url' => 'https://www.era.pt/', 'entidade_oficial' => 0]);
 
         $filename = CommonSeederFunctions::storePhotoEntidade('vidrala.png');
