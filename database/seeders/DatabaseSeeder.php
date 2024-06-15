@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
         Storage::makeDirectory("public/fotos");
         Storage::deleteDirectory("public/entidades");
         Storage::makeDirectory("public/entidades");
-        chown(storage_path('app/public/fotos'), 'www-data');
-        chown(storage_path('app/public/entidades'), 'www-data');
+
+
 
 
         User::factory()->create([

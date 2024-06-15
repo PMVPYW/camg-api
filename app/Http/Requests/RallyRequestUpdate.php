@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueUpdateRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,8 +23,9 @@ class RallyRequestUpdate extends FormRequest
      */
     public function rules(): array
     {
+        $resourceId = $this->route('rally')->id;
         return [
-            "nome" => "sometimes|string|min:0",
+            "nome" => ["sometimes", "string", "min:0", new UniqueUpdateRule('rallies', 'nome', $resourceId)],
             "data_inicio" => "sometimes|date|before_or_equal:data_fim",
             "data_fim" => "sometimes|date|after_or_equal:data_inicio",
             "external_entity_id" => "sometimes|integer",
