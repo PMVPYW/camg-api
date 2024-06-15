@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Noticia;
 use App\Models\Patrocinio;
 use App\Models\User;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public static $seedType = "deploy";
+
     public function run(): void
     {
 
@@ -23,6 +25,9 @@ class DatabaseSeeder extends Seeder
         Storage::makeDirectory("public/fotos");
         Storage::deleteDirectory("public/entidades");
         Storage::makeDirectory("public/entidades");
+        chown(storage_path('app/public/fotos'), 'www-data');
+        chown(storage_path('app/public/entidades'), 'www-data');
+
 
         User::factory()->create([
             'nome' => 'Test User',
