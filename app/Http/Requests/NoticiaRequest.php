@@ -21,8 +21,6 @@ class NoticiaRequest extends FormRequest
      */
     public function rules(): array
     {
-
-
         return [
             'fotos_id' => 'nullable|array',
             'fotos_id.*' => 'integer|exists:fotos,id', // Validação para cada item do array
