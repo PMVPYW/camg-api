@@ -27,7 +27,7 @@ class ProvaUpdateRequest extends FormRequest
             "horario_id" => ["sometimes", "integer", "exists:horarios,id", new HorarioJaTemProva($resourceId)],
             "local" => "sometimes | string",
             "nome" => "sometimes | string",
-            "kml_src" => "sometimes|file|kml",
+            "kml_src" => "file",
         ];
     }
 }

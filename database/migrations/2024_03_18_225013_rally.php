@@ -127,7 +127,7 @@ return new class extends Migration
             $table->longText('coordenadas');
             $table->enum('nivel_ocupacao',['Livre', 'Intermédio', 'Completo']);
             $table->unique(['nome', 'prova_id']); // Garante que o nome seja único para cada prova_id
-            $table->unique(['coordenadas', 'prova_id']); // Garante que o coordenadas seja único para cada prova_id
+            //$table->unique(['coordenadas', 'prova_id']); // Garante que o coordenadas seja único para cada prova_id
         });
 
         Schema::create('historia', function (Blueprint $table) {

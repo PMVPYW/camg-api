@@ -29,7 +29,7 @@ class ProvaRequest extends FormRequest
             "local" => "required | string",
             "distancia_percurso" => "required | integer",
             "nome" => "required | string",
-            "kml_src" => "required|file|kml",
+            "kml_src" => "file",
         ];
     }
     public function messages(): array
