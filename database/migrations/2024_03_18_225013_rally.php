@@ -93,6 +93,7 @@ return new class extends Migration
             $table->enum('tipo_valor', ['Email', 'Telemovel', 'Telefone', 'Fax', 'Facebook', 'Instagram', 'Twitter', 'PaginaWeb', 'WhatsApp', 'Morada', 'Coordenadas']);
             $table->string('valor');
             $table->foreignId('tipocontacto_id')->constrained("tipo_contacto");
+            $table->unique(['nome', 'tipocontacto_id']);
         });
 
         Schema::create('horarios', function (Blueprint $table) {

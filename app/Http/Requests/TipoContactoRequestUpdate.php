@@ -22,9 +22,9 @@ class TipoContactoRequestUpdate extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('tipo_contacto')->id;
+        $id = $this->route('tipocontacto')->id;
         return [
-            "nome" => ["sometimes", "string", new UniqueUpdateRule("tipo_contacto", 'nome', id)]
+            "nome" => ["sometimes", "string", new UniqueUpdateRule("tipo_contacto", 'nome', $id)]
         ];
     }
 
