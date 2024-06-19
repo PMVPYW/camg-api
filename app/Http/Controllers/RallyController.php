@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DeclaracaoFiltersRequest;
 use App\Http\Requests\GetPatrociniosFiltersRequest;
 use App\Http\Requests\PatrocinioRequestDelete;
+use App\Http\Requests\ProvaFiltersRequest;
 use App\Http\Requests\RallyFiltersRequest;
 use App\Http\Requests\RallyRequest;
 use App\Http\Requests\RallyRequestUpdate;
@@ -12,6 +13,7 @@ use App\Http\Resources\DeclaracaoResource;
 use App\Http\Resources\EntidadeResource;
 use App\Http\Resources\HorarioResource;
 use App\Http\Resources\PatrocinioResource;
+use App\Http\Resources\ProvaResource;
 use App\Http\Resources\RallyResource;
 use App\Http\Resources\ZonaEspetaculoResource;
 use App\Models\Declaracao;
@@ -284,5 +286,31 @@ class RallyController extends Controller
             });
         }
         return DeclaracaoResource::collection($declaracoes->get());
+    }
+
+    //ZonaEspetaculo
+    public function getProvas(ProvaFiltersRequest $request,Rally $rally)
+    {
+        $provas = $rally->provas();
+        if ($request->order == 'nome_desc') {
+            $provas = $provas->orderBy('nome', 'desc');
+        } else if ($request->order == 'nome_asc') {
+            $provas = $provas->orderBy('nome', 'asc');
+        } else if ($request->order == 'local_desc') {
+            $provas = $provas->orderBy('local', 'desc');
+        } else if ($request->order == 'local_asc') {
+            $provas = $provas->orderBy('local', 'asc');
+        }else if ($request->order == 'distancia_percurso_asc') {
+            $provas = $provas->orderBy('distancia_percurso', 'asc');
+        } else if ($request->order == 'distancia_percurso_desc') {
+            $provas = $provas->orderBy('distancia_percurso', 'desc');
+        }
+
+        if ($request->search && strlen($request->search) > 0)
+        {
+            $provas = $provas->where('nome', 'LIKE', "%{$request->search}%")
+                ->orWhere('local', 'LIKE', "%{$request->search}%");
+        }
+        return ProvaResource::collection($provas->get());
     }
 }

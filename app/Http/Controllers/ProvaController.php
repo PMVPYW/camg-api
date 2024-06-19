@@ -10,7 +10,9 @@ use App\Http\Resources\HorarioResource;
 use App\Http\Resources\ProvaResource;
 use App\Models\Prova;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class ProvaController extends Controller
 {
@@ -80,7 +82,18 @@ class ProvaController extends Controller
     public function update(ProvaUpdateRequest $request, Prova $prova)
     {
         $validated=$request->validated();
-        DB::transaction(function() use ($validated, $prova){
+        DB::transaction(function() use ($request, $validated, $prova){
+            if ($request->hasFile("kml_src")) {
+                if ($prova->kml_src && Storage::exists('public/kml_files/' . $prova->kml_src)) {
+                    Storage::disk('public')->delete('kml_files/' . $prova->kml_src);
+                }
+                $file = $request->file("kml_src");
+                $file_type = $file->getClientOriginalExtension();
+                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+                Storage::disk('public')->put('kml_files/' . $file_name_to_store, File::get($file));
+                $prova->kml_src = $file_name_to_store;
+            }
+            unset($validated["kml_src"]);
             $prova->fill($validated);
             $prova->save();
         });

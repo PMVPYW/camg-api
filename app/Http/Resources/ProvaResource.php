@@ -22,6 +22,7 @@ class ProvaResource extends JsonResource
             "external_id" => $this->external_id,
             "local" => $this->local,
             "distancia_percurso" => $this->distancia_percurso,
+            "kml_src" => $this->kml_src,
         ];
     }
 }
