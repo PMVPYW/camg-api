@@ -20,6 +20,7 @@ class ZonaEspetaculoResource extends JsonResource
             "nivel_afluencia" => $this->nivel_afluencia,
             "facilidade_acesso" => $this->facilidade_acesso,
             "distancia_estacionamento" => $this->distancia_estacionamento,
+            "nivel_ocupacao" => $this->nivel_ocupacao,
             "coordenadas" => $this->coordenadas,
             "prova"=> $this->prova
         ];
