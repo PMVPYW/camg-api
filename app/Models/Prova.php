@@ -12,7 +12,7 @@ class Prova extends Model
 {
     use HasFactory;
     protected $table = "prova";
-    protected $fillable = ["rally_id","external_id","local","distancia_percurso","horario_id","nome"];
+    protected $fillable = ["rally_id","external_id","local","distancia_percurso","horario_id","nome","kml_src"];
 
     public $timestamps = false;
 

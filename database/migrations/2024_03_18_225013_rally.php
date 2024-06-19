@@ -110,6 +110,7 @@ return new class extends Migration
             $table->string('nome');
             $table->string('local');
             $table->integer('distancia_percurso');
+            $table->string('kml_src')->nullable();
             $table->foreignId('horario_id')->nullable()->constrained("horarios");
             $table->foreignId('rally_id')->constrained("rallies");
             $table->integer('external_id');
@@ -123,7 +124,7 @@ return new class extends Migration
             $table->enum('nivel_afluencia',['Fácil', 'Médio', 'Difícil']);
             $table->enum('facilidade_acesso',['Fácil', 'Médio', 'Difícil']);
             $table->integer('distancia_estacionamento');
-            $table->string('coordenadas');
+            $table->longText('coordenadas');
             $table->enum('nivel_ocupacao',['Livre', 'Intermédio', 'Completo']);
             $table->unique(['nome', 'prova_id']); // Garante que o nome seja único para cada prova_id
             $table->unique(['coordenadas', 'prova_id']); // Garante que o coordenadas seja único para cada prova_id

@@ -48,6 +48,8 @@ Route::get("rally/{rally}/zonasEspetaculo", [RallyController::class, "getZonasEs
 //declarações rally
 Route::get("rally/{rally}/declaracoes", [RallyController::class, "getDeclaracoes"]);
 
+//provas rally
+Route::get("rally/{rally}/provas", [RallyController::class, "getProvas"]);
 
 Route::get("noticia", [NoticiaController::class, "index"]);
 Route::get("noticia/{noticia}", [NoticiaController::class, "show"]);
