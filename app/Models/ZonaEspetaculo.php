@@ -12,7 +12,7 @@ class ZonaEspetaculo extends Model
     use HasFactory;
     protected $table="zona_espetaculo";
     public $timestamps=false;
-    protected $fillable=["nome","prova_id","nivel_ocupacao","nivel_afluencia","facilidade_acesso","distancia_estacionamento","coordenadas"];
+    protected $fillable=["nome","prova_id","nivel_ocupacao","nivel_afluencia","facilidade_acesso","distancia_estacionamento","coordenadas","info"];
 
     public function prova(): belongsTo
     {

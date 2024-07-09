@@ -23,12 +23,13 @@ class ZonaEspetaculoUpdateRequest extends FormRequest
     {
         return [
             "nome" => "sometimes|string|unique:zona_espetaculo,nome,". $this->route('zonaEspetaculo')->id . ',id,prova_id,' . $this->input('prova_id'),
-            "nivel_afluencia" => "sometimes|in:Fácil,Médio,Difícil",
+            "nivel_afluencia" => "sometimes|in:Baixo,Médio,Alto",
             "facilidade_acesso" => "sometimes|in:Fácil,Médio,Difícil",
             "distancia_estacionamento" => "sometimes|integer",
             "coordenadas" => "sometimes|string|unique:zona_espetaculo,coordenadas,". $this->route('zonaEspetaculo')->id . ',id,prova_id,' . $this->input('prova_id'),
             "nivel_ocupacao" => "sometimes|in:Livre,Intermédio,Completo",
-            "prova_id" => "sometimes|exists:prova,id"
+            "prova_id" => "sometimes|exists:prova,id",
+            "info" => "nullable|string"
         ];
     }
 }
