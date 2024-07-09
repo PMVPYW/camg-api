@@ -49,5 +49,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TipoContactoSeeder::class);
         $this->call(ContactoSeeder::class);
         $this->call(HorarioSeeder::class);
+        $this->call(ZonaEspetaculoSeeder::class);
     }
 }

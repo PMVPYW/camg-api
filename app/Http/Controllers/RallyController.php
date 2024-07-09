@@ -260,10 +260,10 @@ class RallyController extends Controller
         $zonasEspetaculo=[];
         foreach ($provas as $prova){
             if($prova->zonas_espetaculo->count()>0) {
-                $zonasEspetaculo = array_merge($zonasEspetaculo, $prova->zonas_espetaculo->toArray());
+                $zonasEspetaculo = array_merge($zonasEspetaculo, $prova->zonas_espetaculo->all());
             }
         }
-        return response()->json($zonasEspetaculo);
+        return ZonaEspetaculoResource::collection($zonasEspetaculo);
     }
 
     //Declarações
