@@ -132,8 +132,8 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::delete("destroyAllEntities", [EntidadeController::class, "destroyAllEntities"]);
 
     //Route::post("prova", [ProvaController::class, "store"]);              //COMO A APP-MOBILE DEPENDE DESTAS PROVAS POR CAUSA DAS CLASSIFICAÇÕES DECIDIMOS COMENTAR ESTA ROTA
-    Route::put("prova/{prova}", [ProvaController::class, "update"]);    //APENAS ATUALIZA A DATA, LOCAL, DISTANCIA, NOME DA PROVA
-    Route::delete("prova/{prova}", [ProvaController::class, "destroy"]);
+    Route::put("prova/{prova}", [ProvaController::class, "update"]);    //APENAS ATUALIZA o LOCAL
+    //Route::delete("prova/{prova}", [ProvaController::class, "destroy"]);
     Route::post("copyProvas", [ProvaController::class, "copyProvas"]);
 
 
