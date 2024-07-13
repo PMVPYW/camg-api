@@ -11,7 +11,7 @@ class HistoriaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class HistoriaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "titulo" => "required|string|min:0|unique:historia,titulo",
+            "subtitulo" => "required|string|min:0",
+            "conteudo" => "sometimes|nullable|string",
+            "photo_url" => "sometimes|nullable|file|image"
         ];
     }
 }

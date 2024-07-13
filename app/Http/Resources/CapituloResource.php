@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class HistoriaResource extends JsonResource
+class CapituloResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,9 @@ class HistoriaResource extends JsonResource
     {
         return [
             "id" => $this->id,
+            "historia_id" => $this->historia_id,
             "titulo" => $this->titulo,
-            "subtitulo" => $this->subtitulo,
-            "conteudo" => $this->conteudo,
-            "photo_url" => $this->photo_url,
-            "capitulo" =>CapituloResource::collection($this->capitulos),
+            "etapas" => $this->etapas
         ];
     }
 }

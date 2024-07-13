@@ -11,7 +11,7 @@ class CapituloRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class CapituloRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "historia_id" => "integer|sometimes|nullable|exists:historia,id",
+            "titulo" => "required|string|min:0|unique:capitulo,titulo",
         ];
     }
 }

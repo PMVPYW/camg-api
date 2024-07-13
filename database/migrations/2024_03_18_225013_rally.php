@@ -131,26 +131,26 @@ return new class extends Migration
             //$table->unique(['coordenadas', 'prova_id']); // Garante que o coordenadas seja único para cada prova_id
         });
 
-        Schema::create('etapa', function (Blueprint $table) {
+        Schema::create('historia', function (Blueprint $table) {
             $table->id();
-            $table->string("nome");
-            $table->string("ano_inicio");
-            $table->string("ano_fim");
+            $table->string("titulo")->unique();
+            $table->string("subtitulo");
+            $table->string("conteudo")->nullable();
+            $table->string('photo_url')->nullable();
         });
 
         Schema::create('capitulo', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("etapa_id")->constrained("etapa");
+            $table->foreignId("historia_id")->nullable()->constrained("historia");
             $table->string("titulo");
         });
 
-        Schema::create('historia', function (Blueprint $table) {
+        Schema::create('etapa', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("capitulo_id")->constrained("capitulo")->nullable();
-            $table->string("titulo");
-            $table->string("subtitulo");
-            $table->string("conteudo")->nullable();
-            $table->string('photo_url')->nullable();
+            $table->foreignId("capitulo_id")->nullable()->constrained("capitulo");
+            $table->string("nome");
+            $table->year("ano_inicio");
+            $table->year("ano_fim");
         });
 
         Schema::create('departamento', function (Blueprint $table) {
@@ -159,14 +159,14 @@ return new class extends Migration
             $table->timestamp("deleted_at")->nullable();
         });
 
-        Schema::create('orgaos_sociais', function (Blueprint $table) {
+       /* Schema::create('orgaos_sociais', function (Blueprint $table) {
             $table->id();
             $table->string("nome")->unique();
             $table->enum('cargo',['presidente', 'secretario', 'vice-presidente', 'vogal']);
             $table->integer("relevancia");
             $table->string('photo_url');
             $table->foreignId('departamento_id')->constrained("departamento");
-        });
+        });*/
 
 
         Schema::create('declaracoes', function (Blueprint $table) {
