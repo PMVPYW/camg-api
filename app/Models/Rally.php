@@ -21,11 +21,6 @@ class Rally extends Model
         return $this->hasMany(Declaracao::class, 'rally_id', 'id');
     }
 
-    public function conselhos_seguranca(): HasMany
-    {
-        return $this->hasMany(ConselhoSeguranca::class, "rally_id", "id");
-    }
-
     public function noticias(): HasMany
     {
         return $this->hasMany(Noticia::class, "rally_id", "id");

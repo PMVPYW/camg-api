@@ -16,7 +16,6 @@ class ConselhoSegurancaResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "rally_id" => $this->rally_id,
             "descricao" => $this->descricao,
             "img_conselho" => $this->img_conselho,
             "erro" => $this->erro,
