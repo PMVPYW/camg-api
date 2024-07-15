@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ValidKML;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProvaRequest extends FormRequest
@@ -29,7 +30,7 @@ class ProvaRequest extends FormRequest
             "local" => "required | string",
             "distancia_percurso" => "required | integer",
             "nome" => "required | string",
-            "kml_src" => "file|mimes:kml",
+            "kml_src" => ["file", new ValidKML()],
         ];
     }
     public function messages(): array
@@ -48,6 +49,7 @@ class ProvaRequest extends FormRequest
             'distancia_percurso.integer' => 'O campo distancia_percurso deve ser um número inteiro.',
             'nome.required' => 'O campo nome é obrigatório.',
             'nome.string' => 'O campo nome deve ser uma string.',
+            'kml_src.file' => 'O ficheiro deve ser um ficheiro.'
         ];
     }
 }

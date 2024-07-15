@@ -137,16 +137,13 @@ class RallyController extends Controller
     public function destroy(Rally $rally)
     {
         DB::transaction(function () use ($rally) {
-            foreach ($rally->conselhos_seguranca as $conselho_seguranca){
-                $conselho_seguranca->forceDelete();
-            }
             foreach ($rally->patrocinios as $patrocinio){
                 $patrocinio->forceDelete();
             }
             foreach ($rally->provas as $prova){
                 $prova->forceDelete();
             }
-            foreach ($rally->horarios as $horario){
+            foreach ($rally->horarios as $horario){                                 
                 $horario->forceDelete();
             }
             foreach ($rally->noticias as $noticia){
@@ -288,7 +285,7 @@ class RallyController extends Controller
         return DeclaracaoResource::collection($declaracoes->get());
     }
 
-    //ZonaEspetaculo
+    //Provas
     public function getProvas(ProvaFiltersRequest $request,Rally $rally)
     {
         $provas = $rally->provas();

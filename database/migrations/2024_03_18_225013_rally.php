@@ -73,7 +73,6 @@ return new class extends Migration
         //TODO --> seeders
         Schema::create('conselhos_seguranca', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("rally_id")->nullable()->constrained("rallies");
             $table->string("descricao");
             $table->string("img_conselho");
             $table->string("erro");
@@ -133,10 +132,24 @@ return new class extends Migration
 
         Schema::create('historia', function (Blueprint $table) {
             $table->id();
-            $table->string("titulo");
+            $table->string("titulo")->unique();
             $table->string("subtitulo");
-            $table->string("conteudo");
-            $table->string('photo_url');
+            $table->longText("conteudo")->nullable();
+            $table->string('photo_url')->nullable();
+        });
+
+        Schema::create('capitulo', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId("historia_id")->nullable()->constrained("historia");
+            $table->string("titulo");
+        });
+
+        Schema::create('etapa', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId("capitulo_id")->nullable()->constrained("capitulo");
+            $table->string("nome");
+            $table->year("ano_inicio");
+            $table->year("ano_fim")->nullable();
         });
 
         Schema::create('departamento', function (Blueprint $table) {
@@ -145,14 +158,14 @@ return new class extends Migration
             $table->timestamp("deleted_at")->nullable();
         });
 
-        Schema::create('orgaos_sociais', function (Blueprint $table) {
+       /* Schema::create('orgaos_sociais', function (Blueprint $table) {
             $table->id();
             $table->string("nome")->unique();
             $table->enum('cargo',['presidente', 'secretario', 'vice-presidente', 'vogal']);
             $table->integer("relevancia");
             $table->string('photo_url');
             $table->foreignId('departamento_id')->constrained("departamento");
-        });
+        });*/
 
 
         Schema::create('declaracoes', function (Blueprint $table) {

@@ -22,7 +22,6 @@ class ConselhoSegurancaUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "rally_id" => "exists:rallies,id",
             "descricao" => "string",
             "img_conselho" => "file|image",
             "erro" => "string",

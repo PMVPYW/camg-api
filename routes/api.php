@@ -3,10 +3,13 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\CapituloController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\ConselhoSegurancaController;
 use App\Http\Controllers\DeclaracoesController;
 use App\Http\Controllers\EntidadeController;
+use App\Http\Controllers\EtapaController;
+use App\Http\Controllers\HistoriaController;
 use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\ImagemNoticiaController;
 use App\Http\Controllers\NoticiaController;
@@ -104,11 +107,27 @@ Route::get("horario/{horario}/prova", [HorarioController::class, "getProva"]);
 Route::get("zonaEspetaculo",[ZonaEspetaculoController::class, "index"]);
 Route::get("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "show"]);
 
+//História
+Route::get("historia",[HistoriaController::class, "index"]);
+Route::get("historia/{historia}",[HistoriaController::class, "show"]);
+
 //protected routes
 Route::middleware("auth:sanctum")->group(function (){
     Route::post("zonaEspetaculo",[ZonaEspetaculoController::class, "store"]);
     Route::put("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "update"])->name("zonaEspetaculo");
     Route::delete("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "destroy"]);
+
+    Route::post("historia",[HistoriaController::class, "store"]);
+    Route::put("historia/{historia}",[HistoriaController::class, "update"]);
+    Route::delete("historia/{historia}",[HistoriaController::class, "destroy"]);
+
+    Route::post("etapa",[EtapaController::class, "store"]);
+    Route::put("etapa/{etapa}",[EtapaController::class, "update"]);
+    Route::delete("etapa/{etapa}",[EtapaController::class, "destroy"]);
+
+    Route::post("capitulo",[CapituloController::class, "store"]);
+    Route::put("capitulo/{capitulo}",[CapituloController::class, "update"]);
+    Route::delete("capitulo/{capitulo}",[CapituloController::class, "destroy"]);
 
     Route::post("rally", [RallyController::class, "store"]);
     Route::put("rally/{rally}", [RallyController::class, "update"]);
@@ -132,8 +151,8 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::delete("destroyAllEntities", [EntidadeController::class, "destroyAllEntities"]);
 
     //Route::post("prova", [ProvaController::class, "store"]);              //COMO A APP-MOBILE DEPENDE DESTAS PROVAS POR CAUSA DAS CLASSIFICAÇÕES DECIDIMOS COMENTAR ESTA ROTA
-    Route::put("prova/{prova}", [ProvaController::class, "update"]);    //APENAS ATUALIZA A DATA, LOCAL, DISTANCIA, NOME DA PROVA
-    Route::delete("prova/{prova}", [ProvaController::class, "destroy"]);
+    Route::put("prova/{prova}", [ProvaController::class, "update"]);    //APENAS ATUALIZA o LOCAL
+    //Route::delete("prova/{prova}", [ProvaController::class, "destroy"]);
     Route::post("copyProvas", [ProvaController::class, "copyProvas"]);
 
 

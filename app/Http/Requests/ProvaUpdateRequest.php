@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\HorarioJaTemProva;
+use App\Rules\ValidKML;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProvaUpdateRequest extends FormRequest
@@ -26,8 +27,13 @@ class ProvaUpdateRequest extends FormRequest
         return [
             "horario_id" => ["sometimes", "integer", "exists:horarios,id", new HorarioJaTemProva($resourceId)],
             "local" => "sometimes | string",
-            "nome" => "sometimes | string",
-            "kml_src" => "file|mimes:kml",
+            "kml_src" => ["file", new ValidKML()],
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'kml_src.file' => 'O ficheiro deve ser um ficheiro.'
         ];
     }
 }

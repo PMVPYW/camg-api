@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class  TipoContactoRequest extends FormRequest
+class EtapaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +22,10 @@ class  TipoContactoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nome" => "required|string|unique:tipo_contacto,nome"
-        ];
-    }
-    public function messages()
-    {
-        return [
-            "nome.required" => "O campo nome é obrigatório.",
-            "nome.string" => "O campo nome deve ser uma string.",
-            "nome.unique" => "Este nome já está em uso."
+            "capitulo_id" => "integer|sometimes|nullable|exists:capitulo,id",
+            "nome" => "required|string|min:0",
+            "ano_inicio" => "required|date_format:Y",
+            "ano_fim" => "sometimes|nullable|date_format:Y|after:ano_inicio",
         ];
     }
 }
