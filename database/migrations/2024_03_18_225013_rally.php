@@ -134,7 +134,7 @@ return new class extends Migration
             $table->id();
             $table->string("titulo")->unique();
             $table->string("subtitulo");
-            $table->string("conteudo")->nullable();
+            $table->longText("conteudo")->nullable();
             $table->string('photo_url')->nullable();
         });
 
@@ -149,7 +149,7 @@ return new class extends Migration
             $table->foreignId("capitulo_id")->nullable()->constrained("capitulo");
             $table->string("nome");
             $table->year("ano_inicio");
-            $table->year("ano_fim");
+            $table->year("ano_fim")->nullable();
         });
 
         Schema::create('departamento', function (Blueprint $table) {

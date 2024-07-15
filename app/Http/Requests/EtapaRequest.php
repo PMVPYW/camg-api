@@ -25,7 +25,7 @@ class EtapaRequest extends FormRequest
             "capitulo_id" => "integer|sometimes|nullable|exists:capitulo,id",
             "nome" => "required|string|min:0",
             "ano_inicio" => "required|date_format:Y",
-            "ano_fim" => "required|date_format:Y|after:ano_inicio",
+            "ano_fim" => "sometimes|nullable|date_format:Y|after:ano_inicio",
         ];
     }
 }
