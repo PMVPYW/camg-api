@@ -62,6 +62,12 @@ class CapituloController extends Controller
      */
     public function destroy(Capitulo $capitulo)
     {
+        DB::transaction(function () use ($capitulo) {
+            foreach ($capitulo->etapas as $etapa){
+                $etapa->forceDelete();
+            }
+            $capitulo->forceDelete();
+        });
         return new CapituloResource($capitulo);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\HistoriaRequest;
 use App\Http\Requests\HistoriaUpdateRequest;
 use App\Http\Resources\HistoriaResource;
+use App\Models\Etapa;
 use App\Models\Historia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -86,6 +87,15 @@ class HistoriaController extends Controller
      */
     public function destroy(Historia $historia)
     {
+        DB::transaction(function () use ($historia) {
+            foreach ($historia->capitulos as $capitulo) {
+                foreach ($capitulo->etapas as $etapa){
+                    $etapa->forceDelete();
+                }
+                $capitulo->forceDelete();
+            }
+            $historia->forceDelete();
+        });
         return new HistoriaResource($historia);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EtapaRequest;
 use App\Http\Requests\EtapaUpdateRequest;
+use App\Http\Resources\CapituloResource;
 use App\Models\Etapa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -61,6 +62,9 @@ class EtapaController extends Controller
      */
     public function destroy(Etapa $etapa)
     {
+        DB::transaction(function () use ($etapa) {
+            $etapa->forceDelete();
+        });
         return $etapa;
     }
 }

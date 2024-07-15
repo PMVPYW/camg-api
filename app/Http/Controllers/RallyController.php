@@ -288,7 +288,7 @@ class RallyController extends Controller
         return DeclaracaoResource::collection($declaracoes->get());
     }
 
-    //ZonaEspetaculo
+    //Provas
     public function getProvas(ProvaFiltersRequest $request,Rally $rally)
     {
         $provas = $rally->provas();
