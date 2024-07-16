@@ -28,4 +28,14 @@ class EtapaUpdateRequest extends FormRequest
              "ano_fim" => "sometimes|nullable|date_format:Y|after:ano_inicio",
         ];
     }
+
+    public static function rulesArray(): array
+    {
+        return [
+            "capitulo_id" => "integer|sometimes|nullable|exists:capitulo,id",
+            "nome" => "sometimes|string|min:0",
+            "ano_inicio" => "sometimes|date_format:Y",
+            "ano_fim" => "sometimes|nullable|date_format:Y|after:ano_inicio",
+        ];
+    }
 }

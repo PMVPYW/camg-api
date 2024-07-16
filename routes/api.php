@@ -121,6 +121,9 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::put("historia/{historia}",[HistoriaController::class, "update"]);
     Route::delete("historia/{historia}",[HistoriaController::class, "destroy"]);
 
+    Route::post("historiaCompleta",[HistoriaController::class, "store_historia_completa"]);
+    Route::put("historiaCompleta/{historia}",[HistoriaController::class, "update_historia_completa"]);
+
     Route::post("etapa",[EtapaController::class, "store"]);
     Route::put("etapa/{etapa}",[EtapaController::class, "update"]);
     Route::delete("etapa/{etapa}",[EtapaController::class, "destroy"]);

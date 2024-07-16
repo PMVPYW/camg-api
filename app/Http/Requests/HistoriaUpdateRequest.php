@@ -22,7 +22,6 @@ class HistoriaUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "capitulo_id" => "integer|sometimes|nullable|exists:capitulo,id",
             "titulo" => "sometimes|string|min:0|unique:historia,titulo",
             "subtitulo" => "sometimes|string|min:0",
             "conteudo" => "sometimes|string|nullable|",
