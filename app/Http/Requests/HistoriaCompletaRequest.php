@@ -30,12 +30,13 @@ class HistoriaCompletaRequest extends FormRequest
             'etapas.*.ano_fim' => EtapaRequest::rulesArray()['ano_fim'],
             "capitulos" => "required|array",
             'capitulos.*' => 'array',
-            'capitulos.*.historia_id' => CapituloRequest::rulesArray()['historia_id'],
+            'capitulos.*.capitulo_id' => CapituloRequest::rulesArray()['historia_id'],
             'capitulos.*.titulo' => CapituloRequest::rulesArray()['titulo'],
             "titulo" => "required|string|min:0|unique:historia,titulo",
             "subtitulo" => "required|string|min:0",
             "conteudo" => "sometimes|nullable|string",
             "photo_url" => "sometimes|nullable|file|image"
         ];
+
     }
 }

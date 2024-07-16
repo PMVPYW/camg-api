@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\HistoriaCompletaRequest;
-use App\Http\Requests\HistoriaCompletaUpdateRequest;
-use App\Http\Requests\HistoriaRequest;
-use App\Http\Requests\HistoriaUpdateRequest;
 use App\Http\Resources\HistoriaResource;
+use App\Http\Requests\{HistoriaCompletaRequest,
+    HistoriaCompletaUpdateRequest,
+    HistoriaFiltersRequest,
+    HistoriaRequest,
+    HistoriaUpdateRequest};
 use App\Models\Capitulo;
 use App\Models\Etapa;
 use App\Models\Historia;
@@ -17,9 +18,28 @@ use Illuminate\Support\Facades\Storage;
 
 class HistoriaController extends Controller
 {
-    public function index()
+    public function index(HistoriaFiltersRequest $request)
     {
-        return HistoriaResource::collection(Historia::all());
+        $historias=Historia::query();
+        if ($request->order == 'subtitulo_desc') {
+            $historias = $historias->orderBy('subtitulo', 'desc');
+        } else if ($request->order == 'subtitulo_asc') {
+            $historias = $historias->orderBy('subtitulo', 'asc');
+        }
+
+        if ($request->order == 'titulo_desc') {
+            $historias = $historias->orderBy('titulo', 'desc');
+        } else if ($request->order == 'titulo_asc') {
+            $historias = $historias->orderBy('titulo', 'asc');
+        }
+
+        if ($request->search && strlen($request->search) > 0)
+        {
+            $historias = $historias->where('titulo', 'LIKE', "%{$request->search}%")
+                ->orWhere('conteudo', 'LIKE', "%{$request->search}%")
+                ->orWhere('subtitulo', 'LIKE', "%{$request->search}%");
+        }
+        return HistoriaResource::collection($historias->get());
     }
 
     /**
@@ -131,12 +151,11 @@ class HistoriaController extends Controller
                     // Criar etapas para cada capítulo
                     if (isset($validated['etapas'])) {
                         foreach ($validated['etapas'] as $etapaData) {
-                            if ($etapaData['capitulo_id'] == $capituloData['historia_id']) {
+                            if ($etapaData['capitulo_id'] == $capituloData['capitulo_id']) {
                                 $etapa = new Etapa();
                                 $etapa->fill($etapaData);
                                 $etapa->capitulo_id = $capitulo->id;
                                 $etapa->save();
-
                             }
                         }
                     }
@@ -176,10 +195,12 @@ class HistoriaController extends Controller
                     //Editar etapas
                     if (isset($validated['etapas'])) {
                         foreach ($validated['etapas'] as $etapaData) {
-                            $etapa = Etapa::find($etapaData['id']);
-                            $etapa->fill($etapaData);
-                            $etapa->capitulo_id = $capitulo->id;
-                            $etapa->save();
+                            if ($etapaData['capitulo_id'] == $capituloData['capitulo_id']) {
+                                $etapa = Etapa::find($etapaData['id']);
+                                $etapa->fill($etapaData);
+                                $etapa->capitulo_id = $capitulo->id;
+                                $etapa->save();
+                            }
                         }
                     }
                 }

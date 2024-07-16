@@ -32,7 +32,7 @@ class HistoriaCompletaUpdateRequest extends FormRequest
             "capitulos" => "sometimes|array",
             'capitulos.*' => 'array',
             'capitulos.*.id' => "sometimes|integer", //serve para identificar o capitulo a editar
-            'capitulos.*.historia_id' => CapituloUpdateRequest::rulesArray()['historia_id'],
+            'capitulos.*.capitulo_id' => CapituloUpdateRequest::rulesArray()['historia_id'],
             'capitulos.*.titulo' => CapituloUpdateRequest::rulesArray()['titulo'],
             "titulo" => "sometimes|string|min:0|unique:historia,titulo",
             "subtitulo" => "sometimes|string|min:0",
