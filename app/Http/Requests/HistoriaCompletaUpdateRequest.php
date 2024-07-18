@@ -25,14 +25,14 @@ class HistoriaCompletaUpdateRequest extends FormRequest
             "etapas" => "sometimes|array",
             'etapas.*' => 'array',
             'etapas.*.id' => "sometimes|integer",  //serve para identificar o etapa a editar
-            'etapas.*.capitulo_id' => EtapaUpdateRequest::rulesArray()['capitulo_id'],
+            'etapas.*.capitulo_id' => "sometimes|integer",
             'etapas.*.nome' => EtapaUpdateRequest::rulesArray()['nome'],
             'etapas.*.ano_inicio' => EtapaUpdateRequest::rulesArray()['ano_inicio'],
             'etapas.*.ano_fim' => EtapaUpdateRequest::rulesArray()['ano_fim'],
             "capitulos" => "sometimes|array",
             'capitulos.*' => 'array',
             'capitulos.*.id' => "sometimes|integer", //serve para identificar o capitulo a editar
-            'capitulos.*.capitulo_id' => CapituloUpdateRequest::rulesArray()['historia_id'],
+            'capitulos.*.capitulo_id' => "sometimes|integer",
             'capitulos.*.titulo' => CapituloUpdateRequest::rulesArray()['titulo'],
             "titulo" => "sometimes|string|min:0|unique:historia,titulo",
             "subtitulo" => "sometimes|string|min:0",

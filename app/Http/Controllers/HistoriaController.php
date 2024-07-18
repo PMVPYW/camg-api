@@ -168,8 +168,7 @@ class HistoriaController extends Controller
     public function update_historia_completa(HistoriaCompletaUpdateRequest $request, Historia $historia)
     {
         $validated= $request->validated();
-        DB::transaction(function() use ($validated, &$historia, $request)
-        {
+        DB::transaction(function() use ($validated, &$historia, $request) {
             if ($request->hasFile("photo_url")) {
                 if ($historia->photo_url && Storage::exists('public/fotos/' . $historia->photo_url)) {
                     Storage::disk('public')->delete('fotos/' . $historia->photo_url);
@@ -184,19 +183,39 @@ class HistoriaController extends Controller
             $historia->fill($validated);
             $historia->save();
 
+            $capituloIdsFromRequest = array_column($validated['capitulos'], 'id');
+            $etapaIdsFromRequest = array_column($validated['etapas'], 'id');
+
+            $capitulos_para_eliminar = Capitulo::where('historia_id', $historia->id)
+                ->whereNotIn('id', $capituloIdsFromRequest)->get();
+
+            foreach ($capitulos_para_eliminar as $capitulo) {
+                foreach ($capitulo->etapas as $etapa){
+                    $etapa->forceDelete();
+                }
+                $capitulo->forceDelete();
+            }
+
             // Editar capítulos
             if (isset($validated['capitulos'])) {
                 foreach ($validated['capitulos'] as $capituloData) {
-                    $capitulo = Capitulo::findOrFail($capituloData['id']);
+                    $capitulo = Capitulo::find($capituloData['id']) ?? new Capitulo();
                     $capitulo->fill($capituloData);
                     $capitulo->historia_id = $historia->id;
                     $capitulo->save();
+
+                    $etapas_para_eliminar = Etapa::where('capitulo_id', $capitulo->id)
+                        ->whereNotIn('id', $etapaIdsFromRequest)->get();
+
+                    foreach ($etapas_para_eliminar as $etapa){
+                        $etapa->forceDelete();
+                    }
 
                     //Editar etapas
                     if (isset($validated['etapas'])) {
                         foreach ($validated['etapas'] as $etapaData) {
                             if ($etapaData['capitulo_id'] == $capituloData['capitulo_id']) {
-                                $etapa = Etapa::find($etapaData['id']);
+                                $etapa = Etapa::find($etapaData['id']) ?? new Etapa();
                                 $etapa->fill($etapaData);
                                 $etapa->capitulo_id = $capitulo->id;
                                 $etapa->save();
