@@ -174,6 +174,7 @@ return new class extends Migration
             $table->string('conteudo');
             $table->string('nome');
             $table->string('cargo');
+            $table->string('entidade_equipa')->nullable();
             $table->string('photo_url');
         });
     }

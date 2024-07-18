@@ -26,7 +26,8 @@ class DeclaracaoRequest extends FormRequest
             "photo_url" => "required|file|image",
             "conteudo" => "required|string",
             "rally_id" => "required|integer|exists:rallies,id",
-            "cargo" => "required|string"
+            "cargo" => "required|string",
+            "entidade_equipa"=>"sometimes|nullable|string"
         ];
     }
 }

@@ -10,7 +10,7 @@ class Declaracao extends Model
 {
     use HasFactory;
     protected $table = 'declaracoes';
-    protected $fillable = ['rally_id', 'conteudo', 'nome', 'cargo', 'photo_url'];
+    protected $fillable = ['rally_id', 'conteudo', 'nome', 'cargo', 'photo_url','entidade_equipa'];
     public $timestamps = false;
 
     public function rally() : BelongsTo
