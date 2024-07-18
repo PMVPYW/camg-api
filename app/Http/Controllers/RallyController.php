@@ -143,7 +143,7 @@ class RallyController extends Controller
             foreach ($rally->provas as $prova){
                 $prova->forceDelete();
             }
-            foreach ($rally->horarios as $horario){                                 
+            foreach ($rally->horarios as $horario){
                 $horario->forceDelete();
             }
             foreach ($rally->noticias as $noticia){
@@ -279,7 +279,8 @@ class RallyController extends Controller
         if ($request->search && strlen($request->search) > 0) {
             $declaracoes = $declaracoes->where(function($query) use ($request) {
                 $query->where('nome', 'LIKE', "%{$request->search}%")
-                    ->orWhere('conteudo', 'LIKE', "%{$request->search}%");
+                    ->orWhere('conteudo', 'LIKE', "%{$request->search}%")
+                    ->orWhere('entidade_equipa', 'LIKE', "%{$request->search}%");
             });
         }
         return DeclaracaoResource::collection($declaracoes->get());

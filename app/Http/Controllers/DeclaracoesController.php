@@ -33,7 +33,7 @@ class DeclaracoesController extends Controller
         if ($request->search && strlen($request->search) > 0)
         {
             $declaracoes = $declaracoes->where('nome', 'LIKE', "%{$request->search}%")
-                ->orWhere('conteudo', 'LIKE', "%{$request->search}%");
+                ->orWhere('conteudo', 'LIKE', "%{$request->search}%")->orWhere('entidade_equipa', 'LIKE', "%{$request->search}%");
         }
 
         return DeclaracaoResource::collection($declaracoes->get());
