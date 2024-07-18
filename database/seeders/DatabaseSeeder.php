@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
         $this->call(HistoriaSeeder::class);
         $this->call(CapituloSeeder::class);
         $this->call(EtapaSeeder::class);
+        $this->call(DeclaracaoSeeder::class);
 
     }
 }

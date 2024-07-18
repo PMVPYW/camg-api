@@ -19,7 +19,7 @@ class HistoriaFactory extends Factory
         return [
             "titulo" => $this->faker->name(),
             "subtitulo" => $this->faker->name(),
-            "conteudo" => $this->faker->text(),
+            "conteudo" => null,
             "photo_url" => null
         ];
     }

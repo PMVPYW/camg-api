@@ -20,7 +20,9 @@ class DeclaracaoResource extends JsonResource
             "conteudo" => $this->conteudo,
             "nome" => $this->nome,
             "cargo" => $this->cargo,
-            "photo_url" => $this->photo_url
+            "photo_url" => $this->photo_url,
+            "entidade_equipa" => $this->entidade_equipa,
+            "pontos" => $this->pontos
         ];
     }
 }

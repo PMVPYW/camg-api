@@ -171,10 +171,13 @@ return new class extends Migration
         Schema::create('declaracoes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rally_id')->constrained("rallies");
-            $table->string('conteudo');
+            $table->longText('conteudo');
             $table->string('nome');
             $table->string('cargo');
+            $table->string('entidade_equipa')->nullable();
             $table->string('photo_url');
+            $table->integer('pontos')->nullable();
+
         });
     }
 
