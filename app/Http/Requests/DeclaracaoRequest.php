@@ -27,7 +27,8 @@ class DeclaracaoRequest extends FormRequest
             "conteudo" => "required|string",
             "rally_id" => "required|integer|exists:rallies,id",
             "cargo" => "required|string",
-            "entidade_equipa"=>"sometimes|nullable|string"
+            "entidade_equipa"=>"sometimes|nullable|string",
+            "pontos"=>"sometimes|nullable|integer"
         ];
     }
 }

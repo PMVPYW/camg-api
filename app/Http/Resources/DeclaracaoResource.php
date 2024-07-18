@@ -21,7 +21,8 @@ class DeclaracaoResource extends JsonResource
             "nome" => $this->nome,
             "cargo" => $this->cargo,
             "photo_url" => $this->photo_url,
-            "entidade_equipa" => $this->entidade_equipa
+            "entidade_equipa" => $this->entidade_equipa,
+            "pontos" => $this->pontos
         ];
     }
 }

@@ -27,7 +27,8 @@ class DeclaracaoUpdateRequest extends FormRequest
             "conteudo" => "sometimes|string",
             "rally_id" => "sometimes|integer|exists:rallies,id",
             "cargo" => "sometimes|string",
-            "entidade_equipa"=>"sometimes|nullable|string"
+            "entidade_equipa"=>"sometimes|nullable|string",
+            "pontos"=>"sometimes|nullable|integer"
         ];
     }
 }

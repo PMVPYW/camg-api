@@ -276,6 +276,15 @@ class RallyController extends Controller
         } else if ($request->order == 'cargo_asc') {
             $declaracoes = $declaracoes->orderBy('cargo', 'asc');
         }
+
+        if ($request->select == 'piloto') {
+            $declaracoes = $declaracoes->where('cargo', 'LIKE', 'piloto');
+        } else if ($request->select == 'presidente'){
+            $declaracoes = $declaracoes->where('cargo', 'LIKE', 'presidente');
+        } else if ($request->select == 'copiloto'){
+            $declaracoes = $declaracoes->where('cargo', 'LIKE', 'copiloto');
+        }
+
         if ($request->search && strlen($request->search) > 0) {
             $declaracoes = $declaracoes->where(function($query) use ($request) {
                 $query->where('nome', 'LIKE', "%{$request->search}%")
