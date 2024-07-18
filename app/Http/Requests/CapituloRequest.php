@@ -26,4 +26,11 @@ class CapituloRequest extends FormRequest
             "titulo" => "required|string|min:0|unique:capitulo,titulo",
         ];
     }
+    public static function rulesArray(): array
+    {
+        return [
+            "historia_id" => "integer|sometimes|nullable|exists:historia,id",
+            "titulo" => "required|string|min:0|unique:capitulo,titulo",
+        ];
+    }
 }

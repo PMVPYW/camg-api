@@ -22,7 +22,15 @@ class CapituloUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "etapa_id" => "integer|sometimes|nullable|exists:etapa,id",
+            "historia_id" => "integer|sometimes|nullable|exists:historia,id",
+            "titulo" => "sometimes|string|min:0|unique:capitulo,titulo",
+        ];
+    }
+
+    public static function rulesArray(): array
+    {
+        return [
+            "historia_id" => "integer|sometimes|nullable|exists:historia,id",
             "titulo" => "sometimes|string|min:0|unique:capitulo,titulo",
         ];
     }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HistoriaUpdateRequest extends FormRequest
+class HistoriaFiltersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,8 @@ class HistoriaUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "titulo" => "sometimes|string|min:0|unique:historia,titulo",
-            "subtitulo" => "sometimes|string|min:0",
-            "conteudo" => "sometimes|string|nullable|",
-            "photo_url" => "sometimes|nullable|file|image"
+            "search" => "nullable|string|min:0",
+            "order" => "nullable|string|in:subtitulo_desc,subtitulo_asc,titulo_asc,titulo_desc"
         ];
     }
 }
