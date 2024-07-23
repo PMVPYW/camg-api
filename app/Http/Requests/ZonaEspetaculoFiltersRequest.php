@@ -22,7 +22,11 @@ class ZonaEspetaculoFiltersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "search" => "nullable|string|min:0",
+            "prova_id" => "nullable|integer|exists:prova,id",
+            "nivel_afluencia" => "nullable|string|in:Baixo,Médio,Alto",
+            "facilidade_acesso" => "nullable|string|in:Fácil,Médio,Difícil",
+            "nivel_ocupacao" => "nullable|string|in:Livre,Intermédio,Completo"
         ];
     }
 }
