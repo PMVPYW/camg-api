@@ -183,18 +183,19 @@ class HistoriaController extends Controller
             $historia->fill($validated);
             $historia->save();
 
-            $capituloIdsFromRequest = array_column($validated['capitulos'], 'id');
-            $etapaIdsFromRequest = array_column($validated['etapas'], 'id');
+            if (isset($validated['capitulos'])) {
+                $capituloIdsFromRequest = array_column($validated['capitulos'], 'id');
+                $capitulos_para_eliminar = Capitulo::where('historia_id', $historia->id)
+                    ->whereNotIn('id', $capituloIdsFromRequest)->get();
 
-            $capitulos_para_eliminar = Capitulo::where('historia_id', $historia->id)
-                ->whereNotIn('id', $capituloIdsFromRequest)->get();
-
-            foreach ($capitulos_para_eliminar as $capitulo) {
-                foreach ($capitulo->etapas as $etapa){
-                    $etapa->forceDelete();
+                foreach ($capitulos_para_eliminar as $capitulo) {
+                    foreach ($capitulo->etapas as $etapa){
+                        $etapa->forceDelete();
+                    }
+                    $capitulo->forceDelete();
                 }
-                $capitulo->forceDelete();
             }
+
 
             // Editar capítulos
             if (isset($validated['capitulos'])) {
@@ -204,12 +205,17 @@ class HistoriaController extends Controller
                     $capitulo->historia_id = $historia->id;
                     $capitulo->save();
 
-                    $etapas_para_eliminar = Etapa::where('capitulo_id', $capitulo->id)
-                        ->whereNotIn('id', $etapaIdsFromRequest)->get();
 
-                    foreach ($etapas_para_eliminar as $etapa){
-                        $etapa->forceDelete();
+                    if (isset($validated['etapas'])) {
+                        $etapaIdsFromRequest = array_column($validated['etapas'], 'id');
+                        $etapas_para_eliminar = Etapa::where('capitulo_id', $capitulo->id)
+                            ->whereNotIn('id', $etapaIdsFromRequest)->get();
+
+                        foreach ($etapas_para_eliminar as $etapa){
+                            $etapa->forceDelete();
+                        }
                     }
+
 
                     //Editar etapas
                     if (isset($validated['etapas'])) {

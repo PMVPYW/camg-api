@@ -22,14 +22,14 @@ class HistoriaCompletaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "etapas" => "required|array",
-            'etapas.*' => 'array',
+            "etapas" => "sometimes|array",
+            'etapas.*' => 'sometimes|array',
             'etapas.*.capitulo_id' => "sometimes|integer",
             'etapas.*.nome' => EtapaRequest::rulesArray()['nome'],
-            'etapas.*.ano_inicio' => EtapaRequest::rulesArray()['ano_inicio'],
-            'etapas.*.ano_fim' => EtapaRequest::rulesArray()['ano_fim'],
-            "capitulos" => "required|array",
-            'capitulos.*' => 'array',
+            'etapas.*.ano_inicio' => 'required|integer|min:1000|max:9999|lte:etapas.*.ano_fim',
+            'etapas.*.ano_fim' => 'sometimes|nullable|integer|min:1000|max:9999|gte:etapas.*.ano_inicio',
+            "capitulos" => "sometimes|array",
+            'capitulos.*' => 'sometimes|array',
             'capitulos.*.capitulo_id' => "sometimes|integer",
             'capitulos.*.titulo' => CapituloRequest::rulesArray()['titulo'],
             "titulo" => "required|string|min:0|unique:historia,titulo",

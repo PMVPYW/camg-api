@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueUpdateRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CapituloUpdateRequest extends FormRequest
@@ -21,16 +22,16 @@ class CapituloUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('capitulo')->id;
         return [
             "historia_id" => "integer|sometimes|nullable|exists:historia,id",
-            "titulo" => "sometimes|string|min:0|unique:capitulo,titulo",
+            "titulo" => ["sometimes","string","min:0",new UniqueUpdateRule("capitulo", "titulo", $id)],
         ];
     }
 
     public static function rulesArray(): array
     {
         return [
-            "historia_id" => "integer|sometimes|nullable|exists:historia,id",
             "titulo" => "sometimes|string|min:0|unique:capitulo,titulo",
         ];
     }

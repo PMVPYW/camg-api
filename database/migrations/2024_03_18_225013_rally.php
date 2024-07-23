@@ -148,8 +148,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId("capitulo_id")->nullable()->constrained("capitulo");
             $table->string("nome");
-            $table->year("ano_inicio");
-            $table->year("ano_fim")->nullable();
+            $table->integer("ano_inicio");
+            $table->integer("ano_fim")->nullable();
+
         });
 
         Schema::create('departamento', function (Blueprint $table) {

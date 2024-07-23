@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueUpdateRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EtapaUpdateRequest extends FormRequest
@@ -21,21 +22,19 @@ class EtapaUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+         $id = $this->route('etapa')->id;
          return [
              "capitulo_id" => "integer|sometimes|nullable|exists:capitulo,id",
-             "nome" => "sometimes|string|min:0",
-             "ano_inicio" => "sometimes|date_format:Y",
-             "ano_fim" => "sometimes|nullable|date_format:Y|after:ano_inicio",
+             "nome" => ["sometimes","string","min:0",new UniqueUpdateRule("etapa", "nome", $id)],
+             "ano_inicio" => "sometimes|integer|digits:4|lte:ano_fim",
+             "ano_fim" => "sometimes|nullable|integer|digits:4|gte:ano_inicio",
         ];
     }
 
     public static function rulesArray(): array
     {
         return [
-            "capitulo_id" => "integer|sometimes|nullable|exists:capitulo,id",
             "nome" => "sometimes|string|min:0",
-            "ano_inicio" => "sometimes|date_format:Y",
-            "ano_fim" => "sometimes|nullable|date_format:Y|after:ano_inicio",
         ];
     }
 }

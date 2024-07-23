@@ -84,6 +84,7 @@ Route::get("tipocontacto", [TipoContactoController::class, "index"]);
 
 Route::get("contacto", [ContactoController::class, "index"]);
 Route::get("contacto/{contacto}", [ContactoController::class, "show"]);
+
 Route::get("conselhoseguranca", [ConselhoSegurancaController::class, "index"]);
 Route::get("conselhoseguranca/{conselhoseguranca}", [ConselhoSegurancaController::class, "show"]);
 
@@ -169,7 +170,7 @@ Route::middleware("auth:sanctum")->group(function (){
     //Route::delete("destroyAllSponsors", [PatrocinioController::class, "destroyAllSponsors"]);
 
     Route::post("contacto", [ContactoController::class, "store"]);
-    Route::put("contacto/{contacto}", [ContactoController::class, "update"])->name("contactUpdate");
+    Route::put("contacto/{contacto}", [ContactoController::class, "update"]);
     Route::delete("contacto/{contacto}", [ContactoController::class, "destroy"]);
 
     Route::get("tipocontacto/{tipocontacto}", [TipoContactoController::class, "show"]);
