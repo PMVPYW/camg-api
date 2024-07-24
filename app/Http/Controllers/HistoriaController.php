@@ -187,7 +187,14 @@ class HistoriaController extends Controller
                 $capituloIdsFromRequest = array_column($validated['capitulos'], 'id');
                 $capitulos_para_eliminar = Capitulo::where('historia_id', $historia->id)
                     ->whereNotIn('id', $capituloIdsFromRequest)->get();
-
+                foreach ($capitulos_para_eliminar as $capitulo) {
+                    foreach ($capitulo->etapas as $etapa){
+                        $etapa->forceDelete();
+                    }
+                    $capitulo->forceDelete();
+                }
+            }else{
+                $capitulos_para_eliminar = Capitulo::where('historia_id', $historia->id);
                 foreach ($capitulos_para_eliminar as $capitulo) {
                     foreach ($capitulo->etapas as $etapa){
                         $etapa->forceDelete();

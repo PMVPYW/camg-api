@@ -24,7 +24,8 @@ class DeclaracaoFiltersRequest extends FormRequest
         return [
             "search" => "nullable|string|min:0",
             "order" => "nullable|string|in:cargo_desc,cargo_asc,nome_asc,nome_desc",
-            "select" => "nullable|string|in:todos,presidente,piloto,copiloto"
+            "select" => "nullable|string|in:outro,presidente,piloto,copiloto",
+            "search_outro" => "nullable|string|min:0",
         ];
     }
 }

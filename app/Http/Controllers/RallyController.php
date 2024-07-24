@@ -9,6 +9,7 @@ use App\Http\Requests\ProvaFiltersRequest;
 use App\Http\Requests\RallyFiltersRequest;
 use App\Http\Requests\RallyRequest;
 use App\Http\Requests\RallyRequestUpdate;
+use App\Http\Requests\ZonaEspetaculoFiltersRequest;
 use App\Http\Resources\DeclaracaoResource;
 use App\Http\Resources\EntidadeResource;
 use App\Http\Resources\HorarioResource;
@@ -251,16 +252,31 @@ class RallyController extends Controller
     }
 
     //ZonaEspetaculo
-    public function getZonasEspetaculo(Rally $rally)
+    public function getZonasEspetaculo(ZonaEspetaculoFiltersRequest $request, Rally $rally)
     {
-        $provas = $rally->provas;
-        $zonasEspetaculo=[];
-        foreach ($provas as $prova){
-            if($prova->zonas_espetaculo->count()>0) {
-                $zonasEspetaculo = array_merge($zonasEspetaculo, $prova->zonas_espetaculo->all());
-            }
+        $request->validated();
+
+        $zonasEspetaculo=ZonaEspetaculo::query();
+        $provaIds = $rally->provas->pluck('id');
+        $zonasEspetaculo->whereIn('prova_id', $provaIds);
+
+        if ($request->prova_id) {
+            $zonasEspetaculo->where('prova_id', $request->prova_id);
         }
-        return ZonaEspetaculoResource::collection($zonasEspetaculo);
+        if ($request->nivel_afluencia) {
+           $zonasEspetaculo->where("nivel_afluencia", "LIKE", $request->nivel_afluencia);
+        }
+        if ($request->facilidade_acesso) {
+            $zonasEspetaculo->where("facilidade_acesso", "LIKE", $request->facilidade_acesso);
+        }
+        if ($request->nivel_ocupacao) {
+            $zonasEspetaculo->where("nivel_ocupacao", "LIKE", $request->nivel_ocupacao);
+        }
+        if ($request->search && strlen($request->search) > 0)
+        {
+            $zonasEspetaculo->where('nome', 'LIKE', "%{$request->search}%");
+        }
+        return ZonaEspetaculoResource::collection($zonasEspetaculo->get());
     }
 
     //Declarações
@@ -290,6 +306,11 @@ class RallyController extends Controller
                 $query->where('nome', 'LIKE', "%{$request->search}%")
                     ->orWhere('conteudo', 'LIKE', "%{$request->search}%")
                     ->orWhere('entidade_equipa', 'LIKE', "%{$request->search}%");
+            });
+        }
+        if ($request->search_outro && strlen($request->search_outro) > 0) {
+            $declaracoes = $declaracoes->where(function($query) use ($request) {
+                $query->where('cargo', 'LIKE', "%{$request->search_outro}%");
             });
         }
         return DeclaracaoResource::collection($declaracoes->get());
