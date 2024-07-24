@@ -113,8 +113,8 @@ class ConselhoSegurancaController extends Controller
             if ($conselhoSeguranca->img_erro && Storage::exists('public/fotos/' . $conselhoSeguranca->img_erro)) {
                 Storage::disk('public')->delete('fotos/' . $conselhoSeguranca->img_erro);
             }
-            $conselhoSeguranca->forceDelete();
+            $conselhoSeguranca->delete();
         });
-        return $conselhoSeguranca;
+        return new ConselhoSegurancaResource($conselhoSeguranca);
     }
 }
