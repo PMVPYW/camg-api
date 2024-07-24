@@ -26,7 +26,7 @@ class EtapaUpdateRequest extends FormRequest
          return [
              "capitulo_id" => "integer|sometimes|nullable|exists:capitulo,id",
              "nome" => ["sometimes","string","min:0",new UniqueUpdateRule("etapa", "nome", $id)],
-             "ano_inicio" => "sometimes|integer|digits:4|lte:ano_fim",
+             "ano_inicio" => "sometimes|integer|digits:4",
              "ano_fim" => "sometimes|nullable|integer|digits:4|gte:ano_inicio",
         ];
     }

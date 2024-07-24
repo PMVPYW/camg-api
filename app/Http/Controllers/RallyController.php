@@ -308,6 +308,11 @@ class RallyController extends Controller
                     ->orWhere('entidade_equipa', 'LIKE', "%{$request->search}%");
             });
         }
+        if ($request->search_outro && strlen($request->search_outro) > 0) {
+            $declaracoes = $declaracoes->where(function($query) use ($request) {
+                $query->where('cargo', 'LIKE', "%{$request->search_outro}%");
+            });
+        }
         return DeclaracaoResource::collection($declaracoes->get());
     }
 
