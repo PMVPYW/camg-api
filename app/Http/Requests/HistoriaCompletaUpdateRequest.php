@@ -59,14 +59,14 @@ class HistoriaCompletaUpdateRequest extends FormRequest
 
         $id_historia = $this->route('historia')->id;
         return array_merge([
-            "etapas" => "sometimes|array",
-            'etapas.*' => 'sometimes|array',
+            "etapas" => "sometimes|nullable|array",
+            'etapas.*' => 'nullable|array',
             'etapas.*.id' => "sometimes|integer",  //serve para identificar o etapa a editar
             'etapas.*.capitulo_id' => "sometimes|integer",
             'etapas.*.ano_inicio' => 'sometimes|integer|digits:4',
             'etapas.*.ano_fim' => 'sometimes|nullable|integer|digits:4|gte:etapas.*.ano_inicio',
-            "capitulos" => "sometimes|array",
-            'capitulos.*' => 'sometimes|array',
+            "capitulos" => "sometimes|nullable|array",
+            'capitulos.*' => 'nullable|array',
             'capitulos.*.id' => "sometimes|integer", //serve para identificar o capitulo a editar
             'capitulos.*.capitulo_id' => "sometimes|integer",
             "titulo" => ["sometimes", "string", "min:0", new UniqueUpdateRule("historia", "titulo", $id_historia)],
