@@ -114,6 +114,9 @@ class HistoriaController extends Controller
                 }
                 $capitulo->forceDelete();
             }
+            if ($historia->photo_url && Storage::exists('public/fotos/' . $historia->photo_url)) {
+                Storage::disk('public')->delete('fotos/' . $historia->photo_url);
+            }
             $historia->forceDelete();
         });
         return new HistoriaResource($historia);
