@@ -105,6 +105,7 @@ class ProvaController extends Controller
      */
     public function destroy(Prova $prova)
     {
+        DB::transaction(function () use ($prova) {
         foreach ($prova->zonas_espetaculo as $ze)
         {
             $ze->forceDelete();
@@ -113,7 +114,11 @@ class ProvaController extends Controller
         {
             $prova->horario->forceDelete();
         }
-        $prova->forceDelete();
+            if ($prova->kml_src && Storage::exists('public/kml_files/' . $prova->kml_src)) {
+                Storage::disk('public')->delete('kml_files/' . $prova->kml_src);
+            }
+            $prova->forceDelete();
+        });
         return new ProvaResource($prova);
     }
 
