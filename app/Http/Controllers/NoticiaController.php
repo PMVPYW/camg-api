@@ -146,9 +146,16 @@ class NoticiaController extends Controller
             if(isset($noticia->imagens[0])) {
                 foreach ($noticia->imagens as $imagem) {
                     $imagem_noticias=ImagemNoticia::find($imagem->id);
+                    $foto = Foto::withTrashed()->find($imagem_noticias->image_id);
                     $imagem_noticias->forceDelete();
+                    if ($foto->deleted_at != null)
+                    {
+                        Storage::disk('public')->delete('fotos/' . $foto->image_src);
+                        $foto->forceDelete();
+                    }
                 }
             }
+            Storage::disk('public')->delete('fotos/' . $noticia->title_img);
             $noticia->forceDelete();
         });
         return new NoticiaResource($noticia);

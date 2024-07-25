@@ -105,6 +105,14 @@ class ProvaController extends Controller
      */
     public function destroy(Prova $prova)
     {
+        foreach ($prova->zonas_espetaculo as $ze)
+        {
+            $ze->forceDelete();
+        }
+        if ($prova->horario)
+        {
+            $prova->horario->forceDelete();
+        }
         $prova->forceDelete();
         return new ProvaResource($prova);
     }
