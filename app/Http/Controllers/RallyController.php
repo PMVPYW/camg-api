@@ -155,6 +155,10 @@ class RallyController extends Controller
                 $album->rally_id=null;
                 $album->save();
             }
+            foreach ($rally->declaracoes as $declaracao)
+            {
+                $declaracao->forceDelete();
+            }
             $rally->forceDelete();
         });
         return new RallyResource($rally);

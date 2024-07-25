@@ -113,12 +113,20 @@ class AlbumController extends Controller
     {
 
         DB::transaction(function () use ($album) {
+            $fc = new FotoController();
+            foreach ($album->Photos as $ph)
+            {
+                $fc->destroy($ph);
+            }
+            if ($album->img && Storage::exists('public/fotos/' . $album->img)) {
+                Storage::disk('public')->delete('fotos/' . $album->img);
+            }
             if ($album->Photos()->withTrashed()->count() == 0) {
-                if ($album->img && Storage::exists('public/fotos/' . $album->img)) {
-                    Storage::disk('public')->delete('fotos/' . $album->img);
-                }
+
                 $album->forceDelete();
             } else {
+                $album->img = null;
+                $album->save();
                 $album->delete();
             }
         });

@@ -86,6 +86,7 @@ class FotoController extends Controller
     {
         DB::transaction(function () use ($foto) {
             if ($foto->ImagemNoticia()->count() == 0) {
+                Storage::disk('public')->delete('fotos/' . $foto->image_src);
                 $foto->forceDelete();
             } else {
                 $foto->delete();
