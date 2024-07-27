@@ -182,7 +182,7 @@ return new class extends Migration
         });
 
         //Objetivo de garatir as notificações na CamgApp
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('notification_tokens', function (Blueprint $table) {
             $table->id();
             $table->string('id_hash',65);
             $table->string('token');
@@ -195,7 +195,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('notification_tokens');
         Schema::dropIfExists('historia');
         Schema::dropIfExists('departamento');
         Schema::dropIfExists('orgaos_sociais');

@@ -14,6 +14,7 @@ use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\ImagemNoticiaController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\FotoController;
+use App\Http\Controllers\NotificationTokenController;
 use App\Http\Controllers\PatrocinioController;
 use App\Http\Controllers\ProvaController;
 use App\Http\Controllers\RallyController;
@@ -112,8 +113,12 @@ Route::get("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "
 Route::get("historia",[HistoriaController::class, "index"]);
 Route::get("historia/{historia}",[HistoriaController::class, "show"]);
 
+Route::post("notificationToken",[NotificationTokenController::class, "store"]);
+
 //protected routes
 Route::middleware("auth:sanctum")->group(function (){
+    Route::get("notificationToken",[NotificationTokenController::class, "index"]);
+
     Route::post("zonaEspetaculo",[ZonaEspetaculoController::class, "store"]);
     Route::put("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "update"])->name("zonaEspetaculo");
     Route::delete("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "destroy"]);
