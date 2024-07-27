@@ -180,6 +180,14 @@ return new class extends Migration
             $table->integer('pontos')->nullable();
 
         });
+
+        //Objetivo de garatir as notificações na CamgApp
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('id_hash',65);
+            $table->string('token');
+            $table->timestamp('created_at');
+        });
     }
 
     /**
@@ -187,6 +195,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('users');
         Schema::dropIfExists('historia');
         Schema::dropIfExists('departamento');
         Schema::dropIfExists('orgaos_sociais');
