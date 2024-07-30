@@ -17,10 +17,10 @@ class ConselhoSegurancaFactory extends Factory
     public function definition(): array
     {
         return [
-            'conselho' => null,
-            "erro" => null,
-            "conselho_img" => null,
-            "erro_img" => null
+            'descricao' => $this->faker->text(),
+            "erro" => $this->faker->text(),
+            "img_conselho" => null,
+            "img_erro" => null
         ];
     }
 }
