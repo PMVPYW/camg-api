@@ -28,8 +28,7 @@ class TipoContactoRequestUpdate extends FormRequest
     public function messages(): array
     {
         return [
-            "nome.required" => "O campo nome é obrigatório.",
-            "nome.string" => "O campo nome deve ser uma string.",
+            "nome.string" => "O campo nome deve ser um texto.",
             "nome.unique" => "Este nome já está em uso."
         ];
     }

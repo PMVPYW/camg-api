@@ -33,7 +33,7 @@ class ProvaUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'kml_src.file' => 'O ficheiro deve ser um ficheiro.'
+            'kml_src.file' => 'O kml deve ser um ficheiro.'
         ];
     }
 }

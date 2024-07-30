@@ -36,20 +36,20 @@ class ProvaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'horario_id.integer' => 'O campo horario_id deve ser um número inteiro.',
-            'horario_id.exists' => 'O horario_id fornecido não existe na tabela horários.',
-            'rally_id.required' => 'O campo rally_id é obrigatório.',
-            'rally_id.integer' => 'O campo rally_id deve ser um número inteiro.',
-            'rally_id.exists' => 'O rally_id fornecido não existe na tabela rallies.',
-            'external_id.required' => 'O campo external_id é obrigatório.',
-            'external_id.integer' => 'O campo external_id deve ser um número inteiro.',
+            'horario_id.integer' => 'O campo horario deve ser um número inteiro.',
+            'horario_id.exists' => 'O horario fornecido não existe na tabela horários.',
+            'rally_id.required' => 'O campo rally é obrigatório.',
+            'rally_id.integer' => 'O campo rally deve ser um número inteiro.',
+            'rally_id.exists' => 'O rally fornecido não existe na tabela rallies.',
+            'external_id.required' => 'O campo ID da entidade externa é obrigatório.',
+            'external_id.integer' => 'O ID da entidade externa deve ser um número inteiro.',
             'local.required' => 'O campo local é obrigatório.',
-            'local.string' => 'O campo local deve ser uma string.',
-            'distancia_percurso.required' => 'O campo distancia_percurso é obrigatório.',
-            'distancia_percurso.integer' => 'O campo distancia_percurso deve ser um número inteiro.',
+            'local.string' => 'O campo local deve ser um texto.',
+            'distancia_percurso.required' => 'O campo distância percurso é obrigatório.',
+            'distancia_percurso.integer' => 'O campo distância percurso deve ser um número inteiro.',
             'nome.required' => 'O campo nome é obrigatório.',
-            'nome.string' => 'O campo nome deve ser uma string.',
-            'kml_src.file' => 'O ficheiro deve ser um ficheiro.'
+            'nome.string' => 'O campo nome deve ser um texto.',
+            'kml_src.file' => 'O kml deve ser um ficheiro.'
         ];
     }
 }

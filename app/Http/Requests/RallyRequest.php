@@ -31,12 +31,12 @@ class RallyRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             "nome.required" => "O campo nome é obrigatório.",
             "nome.string" => "O campo nome deve ser uma string.",
-            "nome.min" => "O campo nome deve ter pelo menos :min caracteres.",
+            "nome.min" => "O campo nome deve ter texto.",
             "nome.unique" => "Este nome já está em uso.",
             "data_inicio.required" => "O campo data de início é obrigatório.",
             "data_inicio.date" => "O campo data de início deve ser uma data válida.",

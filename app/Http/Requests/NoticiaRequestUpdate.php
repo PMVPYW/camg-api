@@ -35,14 +35,14 @@ class NoticiaRequestUpdate extends FormRequest
     public function messages(): array
     {
         return [
-            'fotos_id.array' => 'O campo fotos_id deve ser um array.',
-            'fotos_id.*.integer' => 'Cada item em fotos_id deve ser um número inteiro.',
-            'fotos_id.*.exists' => 'Cada item em fotos_id deve existir na tabela fotos.',
-            'rally_id.integer' => 'O campo rally_id deve ser um número inteiro.',
-            'rally_id.exists' => 'O rally_id fornecido não existe na tabela rallies.',
-            'titulo.string' => 'O campo título deve ser uma string.',
+            'fotos_id.array' => 'O campo fotos deve ser um vetor.',
+            'fotos_id.*.integer' => 'Cada item deve ser um número inteiro.',
+            'fotos_id.*.exists' => 'Cada item deve existir na tabela fotos.',
+            'rally_id.integer' => 'O campo rally deve ser um número inteiro.',
+            'rally_id.exists' => 'O rally fornecido não existe na tabela rallies.',
+            'titulo.string' => 'O campo título deve ser um texto.',
             'titulo.unique' => 'Este título já está em uso.',
-            'conteudo.string' => 'O campo conteúdo deve ser uma string.',
+            'conteudo.string' => 'O campo conteúdo deve ser um texto.',
             'title_img.file' => 'O campo capa noticia deve ser um arquivo.',
             'title_img.image' => 'O campo capa noticia deve ser uma imagem.',
             'data.date' => 'O campo data deve ser uma data válida.'

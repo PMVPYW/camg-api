@@ -29,4 +29,24 @@ class ZonaEspetaculoFiltersRequest extends FormRequest
             "nivel_ocupacao" => "nullable|string|in:Livre,Intermédio,Completo"
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'search.string' => 'O campo procurar deve ser um texto.',
+            'search.min' => 'O campo procurar deve ter texto.',
+
+            'prova_id.integer' => 'O campo prova deve ser um número inteiro.',
+            'prova_id.exists' => 'O campo prova deve existir na tabela provas.',
+
+            'nivel_afluencia.string' => 'O campo nível de afluência deve ser um texto.',
+            'nivel_afluencia.in' => 'O campo nível de afluência deve ter um dos seguintes valores: Baixo, Médio, Alto.',
+
+            'facilidade_acesso.string' => 'O campo facilidade de acesso deve ser um texto.',
+            'facilidade_acesso.in' => 'O campo facilidade de acesso deve ter um dos seguintes valores: Fácil, Médio, Difícil.',
+
+            'nivel_ocupacao.string' => 'O campo nível de ocupação deve ser um texto.',
+            'nivel_ocupacao.in' => 'O campo nível de ocupação deve ter um dos seguintes valores: Livre, Intermédio, Completo.',
+        ];
+    }
+
 }

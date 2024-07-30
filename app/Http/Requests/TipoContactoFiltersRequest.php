@@ -26,4 +26,13 @@ class TipoContactoFiltersRequest extends FormRequest
             "order" => "nullable|string|in:nome_asc,nome_desc"
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'tipo_contacto_id.integer' => 'O campo tipo de contacto deve ser um número inteiro.',
+            'tipo_contacto_id.exists' => 'O campo  tipo de contacto deve existir na tabela tipo de contactos.',
+            'order.string' => 'O campo ordem deve ser um texto.',
+            'order.in' => 'O campo order ordem ser um dos seguintes valores: nome_asc, nome_desc.',
+        ];
+    }
 }

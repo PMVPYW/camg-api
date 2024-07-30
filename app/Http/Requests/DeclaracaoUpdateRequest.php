@@ -31,4 +31,18 @@ class DeclaracaoUpdateRequest extends FormRequest
             "pontos"=>"sometimes|nullable|integer"
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'nome.string' => 'O campo nome deve ser um texto.',
+            'photo_url.file' => 'O campo imagem deve ser um arquivo.',
+            'photo_url.image' => 'O campo deve ser uma imagem.',
+            'conteudo.string' => 'O campo conteúdo deve ser um texto.',
+            'rally_id.integer' => 'O campo rally deve ser um número inteiro.',
+            'rally_id.exists' => 'O rally fornecido não existe na tabela rallies.',
+            'cargo.string' => 'O campo cargo deve ser um texto.',
+            'entidade_equipa.string' => 'O campo entidade/equipa deve ser um texto.',
+            'pontos.integer' => 'O campo pontos deve ser um número inteiro.',
+        ];
+    }
 }

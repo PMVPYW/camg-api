@@ -28,4 +28,15 @@ class AlbumRequest extends FormRequest
             "img" => "file|nullable|image"
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'rally_id.integer' => 'O campo rally deve ser um número inteiro.',
+            'rally_id.exists' => 'O rally fornecido não existe.',
+            'nome.string' => 'O campo nome deve ser um texto.',
+            'nome.required' => 'O campo nome é obrigatório.',
+            'img.file' => 'O campo imagem deve ser um arquivo.',
+            'img.image' => 'O campo deve ser uma imagem.',
+        ];
+    }
 }

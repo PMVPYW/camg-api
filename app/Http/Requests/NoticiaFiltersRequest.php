@@ -29,4 +29,17 @@ class NoticiaFiltersRequest extends FormRequest
             "order" => "nullable|string|in:date_desc,date_asc,titulo_asc,titulo_desc"
         ];
     }
+    public function messages()
+    {
+        return [
+            'search.string' => 'O campo pesquisa deve ser um texto.',
+            'search.min' => 'O campo pesquisa deve ter texto.',
+            'data_inicio.date' => 'O campo data início deve ser uma data válida.',
+            'data_fim.date' => 'O campo data fim deve ser uma data válida.',
+            'rally_id.integer' => 'O campo rally deve ser um número inteiro.',
+            'rally_id.exists' => 'O rally fornecido não existe na tabela rallies.',
+            'order.string' => 'O campo ordem deve ser um texto.',
+            'order.in' => 'O campo ordem deve ter um dos seguintes valores: date_desc, date_asc, titulo_asc, titulo_desc.',
+        ];
+    }
 }

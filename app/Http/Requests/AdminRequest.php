@@ -34,12 +34,12 @@ class AdminRequest extends FormRequest
     {
         return [
             "nome.required" => "O campo nome é obrigatório.",
-            "nome.string" => "O campo nome deve ser uma string.",
+            "nome.string" => "O campo nome deve ser um texto.",
             "email.required" => "O campo email é obrigatório.",
             "email.email" => "O campo email deve ser um endereço de e-mail válido.",
             "email.unique" => "Este endereço de e-mail já está em uso.",
             "password.required" => "O campo senha é obrigatório.",
-            "password.string" => "O campo senha deve ser uma string.",
+            "password.string" => "O campo senha deve ser um texto.",
             "password.confirmed" => "A confirmação da senha não corresponde.",
             "password.min" => "A senha deve ter no mínimo :min caracteres.",
             "password.mixed" => "A senha deve conter caracteres maiúsculos e minúsculos.",

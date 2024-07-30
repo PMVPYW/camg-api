@@ -26,4 +26,16 @@ class CopyProvaRequest extends FormRequest
             "rally_id" => "required|integer|exists:rallies,id",
         ];
     }
+    public function messages():array
+    {
+        return [
+            'external_entity_id.required' => 'O campo ID da entidade externa é obrigatório.',
+            'external_entity_id.integer' => 'O campo ID da entidade externa deve ser um número inteiro.',
+            'external_entity_id.exists' => 'O ID da entidade externa fornecido não existe na tabela rallies.',
+            'rally_id.required' => 'O campo rally é obrigatório.',
+            'rally_id.integer' => 'O campo rally deve ser um número inteiro.',
+            'rally_id.exists' => 'O rally fornecido não existe na tabela rallies.',
+        ];
+    }
+
 }

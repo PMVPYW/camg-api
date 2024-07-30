@@ -36,7 +36,7 @@ class ZonaEspetaculoRequest extends FormRequest
     {
         return [
             'nome.required' => 'O campo nome é obrigatório.',
-            'nome.string' => 'O campo nome deve ser uma string.',
+            'nome.string' => 'O campo nome deve ser um texto.',
             'nome.unique' => 'O nome fornecido já está em uso para esta prova.',
 
             'nivel_afluencia.required' => 'O campo nível de afluência é obrigatório.',
@@ -49,7 +49,7 @@ class ZonaEspetaculoRequest extends FormRequest
             'distancia_estacionamento.integer' => 'O campo distância ao estacionamento deve ser um número inteiro.',
 
             'coordenadas.required' => 'O campo coordenadas é obrigatório.',
-            'coordenadas.string' => 'O campo coordenadas deve ser uma string.',
+            'coordenadas.string' => 'O campo coordenadas deve ser um texto.',
             'coordenadas.unique' => 'As coordenadas fornecidas já estão em uso para esta prova.',
 
             'nivel_ocupacao.required' => 'O campo nível de ocupação é obrigatório.',
@@ -58,7 +58,7 @@ class ZonaEspetaculoRequest extends FormRequest
             'prova_id.required' => 'O campo prova é obrigatório.',
             'prova_id.exists' => 'A prova selecionada é inválida.',
 
-            'info.string' => 'O campo coordenadas deve ser uma string.',
+            'info.string' => 'O campo coordenadas deve ser um texto.',
 
         ];
     }

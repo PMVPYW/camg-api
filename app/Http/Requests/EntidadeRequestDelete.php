@@ -26,4 +26,12 @@ class EntidadeRequestDelete extends FormRequest
             'entidades_id.*' => 'integer|exists:entidades,id',
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'entidades_id.array' => 'O campo entidades deve ser um vetor de valores.',
+            'entidades_id.*.integer' => 'Cada item do vetor deve ser um número inteiro.',
+            'entidades_id.*.exists' => 'Cada item do vetor deve existir na tabela entidades.',
+        ];
+    }
 }

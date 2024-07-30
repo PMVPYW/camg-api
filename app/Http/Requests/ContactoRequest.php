@@ -44,16 +44,16 @@ class ContactoRequest extends FormRequest
     {
         return [
             'nome.required' => 'O campo nome é obrigatório.',
-            'nome.string' => 'O campo nome deve ser uma string.',
+            'nome.string' => 'O campo nome deve ser um texto.',
             'tipo_valor.required' => 'O campo tipo é obrigatório.',
             'tipo_valor.in' => 'O campo tipo deve ser um dos seguintes valores: Email, Telemovel, Telefone, Fax, Facebook, Instagram, Twitter, PaginaWeb, WhatsApp, Morada, Coordenadas.',
             'valor.required' => 'O campo valor é obrigatório.',
-            'valor.string' => 'O campo valor deve ser uma string.',
+            'valor.string' => 'O campo valor deve ser um texto.',
             'valor.max' => 'O campo valor não pode ter mais que 9 caracteres quando do tipo Telemóvel ou Telefone.',
             'valor.email' => 'O campo valor não é um email válido',
             'tipocontacto_id.required' => 'O campo tipo de contacto é obrigatório.',
             'tipocontacto_id.integer' => 'O campo tipo de contacto deve ser um número inteiro.',
-            'tipocontacto_id.exists' => 'O tipo de contacto fornecido não existe na tabela tipo_contacto.',
+            'tipocontacto_id.exists' => 'O tipo de contacto fornecido não existe na tabela de tipos de contacto.',
         ];
     }
 }

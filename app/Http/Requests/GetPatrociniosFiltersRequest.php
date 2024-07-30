@@ -25,4 +25,11 @@ class GetPatrociniosFiltersRequest extends FormRequest
             "filters" => "nullable|string|in:nome_asc,nome_desc"
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'filters.string' => 'O campo filtros deve ser um texto.',
+            'filters.in' => 'O campo filtros deve ter um dos seguintes valores: nome_asc, nome_desc.',
+        ];
+    }
 }

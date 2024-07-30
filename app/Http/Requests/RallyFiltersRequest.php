@@ -30,4 +30,21 @@ class RallyFiltersRequest extends FormRequest
             "order" => "nullable|string|in:proximity,date_desc,date_asc"
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'search.string' => 'O campo pesquisa deve ser um texto.',
+            'search.min' => 'O campo pesquisa deve ter texto.',
+
+            'data_inicio.date' => 'O campo data_inicio deve ser uma data válida.',
+
+            'data_fim.date' => 'O campo data_fim deve ser uma data válida.',
+
+            'status.string' => 'O campo status deve ser um texto.',
+            'status.in' => 'O campo status deve ser um dos seguintes valores: all, not_started, on_going, terminated.',
+
+            'order.string' => 'O campo ordem deve ser um texto.',
+            'order.in' => 'O campo ordem deve ter um dos seguintes valores: proximity, date_desc, date_asc.',
+        ];
+    }
 }

@@ -37,7 +37,7 @@ class EntidadeRequest extends FormRequest
             'photo_url.file' => 'O campo logo deve ser um arquivo.',
             'photo_url.image' => 'O campo logo deve ser uma imagem.',
             'url.required' => 'O campo link é obrigatório.',
-            'url.url' => 'O campo link deve ser uma URL válida começando com http ou https.',
+            'url.url' => 'O campo link deve ser um URL válido ou seja começar com http ou https.',
             'entidade_oficial.required' => 'O campo entidade oficial é obrigatório.',
             'entidade_oficial.boolean' => 'O campo entidade oficial deve ser verdadeiro ou falso.'
         ];

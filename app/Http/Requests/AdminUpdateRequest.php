@@ -37,9 +37,9 @@ class AdminUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            "nome.string" => "O campo nome deve ser uma string.",
+            "nome.string" => "O campo nome deve ser um texto.",
             "email.email" => "O campo email deve ser um endereço de e-mail válido.",
-            "password.string" => "O campo senha deve ser uma string.",
+            "password.string" => "O campo senha deve ser um texto.",
             "password.confirmed" => "A confirmação da senha não corresponde.",
             "password.min" => "A senha deve ter no mínimo :min caracteres.",
             "password.mixed" => "A senha deve conter caracteres maiúsculos e minúsculos.",

@@ -25,4 +25,11 @@ class ContactoFiltersRequest extends FormRequest
             "tipo_contacto_id" => "nullable|integer|exists:tipo_contacto,id",
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'tipo_contacto_id.integer' => 'O campo Tipo de Contacto deve ser um número inteiro.',
+            'tipo_contacto_id.exists' => 'O Tipo de Contacto fornecido não existe.',
+        ];
+    }
 }

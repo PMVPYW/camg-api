@@ -26,4 +26,12 @@ class PatrocinioRequestDelete extends FormRequest
             'patrocinios_id.*' => 'integer|exists:patrocinios,id',
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'patrocinios_id.array' => 'O campo patrocínios deve ser um vetor.',
+            'patrocinios_id.*.integer' => 'Cada item deve ser um número inteiro.',
+            'patrocinios_id.*.exists' => 'O valor fornecido não existe na tabela de patrocínios.',
+        ];
+    }
 }

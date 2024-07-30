@@ -28,4 +28,19 @@ class FotoRequest extends FormRequest
             "description" => "sometimes|string"
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'album_id.integer' => 'O campo album deve ser um número inteiro.',
+            'album_id.required' => 'O campo album é obrigatório.',
+            'album_id.exists' => 'O album fornecido não existe na tabela albuns.',
+            'image_src.required' => 'O campo imagem é obrigatório.',
+            'image_src.array' => 'O campo imagem deve ser um vetor de imagens.',
+            'image_src.min' => 'O campo imagem deve conter pelo menos 1 imagem.',
+            'image_src.*.required' => 'Cada item no campo imagem é obrigatório.',
+            'image_src.*.file' => 'Cada item deve ser um arquivo.',
+            'image_src.*.image' => 'Cada item deve ser uma imagem.',
+            'description.string' => 'O campo descrição deve ser um texto.',
+        ];
+    }
 }

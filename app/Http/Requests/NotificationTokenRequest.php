@@ -26,4 +26,15 @@ class NotificationTokenRequest extends FormRequest
             'id_hash' => 'required|string|size:64'
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'token.required' => 'O campo token é obrigatório.',
+            'token.string' => 'O campo token deve ser um texto.',
+
+            'id_hash.required' => 'O campo hash é obrigatório.',
+            'id_hash.string' => 'O campo hash deve ser um texto.',
+            'id_hash.size' => 'O campo hash deve ter exatamente 64 caracteres.',
+        ];
+    }
 }

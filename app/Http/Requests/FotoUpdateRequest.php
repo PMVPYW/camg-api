@@ -27,4 +27,14 @@ class FotoUpdateRequest extends FormRequest
             "description" => "sometimes|string"
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'album_id.integer' => 'O campo album deve ser um número inteiro.',
+            'album_id.exists' => 'O album fornecido não existe na tabela albuns.',
+            'image_src.file' => 'O campo imagem deve ser um arquivo.',
+            'image_src.image' => 'O campo deve ser uma imagem.',
+            'description.string' => 'O campo descrição deve ser um texto.',
+        ];
+    }
 }

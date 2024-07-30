@@ -27,4 +27,11 @@ class AlbumFiltersRequest extends FormRequest
             "search" => "string|nullable",
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'rally_id.string' => 'O campo rally_id deve ser um texto',
+            'search.string' => 'O campo procurar deve ser um texto.',
+        ];
+    }
 }

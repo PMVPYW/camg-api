@@ -33,7 +33,7 @@ class EntidadeRequestUpdate extends FormRequest
             'nome.unique' => 'Este nome já está em uso.',
             'photo_url.file' => 'O campo logo deve ser um arquivo.',
             'photo_url.image' => 'O campo logo deve ser uma imagem.',
-            'url.url' => 'O campo link deve ser uma URL válida começando com http ou https.',
+            'url.url' => 'O campo link deve ser um URL válido ou seja começar com http ou https.',
             'entidade_oficial.boolean' => 'O campo entidade oficial deve ser verdadeiro ou falso.'
         ];
     }

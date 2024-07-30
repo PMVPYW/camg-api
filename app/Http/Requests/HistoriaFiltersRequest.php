@@ -26,4 +26,13 @@ class HistoriaFiltersRequest extends FormRequest
             "order" => "nullable|string|in:subtitulo_desc,subtitulo_asc,titulo_asc,titulo_desc"
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'search.string' => 'O campo procurar deve ser um texto.',
+            'search.min' => 'O campo procurar deve ter texto',
+            'order.string' => 'O campo ordenar deve ser um texto.',
+            'order.in' => 'O campo ordenar deve ser um dos seguintes valores: subtitulo_desc, subtitulo_asc, titulo_asc, titulo_desc.',
+        ];
+    }
 }

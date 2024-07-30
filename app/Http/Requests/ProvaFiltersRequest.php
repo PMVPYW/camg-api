@@ -27,4 +27,15 @@ class ProvaFiltersRequest extends FormRequest
             "order" => "nullable|string|in:nome_desc,nome_asc,local_asc,local_desc,distancia_percurso_asc,distancia_percurso_desc,proximity"
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'search.string' => 'O campo pesquisa deve ser um texto.',
+            'search.min' => 'O campo pesquisa deve ter texto',
+            'rally_id.integer' => 'O campo rally deve ser um número inteiro.',
+            'rally_id.exists' => 'O rally fornecido não existe na tabela de rallies.',
+            'order.string' => 'O campo ordem deve ser um texto.',
+            'order.in' => 'O campo ordem deve ter um dos seguintes valores: nome_desc, nome_asc, local_asc, local_desc, distancia_percurso_asc, distancia_percurso_desc, proximity.',
+        ];
+    }
 }

@@ -27,4 +27,15 @@ class AdminsFiltersRequest extends FormRequest
             "status" => "nullable|string|in:all,unblocked,blocked,unauthorized",
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'search.string' => 'O campo procurar deve ser um texto.',
+            'search.min' => 'O campo procurar deve ter texto.',
+            'order.string' => 'O campo  ordem deve ser um texto.',
+            'order.in' => 'O campo ordem deve conter um dos seguintes valores: nome_asc, nome_desc, most_recent, least_recent.',
+            'status.string' => 'O campo estado deve ser um texto.',
+            'status.in' => 'O campo estado deve conter um dos seguintes valores: all, unblocked, blocked, unauthorized.',
+        ];
+    }
 }

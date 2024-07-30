@@ -35,4 +35,14 @@ class CapituloUpdateRequest extends FormRequest
             "titulo" => "sometimes|string|min:0|unique:capitulo,titulo",
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'historia_id.integer' => 'O campo historia deve ser um número inteiro.',
+            'historia_id.exists' => 'A história fornecida não existe.',
+            'titulo.string' => 'O campo título deve ser um texto.',
+            'titulo.min' => 'O campo título deve ter texto.',
+        ];
+    }
 }
