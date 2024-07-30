@@ -45,7 +45,9 @@ class HistoriaCompletaRequest extends FormRequest
             'etapas.array' => 'O campo etapas deve ser um array.',
             'etapas.*.array' => 'Cada item em etapas deve ser um vetor.',
             'etapas.*.capitulo_id.integer' => 'O campo capitulo deve ser um número inteiro.',
-            'etapas.*.nome' => EtapaRequest::messages()['nome'],
+            'etapas.*.nome.required' => 'O campo nome é obrigatório.',
+            'etapas.*.nome.string' => 'O campo nome deve ser um texto.',
+            'etapas.*.nome.min' => 'O campo nome deve ter texto.',
             'etapas.*.ano_inicio.required' => 'O campo ano inicio é obrigatório.',
             'etapas.*.ano_inicio.integer' => 'O campo ano inicio deve ser um número inteiro.',
             'etapas.*.ano_inicio.digits' => 'O campo ano inicio deve ter exatamente 4 dígitos.',
@@ -56,7 +58,12 @@ class HistoriaCompletaRequest extends FormRequest
             'capitulos.array' => 'O campo capitulos deve ser um vetor.',
             'capitulos.*.array' => 'Cada item em capitulos deve ser um vetor.',
             'capitulos.*.capitulo_id.integer' => 'O campo capitulo em capitulos deve ser um número inteiro.',
-            'capitulos.*.titulo' => CapituloRequest::messages()['titulo'],
+
+
+            'capitulos.*.titulo.required' => 'O campo título é obrigatório.',
+            'capitulos.*.titulo.unique' => 'O título fornecido já está em uso.',
+            'capitulos.*.titulo.string' => 'O campo título deve ser um texto.',
+            'capitulos.*.titulo.min' => 'O campo título deve ter texto.',
 
             'titulo.required' => 'O campo titulo é obrigatório.',
             'titulo.string' => 'O campo titulo deve ser um texto.',
