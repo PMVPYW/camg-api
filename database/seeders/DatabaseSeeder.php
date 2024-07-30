@@ -54,6 +54,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CapituloSeeder::class);
         $this->call(EtapaSeeder::class);
         $this->call(DeclaracaoSeeder::class);
+        $this->call(ConselhoSegurancaSeeder::class);
 
     }
 }
