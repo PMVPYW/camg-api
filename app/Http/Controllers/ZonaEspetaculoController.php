@@ -60,5 +60,6 @@ class ZonaEspetaculoController extends Controller
     public function destroy(ZonaEspetaculo $zonaEspetaculo)
     {
         $zonaEspetaculo->forceDelete();
+        return new ZonaEspetaculoResource($zonaEspetaculo);
     }
 }
