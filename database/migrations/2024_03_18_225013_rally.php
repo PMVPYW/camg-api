@@ -152,14 +152,14 @@ return new class extends Migration
             $table->integer("ano_fim")->nullable();
 
         });
-
+        /*
         Schema::create('departamento', function (Blueprint $table) {
             $table->id();
             $table->string('nome')->unique();
             $table->timestamp("deleted_at")->nullable();
         });
 
-       /* Schema::create('orgaos_sociais', function (Blueprint $table) {
+       Schema::create('orgaos_sociais', function (Blueprint $table) {
             $table->id();
             $table->string("nome")->unique();
             $table->enum('cargo',['presidente', 'secretario', 'vice-presidente', 'vogal']);
