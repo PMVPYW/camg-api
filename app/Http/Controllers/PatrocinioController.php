@@ -97,8 +97,6 @@ class PatrocinioController extends Controller
 
 
 
-
-
     //Métodos Auxiliares
     public function destroyAllSponsors(PatrocinioRequestDelete $patrocinios)
     {
