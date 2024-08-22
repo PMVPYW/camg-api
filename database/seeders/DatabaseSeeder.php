@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         Storage::makeDirectory("public/fotos");
         Storage::deleteDirectory("public/entidades");
         Storage::makeDirectory("public/entidades");
+        Storage::deleteDirectory("public/declaracoes");
+        Storage::makeDirectory("public/declaracoes");
 
         User::factory()->create([
             'nome' => 'Test User',
