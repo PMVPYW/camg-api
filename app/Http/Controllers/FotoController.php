@@ -32,7 +32,7 @@ class FotoController extends Controller
         foreach ($request->file("image_src") as $file) {
             $file_type = $file->getClientOriginalExtension();
             $file_name_to_store = str_replace('=', '', base64_encode(microtime()));
-            while(Storage::exists($file_name_to_store . '.' . $file_type))
+            while(Storage::disk('public')->exists('fotos/'.$file_name_to_store . '.' . $file_type))
             {
                 $file_name_to_store = $file_name_to_store . random_int();
             }
