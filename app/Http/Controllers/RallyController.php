@@ -195,7 +195,7 @@ class RallyController extends Controller
                 });
                 break;
             case 'rel_asc':
-                $patrocinios = $patrocinios->sortByAsc(function ($patrocinio) {
+                $patrocinios = $patrocinios->sortBy(function ($patrocinio) {
                     return $patrocinio->relevancia;
                 });
             break;

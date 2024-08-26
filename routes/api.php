@@ -12,6 +12,7 @@ use App\Http\Controllers\EtapaController;
 use App\Http\Controllers\HistoriaController;
 use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\ImagemNoticiaController;
+use App\Http\Controllers\LivestreamController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\FotoController;
 use App\Http\Controllers\NotificationTokenController;
@@ -117,9 +118,17 @@ Route::get("historia/{historia}",[HistoriaController::class, "show"]);
 
 Route::post("notificationToken",[NotificationTokenController::class, "store"]);
 
+//Livestream
+Route::get("livestream",[LivestreamController::class, "index"]);
+Route::get("livestream/{livestream}",[LivestreamController::class, "show"]);
+
 //protected routes
 Route::middleware("auth:sanctum")->group(function (){
     Route::get("notificationToken",[NotificationTokenController::class, "index"]);
+
+    Route::post("livestream",[LivestreamController::class, "store"]);
+    Route::put("livestream/{livestream}",[LivestreamController::class, "update"]);
+    Route::delete("livestream/{livestream}",[LivestreamController::class, "destroy"]);
 
     Route::post("zonaEspetaculo",[ZonaEspetaculoController::class, "store"]);
     Route::put("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "update"])->name("zonaEspetaculo");
