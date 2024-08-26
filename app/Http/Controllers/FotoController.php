@@ -31,7 +31,12 @@ class FotoController extends Controller
         unset($validated["image_src"]);
         foreach ($request->file("image_src") as $file) {
             $file_type = $file->getClientOriginalExtension();
-            $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+            $file_name_to_store = str_replace('=', '', base64_encode(microtime()));
+            while(Storage::exists($file_name_to_store . '.' . $file_type))
+            {
+                $file_name_to_store = $file_name_to_store . random_int();
+            }
+            $file_name_to_store = $file_name_to_store . '.' . $file_type;
             Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
             $foto = null;
             DB::transaction(function () use ($validated, &$foto, $file_name_to_store) {
@@ -66,7 +71,12 @@ class FotoController extends Controller
             }
             $file = $request->file("image_src");
             $file_type = $file->getClientOriginalExtension();
-            $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+            $file_name_to_store = str_replace('=', '', base64_encode(microtime()));
+            while(Storage::exists($file_name_to_store . '.' . $file_type))
+            {
+                $file_name_to_store = $file_name_to_store . random_int();
+            }
+            $file_name_to_store = $file_name_to_store . '.' . $file_type;
             Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
             $foto->image_src = $file_name_to_store;
             unset($validated["image_src"]);
