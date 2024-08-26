@@ -89,7 +89,12 @@ class ProvaController extends Controller
                 }
                 $file = $request->file("kml_src");
                 $file_type = $file->getClientOriginalExtension();
-                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+                $file_name_to_store = str_replace('=', '', base64_encode(microtime()));
+                while(Storage::disk('public')->exists('kml_files/'.$file_name_to_store . '.' . $file_type))
+                {
+                    $file_name_to_store = $file_name_to_store . random_int();
+                }
+                $file_name_to_store = $file_name_to_store . '.' . $file_type;
                 Storage::disk('public')->put('kml_files/' . $file_name_to_store, File::get($file));
                 $prova->kml_src = $file_name_to_store;
             }

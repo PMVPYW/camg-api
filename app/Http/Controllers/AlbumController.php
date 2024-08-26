@@ -57,7 +57,12 @@ class AlbumController extends Controller
         if ($request->hasFile("img")) {
             $file = $request->file("img");
             $file_type = $file->getClientOriginalExtension();
-            $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+            $file_name_to_store = str_replace('=', '', base64_encode(microtime()));
+            while(Storage::disk('public')->exists('fotos/'.$file_name_to_store . '.' . $file_type))
+            {
+                $file_name_to_store = $file_name_to_store . random_int();
+            }
+            $file_name_to_store = $file_name_to_store . '.' . $file_type;
             Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
         }
         $album = null;
@@ -91,7 +96,12 @@ class AlbumController extends Controller
                 }
                 $file = $request->file("img");
                 $file_type = $file->getClientOriginalExtension();
-                $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+                $file_name_to_store = str_replace('=', '', base64_encode(microtime()));
+                while(Storage::disk('public')->exists('fotos/'.$file_name_to_store . '.' . $file_type))
+                {
+                    $file_name_to_store = $file_name_to_store . random_int();
+                }
+                $file_name_to_store = $file_name_to_store . '.' . $file_type;
                 Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
                 $album->img = $file_name_to_store;
             }

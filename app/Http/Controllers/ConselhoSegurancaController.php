@@ -30,13 +30,23 @@ class ConselhoSegurancaController extends Controller
         //img1 - img_conselho
         $file = $request->file("img_conselho");
         $file_type = $file->getClientOriginalExtension();
-        $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+        $file_name_to_store = str_replace('=', '', base64_encode(microtime()));
+        while(Storage::disk('public')->exists('fotos/'.$file_name_to_store . '.' . $file_type))
+        {
+            $file_name_to_store = $file_name_to_store . random_int();
+        }
+        $file_name_to_store = $file_name_to_store . '.' . $file_type;
         Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
         //img2 - img_erro
-        $file = $request->file("img_erro");
-        $file_type = $file->getClientOriginalExtension();
-        $file_name_to_store2 = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
-        Storage::disk('public')->put('fotos/' . $file_name_to_store2, File::get($file));
+        $file2 = $request->file("img_erro");
+        $file_type2 = $file2->getClientOriginalExtension();
+        $file_name_to_store2 = str_replace('=', '', base64_encode(microtime()));
+        while(Storage::disk('public')->exists('fotos/'.$file_name_to_store2 . '.' . $file_type2))
+        {
+            $file_name_to_store2 = $file_name_to_store2 . random_int();
+        }
+        $file_name_to_store2 = $file_name_to_store2 . '.' . $file_type2;
+        Storage::disk('public')->put('fotos/' . $file_name_to_store2, File::get($file2));
 
         $conselho = null;
         DB::transaction(function () use ($validated, &$conselho, $file_name_to_store, $file_name_to_store2) {
@@ -75,7 +85,12 @@ class ConselhoSegurancaController extends Controller
             }
             $file = $request->file("img_conselho");
             $file_type = $file->getClientOriginalExtension();
-            $file_name_to_store = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
+            $file_name_to_store = str_replace('=', '', base64_encode(microtime()));
+            while(Storage::disk('public')->exists('fotos/'.$file_name_to_store . '.' . $file_type))
+            {
+                $file_name_to_store = $file_name_to_store . random_int();
+            }
+            $file_name_to_store = $file_name_to_store . '.' . $file_type;
             Storage::disk('public')->put('fotos/' . $file_name_to_store, File::get($file));
             unset($validated["img_conselho"]);
         }
@@ -84,10 +99,15 @@ class ConselhoSegurancaController extends Controller
             if ($conselho->img_erro && Storage::exists('public/fotos/' . $conselho->img_erro)) {
                 Storage::disk('public')->delete('fotos/' . $conselho->img_erro);
             }
-            $file = $request->file("img_erro");
-            $file_type = $file->getClientOriginalExtension();
-            $file_name_to_store2 = substr(base64_encode(microtime()), 3, 6) . '.' . $file_type;
-            Storage::disk('public')->put('fotos/' . $file_name_to_store2, File::get($file));
+            $file2 = $request->file("img_erro");
+            $file_type2 = $file2->getClientOriginalExtension();
+            $file_name_to_store2 = str_replace('=', '', base64_encode(microtime()));
+            while(Storage::disk('public')->exists('fotos/'.$file_name_to_store2 . '.' . $file_type2))
+            {
+                $file_name_to_store2 = $file_name_to_store2 . random_int();
+            }
+            $file_name_to_store2 = $file_name_to_store2 . '.' . $file_type2;
+            Storage::disk('public')->put('fotos/' . $file_name_to_store2, File::get($file2));
             unset($validated["img_erro"]);
         }
 
