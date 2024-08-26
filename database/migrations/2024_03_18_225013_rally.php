@@ -176,6 +176,14 @@ return new class extends Migration
             $table->integer('pontos')->nullable();
 
         });
+        Schema::create('livestream', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome')->unique();
+            $table->longText('link');
+            $table->boolean('visivel')->default(false);
+            $table->timestamp('enable_timestamp');
+            $table->foreignId('rally_id')->nullable()->constrained("rallies");
+        });
 
         //Objetivo de garatir as notificações na CamgApp
         Schema::create('notification_tokens', function (Blueprint $table) {
@@ -203,6 +211,7 @@ return new class extends Migration
         Schema::dropIfExists('entidades');
         Schema::dropIfExists('imagens_noticia');
         Schema::dropIfExists('noticias');
+        Schema::dropIfExists('livestream');
         Schema::dropIfExists('fotos');
         Schema::dropIfExists('albuns');
         Schema::dropIfExists('rallies');

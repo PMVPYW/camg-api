@@ -26,6 +26,11 @@ class Rally extends Model
         return $this->hasMany(Noticia::class, "rally_id", "id");
     }
 
+    public function livestreams(): HasMany
+    {
+        return $this->hasMany(Livestream::class, "rally_id", "id");
+    }
+
     public function Albuns(): HasMany
     {
         return $this->hasMany(Album::class, "rally_id", "id");
