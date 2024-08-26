@@ -19,9 +19,9 @@ class LivestreamController extends Controller
     {
         $livestream = Livestream::query();
         $livestream = $livestream->orderBy('enable_timestamp', 'desc');
-        if ($request->order == 'enable') {
+        if ($request->status == 'enable') {
             $livestream = $livestream->where([["visivel", 1]]);// começam antes do fim da pesquisa
-        } else if ($request->order == 'disable'){
+        } else if ($request->status == 'disable'){
             $livestream = $livestream->where([["visivel", 0]]);// começam antes do fim da pesquisa
         }
 

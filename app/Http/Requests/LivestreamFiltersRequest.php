@@ -24,7 +24,7 @@ class LivestreamFiltersRequest extends FormRequest
         return [
             "search" => "nullable|string|min:0",
             "rally_id" => "nullable|integer|exists:rallies,id",
-            "order" => "nullable|string|in:disable,enable,all"
+            "status" => "nullable|string|in:disable,enable,all"
         ];
     }
 }
