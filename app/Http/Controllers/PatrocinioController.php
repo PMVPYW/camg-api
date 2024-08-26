@@ -19,7 +19,7 @@ class PatrocinioController extends Controller
     public function index()
     {
         $patrocinios = Patrocinio::query();
-        $patrocinios = $patrocinios->where("entidade_oficial",false);
+        $patrocinios = $patrocinios->where("entidade_oficial",false)->orderBy('relevancia', 'desc');
         return PatrocinioResource::collection($patrocinios->get());
     }
 

@@ -21,7 +21,7 @@ class AlbumController extends Controller
     public function index(AlbumFiltersRequest $request)
     {
         $validated = $request->validated(); //data is validated now - i will use request from here because i prefer the sintax
-        $albuns = Album::query();
+        $albuns = Album::orderBy('id', 'desc');
         if ($request->rally_id)
         {
             $rally_id = $request->rally_id;

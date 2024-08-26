@@ -184,6 +184,15 @@ class RallyController extends Controller
                     return $patrocinio->entidade->nome;
                 });
                 break;
+            case 'rel_asc':
+                $patrocinios = $patrocinios->sortByAsc(function ($patrocinio) {
+                    return $patrocinio->relevancia;
+                });
+            break;
+            default:
+                $patrocinios = $patrocinios->sortByDesc(function ($patrocinio) {
+                    return $patrocinio->relevancia;
+                });
         }
         return PatrocinioResource::collection($patrocinios);
     }

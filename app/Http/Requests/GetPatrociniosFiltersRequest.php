@@ -22,14 +22,14 @@ class GetPatrociniosFiltersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "filters" => "nullable|string|in:nome_asc,nome_desc"
+            "filters" => "nullable|string|in:nome_asc,nome_desc,rel_asc,rel_desc"
         ];
     }
     public function messages(): array
     {
         return [
             'filters.string' => 'O campo filtros deve ser um texto.',
-            'filters.in' => 'O campo filtros deve ter um dos seguintes valores: nome_asc, nome_desc.',
+            'filters.in' => 'O campo filtros deve ter um dos seguintes valores: nome_asc, nome_desc, rel_asc, rel_desc.',
         ];
     }
 }
