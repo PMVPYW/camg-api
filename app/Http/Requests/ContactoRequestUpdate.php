@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ContactoRequestUpdate extends FormRequest
 {
@@ -22,7 +24,7 @@ class ContactoRequestUpdate extends FormRequest
     public function rules(): array
     {
         return [
-            "nome" => "sometimes|string",
+            "nome" => ["sometimes", "string", Rule::unique('contactos')->where(fn (Builder $query) => $query->where('tipocontacto_id', $this->input('tipocontacto_id')))->ignore($this->route('contacto')->id)],
             "tipo_valor" => "sometimes|in:Email,Telemovel,Telefone,Fax,Facebook,Instagram,Twitter,PaginaWeb,WhatsApp,Morada,Coordenadas",
             "valor" => "sometimes|string",
             "tipocontacto_id" => "sometimes|integer|exists:tipo_contacto,id"
@@ -55,6 +57,7 @@ class ContactoRequestUpdate extends FormRequest
             'nome.string' => 'O campo nome deve ser um texto.',
             'tipo_valor.in' => 'O campo tipo deve ser um dos seguintes valores: Email, Telemovel, Telefone, Fax, Facebook, Instagram, Twitter, PaginaWeb, WhatsApp, Morada, Coordenadas.',
             'valor.string' => 'O campo valor deve ser um texto.',
+            "nome.unique" => 'O nome deve ser unico dentro do tipo de contacto.',
             'valor.max' => 'O campo valor não pode ter mais que 9 caracteres quando do tipo Telemóvel ou Telefone.',
             'valor.email' => 'O campo valor não é um email válido',
             'tipocontacto_id.integer' => 'O campo tipo de contacto deve ser um número inteiro.',

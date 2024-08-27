@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ContactoRequest extends FormRequest
 {
@@ -22,7 +24,7 @@ class ContactoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nome" => "required|string",
+            "nome" => "required","string", Rule::unique('contactos')->where(fn (Builder $query) => $query->where('tipocontacto_id', $this->input('tipocontacto_id'))),
             "tipo_valor" => "required|in:Email,Telemovel,Telefone,Fax,Facebook,Instagram,Twitter,PaginaWeb,WhatsApp,Morada,Coordenadas",
             "valor" => "required|string",
             "tipocontacto_id" => "required|integer|exists:tipo_contacto,id"
@@ -44,6 +46,7 @@ class ContactoRequest extends FormRequest
     {
         return [
             'nome.required' => 'O campo nome é obrigatório.',
+            "nome.unique" => 'O nome deve ser unico dentro do tipo de contacto.',
             'nome.string' => 'O campo nome deve ser um texto.',
             'tipo_valor.required' => 'O campo tipo é obrigatório.',
             'tipo_valor.in' => 'O campo tipo deve ser um dos seguintes valores: Email, Telemovel, Telefone, Fax, Facebook, Instagram, Twitter, PaginaWeb, WhatsApp, Morada, Coordenadas.',

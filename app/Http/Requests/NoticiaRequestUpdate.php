@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueUpdateRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class NoticiaRequestUpdate extends FormRequest
@@ -21,9 +22,10 @@ class NoticiaRequestUpdate extends FormRequest
      */
     public function rules(): array
     {
+        $resourceId = $this->route('noticia')->id;
         return [
             "rally_id" => "nullable|integer|exists:rallies,id",
-            "titulo" => "sometimes|string",
+            "titulo" => ["sometimes", "string", new UniqueUpdateRule('noticias', 'titulo', $resourceId)],
             "conteudo" => "sometimes|string",
             "title_img" => "sometimes|file|image",
             "data" => "sometimes|date",

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueUpdateRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TipoContactoRequestUpdate extends FormRequest
@@ -21,10 +22,12 @@ class TipoContactoRequestUpdate extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('tipocontacto')->id;
         return [
-            "nome" => "sometimes|string|unique:tipo_contacto,nome"
+            "nome" => ["sometimes", "string", new UniqueUpdateRule("tipo_contacto", 'nome', $id)]
         ];
     }
+
     public function messages(): array
     {
         return [
