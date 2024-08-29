@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueUpdateRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LivestreamUpdateRequest extends FormRequest
@@ -21,11 +22,32 @@ class LivestreamUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $resourceId = $this->route('livestream')->id;
         return [
             "rally_id" => "nullable|integer|exists:rallies,id",
-            "nome" => "sometimes|string|unique:livestream,nome",
+            "nome" => ["sometimes","string", new UniqueUpdateRule("livestream", "nome", $resourceId)],
             "visivel" => "sometimes|boolean",
-            "link" => "sometimes|string|url:http,https|unique:livestream,link",
+            "link" => ["sometimes","string","url:http,https", new UniqueUpdateRule("livestream", "link", $resourceId)],
+        ];
+    }
+
+
+    /**
+     * Get custom error messages for validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'rally_id.integer' => 'O campo de ID do rally deve ser um número inteiro.',
+            'rally_id.exists' => 'O rally selecionado não existe.',
+            'nome.string' => 'O nome deve ser uma palavra.',
+            'nome.unique_update_rule' => 'Este nome já existe. Por favor, insira outro.',
+            'visivel.boolean' => 'O campo visível deve ser verdadeiro ou falso.',
+            'link.string' => 'O link deve ser uma cadeia de caracteres.',
+            'link.url' => 'O link deve ser um URL válido começando com http ou https.',
+            'link.unique_update_rule' => 'Este link já existe. Por favor, insira outro.',
         ];
     }
 }

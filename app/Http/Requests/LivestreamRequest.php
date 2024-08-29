@@ -27,4 +27,24 @@ class LivestreamRequest extends FormRequest
             "link" => "required|string|url:http,https|unique:livestream,link",
         ];
     }
+
+    /**
+     * Get custom error messages for validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'rally_id.integer' => 'O campo de ID do rally deve ser um número inteiro.',
+            'rally_id.exists' => 'O rally selecionado não existe.',
+            'nome.required' => 'O nome é obrigatório.',
+            'nome.string' => 'O nome deve ser uma palavra.',
+            'nome.unique' => 'Este nome já existe. Por favor, insira outro.',
+            'link.required' => 'O link é obrigatório.',
+            'link.string' => 'O link deve ser uma palavra.',
+            'link.url' => 'O link deve ser um URL válido começando com http ou https.',
+            'link.unique' => 'Este link já está em uso. Por favor, insira outro.',
+        ];
+    }
 }
