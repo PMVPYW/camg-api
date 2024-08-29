@@ -50,7 +50,6 @@ class LivestreamController extends Controller
             $livestream->enable_timestamp = new \DateTime();
             $livestream->save();
         });
-        dump($livestream);
         return response(new LivestreamResource($livestream), 201);
     }
 
