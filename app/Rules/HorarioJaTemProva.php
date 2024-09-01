@@ -25,6 +25,14 @@ class HorarioJaTemProva implements ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        if ($value == null)
+        {
+            return;
+        }
+        if (Horario::query()->where('id', $value)->first()->rally_id != Prova::query()->where('id', $this->ignoreId)->first()->rally_id) {
+            $fail("Este horário não pertence a este rally!");
+        }
+
         $query = Prova::where('horario_id', $value)->wherenot('id', $this->ignoreId)->get();
         if ($query->count() > 0) {
             $fail("Este horário já tem uma prova associada!");

@@ -19,6 +19,7 @@ use App\Http\Resources\RallyResource;
 use App\Http\Resources\ZonaEspetaculoResource;
 use App\Models\Declaracao;
 use App\Models\Entidade;
+use App\Models\Horario;
 use App\Models\Prova;
 use App\Models\Rally;
 use App\Models\ZonaEspetaculo;
@@ -155,8 +156,10 @@ class RallyController extends Controller
                 $prova->forceDelete();
             }
             foreach ($rally->horarios as $horario){
-                $horario->forceDelete();
+                $a = new  HorarioController();
+                $a->destroy($horario);
             }
+
             foreach ($rally->noticias as $noticia){
                 $noticia->rally_id=null;
                 $noticia->save();
@@ -169,6 +172,7 @@ class RallyController extends Controller
             {
                 $declaracao->forceDelete();
             }
+
             $rally->forceDelete();
         });
         return new RallyResource($rally);

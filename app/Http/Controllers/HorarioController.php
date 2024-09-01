@@ -8,6 +8,7 @@ use App\Http\Resources\HorarioResource;
 use App\Http\Resources\ProvaResource;
 use App\Http\Resources\RallyResource;
 use App\Models\Horario;
+use App\Models\Prova;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -52,6 +53,12 @@ class HorarioController extends Controller
         DB::transaction(function () use ($validated, $horario) {
             $horario->fill($validated);
             $horario->save();
+
+            $provas = Prova::query()->where('horario_id', $horario->id);
+            foreach ($provas as $prova) {
+                $prova->horario_id = null;
+                $prova->save();
+            }
         });
         return new HorarioResource($horario);
     }
@@ -61,11 +68,13 @@ class HorarioController extends Controller
      */
     public function destroy(horario $horario)
     {
-        if ($horario->prova()->count() == 0) {
-            $horario->forceDelete();
-        } else {
-            $horario->delete();
+        $provas = Prova::query()->where("horario_id", $horario->id)->get();
+
+        foreach ($provas as $prova) {
+            $prova->horario_id = null;
+            $prova->save();
         }
+        $horario->forceDelete();
         return new HorarioResource($horario);
     }
 
