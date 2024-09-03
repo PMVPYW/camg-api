@@ -116,6 +116,14 @@ Route::get("zonaEspetaculo/{zonaEspetaculo}",[ZonaEspetaculoController::class, "
 Route::get("historia",[HistoriaController::class, "index"]);
 Route::get("historia/{historia}",[HistoriaController::class, "show"]);
 
+//Capítulo
+Route::get("capitulo",[CapituloController::class, "index"]);
+Route::get("capitulo/{capitulo}",[CapituloController::class, "show"]);
+
+//Etapa
+Route::get("etapa",[EtapaController::class, "index"]);
+Route::get("etapa/{etapa}",[EtapaController::class, "show"]);
+
 Route::post("notificationToken",[NotificationTokenController::class, "store"]);
 
 //Livestream

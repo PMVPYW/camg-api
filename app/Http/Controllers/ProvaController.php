@@ -9,6 +9,7 @@ use App\Http\Requests\ProvaUpdateRequest;
 use App\Http\Resources\HorarioResource;
 use App\Http\Resources\ProvaResource;
 use App\Models\Prova;
+use App\Models\ZonaEspetaculo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
@@ -134,8 +135,10 @@ class ProvaController extends Controller
         $posts = $response->json();
         $posts = $posts['event']['data']['itineraries'][0]['specials'];
         $provas = [];
-        DB::transaction(function () use ($validated, &$provas, $posts) {
+        $provas_id = [];
+        DB::transaction(function () use ($validated, &$provas, $posts, $provas_id) {
             foreach ($posts as $post) {
+                array_push($provas_id, $post["id"]);
                 $Prova = Prova::query();
                 $n_provas_existentes=$Prova->where([["external_id", $post["id"]]])->first();
                 if(!$n_provas_existentes){
@@ -147,6 +150,13 @@ class ProvaController extends Controller
                     $prova->rally_id = $validated["rally_id"];
                     $provas[]=$prova;
                     $prova->save();
+                }
+            }
+            $to_deleted=Prova::query()->where('rally_id', $validated["rally_id"])->whereNotIn('external_id', $provas_id)->get();
+            if(count($to_deleted)>0){
+                foreach ($to_deleted as $un_deleted){
+                    ZonaEspetaculo::query()->where('prova_id', $un_deleted->id)->delete();
+                    $un_deleted->delete();
                 }
             }
         });
